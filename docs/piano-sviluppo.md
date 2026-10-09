@@ -147,6 +147,11 @@ Principi validi per tutte le fasi:
 - [x] Rivelazione finale di limite e totale.
 - [ ] Prova reale.
 
+## Sfide aggiuntive
+- [x] Semaforo ([006](specs/006-sfida-semaforo.md))
+- [x] Ultimo a mollare ([007](specs/007-sfida-ultimo-a-mollare.md))
+- [x] Raffica ([008](specs/008-sfida-raffica.md))
+
 ## Fase 10: Modalità Eliminazione
 - [ ] Selezione della modalità nel pannello host.
 - [ ] Schermata di eliminazione (chi esce e perché, salvati per pareggio).

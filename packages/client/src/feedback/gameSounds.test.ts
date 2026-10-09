@@ -26,6 +26,7 @@ function snapshot(
         challenge: "stop-the-clock",
         players: ["a", "b"],
         publicParams: {},
+        playMs: null,
         played: [],
         turn: null,
         results: null,

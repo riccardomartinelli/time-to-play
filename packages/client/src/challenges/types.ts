@@ -24,4 +24,6 @@ export interface ChallengeUi {
   formatResult(result: unknown, reveal: unknown, playerId: string): FormattedResult | null;
   /** What the round results reveal (e.g. the target time). */
   describeReveal(reveal: unknown): string | null;
+  /** Shown for connected players without a result; "Tempo scaduto" by default. */
+  timedOutLabel?: string;
 }

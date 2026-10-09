@@ -7,12 +7,15 @@ import {
   createHiddenTimerParams,
   doubleClick,
   hiddenTimerOutcome,
+  lastToLetGo,
   initialHiddenTimerState,
   parseHiddenTimerSubmission,
   pickNextChallenge,
+  rapidFire,
   skipCurrentTurn,
   startNextTurn,
   stopTheClock,
+  trafficLight,
   type ChallengeId,
   type GamePhase,
   type GameSettings,
@@ -20,6 +23,7 @@ import {
   type GameView,
   type HiddenTimerParams,
   type HiddenTimerState,
+  type PlayWindow,
   type PlayerId,
   type Random,
   type Result,
@@ -36,6 +40,9 @@ const SIMULTANEOUS: Partial<Record<ChallengeId, SimultaneousChallenge<unknown, u
   {
     "stop-the-clock": stopTheClock,
     "double-click": doubleClick,
+    "traffic-light": trafficLight,
+    "last-to-let-go": lastToLetGo,
+    "rapid-fire": rapidFire,
   };
 
 interface RoundBase {
@@ -52,6 +59,7 @@ interface SimultaneousRound extends RoundBase {
   params: unknown;
   /** Evaluated results of the players who played. */
   played: Map<PlayerId, unknown>;
+  window: PlayWindow;
 }
 
 interface TurnBasedRound extends RoundBase {
@@ -176,13 +184,7 @@ export class GameEngine {
     };
     const definition = SIMULTANEOUS[challenge];
     this.round = definition
-      ? {
-          ...base,
-          kind: "simultaneous",
-          definition,
-          params: definition.createParams(this.options.rng),
-          played: new Map(),
-        }
+      ? this.simultaneousRound(base, definition)
       : {
           ...base,
           kind: "turnBased",
@@ -203,8 +205,31 @@ export class GameEngine {
       this.nextTurn(round);
       return;
     }
-    const { playMs, submitGraceMs } = this.options.timings;
-    this.enterPhase("playing", playMs, () => this.finishRound(), playMs + submitGraceMs);
+    const { durationMs, visible } = round.window;
+    this.enterPhase(
+      "playing",
+      visible ? durationMs : null,
+      () => this.finishRound(),
+      durationMs + this.options.timings.submitGraceMs,
+    );
+  }
+
+  private simultaneousRound(
+    base: RoundBase,
+    definition: SimultaneousChallenge<unknown, unknown, unknown>,
+  ): SimultaneousRound {
+    const params = definition.createParams(this.options.rng);
+    return {
+      ...base,
+      kind: "simultaneous",
+      definition,
+      params,
+      played: new Map(),
+      window: definition.playWindow?.(params) ?? {
+        durationMs: this.options.timings.playMs,
+        visible: true,
+      },
+    };
   }
 
   private nextTurn(round: TurnBasedRound): void {
@@ -309,6 +334,7 @@ export class GameEngine {
         challenge: round.challenge,
         players: [...round.players],
         publicParams: round.definition.publicParams(round.params),
+        playMs: round.window.visible ? round.window.durationMs : null,
         played: [...round.played.keys()],
         turn: null,
         results: round.results,
@@ -321,6 +347,7 @@ export class GameEngine {
       challenge: round.challenge,
       players: [...round.players],
       publicParams: { order: [...round.params.order] },
+      playMs: null,
       played: [...new Set(round.state.turns.map((turn) => turn.playerId))],
       turn: current && round.turnEndsAt ? { playerId: current, endsAt: round.turnEndsAt } : null,
       results: round.results,

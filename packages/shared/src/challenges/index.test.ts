@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { seededRandom } from "../random.js";
+import { CHALLENGE_IDS } from "../rules.js";
 import { pickNextChallenge } from "./index.js";
 
 describe("pickNextChallenge", () => {
@@ -17,7 +18,7 @@ describe("pickNextChallenge", () => {
     const rng = seededRandom(5);
     const seen = new Set<string>();
     for (let i = 0; i < 100; i++) seen.add(pickNextChallenge(rng, null));
-    expect(seen.size).toBe(3);
+    expect(seen.size).toBe(CHALLENGE_IDS.length);
   });
 
   it("repeats when only one challenge is available", () => {

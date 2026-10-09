@@ -5,6 +5,8 @@ import styles from "./GameButton.module.css";
 interface GameButtonProps {
   children: ReactNode;
   disabled?: boolean;
+  /** Neutral leaves the screen's colors to the challenge (e.g. the traffic light). */
+  variant?: "primary" | "neutral";
   /** Also react to the space bar (desktop). */
   keyboard?: boolean;
   /** `time` is the input event time, comparable with `performance.now()`. */
@@ -21,6 +23,7 @@ const SPACE = "Space";
 export function GameButton({
   children,
   disabled = false,
+  variant = "primary",
   keyboard = true,
   onPressStart,
   onPressEnd,
@@ -77,7 +80,7 @@ export function GameButton({
   return (
     <button
       type="button"
-      className={styles.button}
+      className={`${styles.button} ${styles[variant]}`}
       data-pressed={pressed}
       disabled={disabled}
       onPointerDown={(event) => {

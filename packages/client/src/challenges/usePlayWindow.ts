@@ -15,6 +15,7 @@ export function usePlayWindow(
   snapshot: LobbySnapshot,
   round: RoundSnapshot,
   submit: (submission: unknown) => Promise<ClientResult>,
+  { hurry = true }: { hurry?: boolean } = {},
 ) {
   const remainingMs = useRemaining(snapshot.phaseEndsAt) ?? 0;
   const alreadyPlayed = round.played.includes(snapshot.you);
@@ -36,11 +37,11 @@ export function usePlayWindow(
   const done = state !== "idle" || alreadyPlayed;
   // Hurry up: ticks in the last 3 seconds, until this player has played.
   const left = secondsLeft(remainingMs);
-  useTicks(`hurry-${round.id}`, left, !done && left <= URGENT_SECONDS);
+  useTicks(`hurry-${round.id}`, left, hurry && !done && left <= URGENT_SECONDS);
 
   return {
     remainingMs,
-    totalMs: PLAY_TIMEOUT_MS,
+    totalMs: round.playMs ?? PLAY_TIMEOUT_MS,
     done,
     error,
     send,

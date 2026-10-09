@@ -40,6 +40,7 @@ export function Gallery() {
           Tra gli ultimi due rilasci:{" "}
           <span className="numeric">{doubleClick === null ? "-" : formatSeconds(doubleClick)}</span>
         </p>
+        <GameButton variant="neutral">Neutro</GameButton>
         <GameButton disabled>Disattivato</GameButton>
       </section>
 

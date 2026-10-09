@@ -116,7 +116,7 @@ Tutto vive **in memoria** (vedi [tech.md](tech.md)): un riavvio del server cance
 | `lobby` | Ingresso giocatori, impostazioni dell'host | libera | l'host avvia |
 | `intro` | Viene estratta e presentata la sfida | 3 s * | timer |
 | `countdown` | 3, 2, 1... | 3 s | timer |
-| `playing` | I giocatori giocano | 10 s (Timer nascosto: turni da 30 s) | tutti hanno giocato o tempo scaduto |
+| `playing` | I giocatori giocano | dipende dalla sfida (10 s di base; Timer nascosto: turni da 30 s) | tutti hanno giocato o tempo scaduto |
 | `roundResults` | Risultati e posizioni del round, eliminazioni | 6 s * | timer |
 | `standings` | Classifica generale | 5 s * | timer |
 | `gameOver` | Vincitore o vincitori | libera | ogni giocatore preme "Torna alla home" |
@@ -206,8 +206,11 @@ interface SimultaneousChallenge<Params, Submission, Result> {
   parseSubmission(raw: unknown): Submission | null   // validazione dell'input del client
   evaluate(params: Params, submission: Submission): Result
   compare(a: Result, b: Result): number       // < 0 se a è migliore di b, 0 se pari
+  playWindow?(params: Params): { durationMs: number; visible: boolean }  // default: 10 s, visibile
 }
 ```
+
+`playWindow` permette a ogni sfida di avere la sua durata di gioco: il Semaforo dura quanto il rosso più 3 s, la Raffica 5 s, Ultimo a mollare finisce all'esplosione con la scadenza **nascosta** (`phaseEndsAt` e `playMs` restano `null` nello snapshot).
 
 - Le sfide **simultanee** (Stop al secondo, Doppio clic) implementano `SimultaneousChallenge`: il motore raccoglie i risultati e costruisce l'esito con `buildSimultaneousOutcome` (classifica, timeout, disconnessi).
 - Le sfide **a turni** (oggi solo il Timer nascosto) hanno funzioni dedicate: `startNextTurn`, `applyHiddenTimerTurn`, `applyHiddenTimerTimeout`, `hiddenTimerOutcome`. Se in futuro arriveranno altre sfide a turni, si estrarrà un'interfaccia comune.

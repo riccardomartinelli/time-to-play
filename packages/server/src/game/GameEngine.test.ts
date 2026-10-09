@@ -301,4 +301,64 @@ describe("GameEngine", () => {
       expect(turnOf(game)).toBe(order[1]);
     });
   });
+
+  describe("challenge play windows", () => {
+    it("gives the traffic light its red time plus 3 s to react", () => {
+      const game = setup({ challenge: "traffic-light" });
+      game.toPlaying();
+      const { redMs } = game.round().publicParams as { redMs: number };
+      expect(game.engine.phaseEndsAt).toBe(Date.now() + redMs + 3_000);
+      expect(game.round().playMs).toBe(redMs + 3_000);
+    });
+
+    it("ranks false starts last in the traffic light", () => {
+      const game = setup({ challenge: "traffic-light" });
+      game.toPlaying();
+      game.submit("a", { falseStart: true });
+      game.submit("b", { reactionMs: 300 });
+      game.submit("c", { reactionMs: 200 });
+      expect(game.results().entries.map((e) => [e.playerId, e.position])).toEqual([
+        ["c", 1],
+        ["b", 2],
+        ["a", 3],
+      ]);
+    });
+
+    it("hides the explosion of last to let go and ends the round there", () => {
+      const game = setup({ challenge: "last-to-let-go" });
+      game.toPlaying();
+      expect(game.engine.phaseEndsAt).toBeNull();
+      expect(game.round().playMs).toBeNull();
+      expect(JSON.stringify(game.engine.snapshot())).not.toMatch(/explodeMs/);
+
+      game.submit("a", { holdMs: 2_000 });
+      const started = Date.now();
+      while (game.engine.phase === "playing") vi.advanceTimersByTime(10);
+      const { entries, reveal } = game.results();
+      const explodeMs = (reveal as { explodeMs: number }).explodeMs;
+      expect(explodeMs).toBeGreaterThanOrEqual(3_000);
+      expect(Date.now() - started).toBeGreaterThanOrEqual(explodeMs + T.submitGraceMs);
+      expect(Date.now() - started).toBeLessThan(explodeMs + T.submitGraceMs + 20);
+      // b and c were still holding at the explosion: last, tied.
+      expect(entries.map((e) => [e.playerId, e.position, e.status])).toEqual([
+        ["a", 1, "played"],
+        ["b", 2, "timedOut"],
+        ["c", 2, "timedOut"],
+      ]);
+    });
+
+    it("gives rapid fire a visible 5 s window", () => {
+      const game = setup({ challenge: "rapid-fire" });
+      game.toPlaying();
+      expect(game.engine.phaseEndsAt).toBe(Date.now() + 5_000);
+      game.submit("a", { taps: 30 });
+      game.submit("b", { taps: 41 });
+      game.submit("c", { taps: 30 });
+      expect(game.results().entries.map((e) => [e.playerId, e.position])).toEqual([
+        ["b", 1],
+        ["a", 2],
+        ["c", 2],
+      ]);
+    });
+  });
 });

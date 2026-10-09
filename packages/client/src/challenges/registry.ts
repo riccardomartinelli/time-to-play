@@ -2,7 +2,10 @@ import type { ChallengeId } from "@ttp/shared";
 import { formatDifference, formatSeconds } from "../format";
 import { DoubleClickPlay } from "./DoubleClickPlay";
 import { HiddenTimerPlay } from "./HiddenTimerPlay";
+import { LastToLetGoPlay } from "./LastToLetGoPlay";
+import { RapidFirePlay } from "./RapidFirePlay";
 import { StopTheClockPlay } from "./StopTheClockPlay";
+import { TrafficLightPlay } from "./TrafficLightPlay";
 import type { ChallengeUi } from "./types";
 
 interface HiddenTimerReveal {
@@ -57,5 +60,47 @@ export const CHALLENGES: Record<ChallengeId, ChallengeUi> = {
       const { limitMs, totalMs } = reveal as HiddenTimerReveal;
       return `Limite segreto: ${formatSeconds(limitMs, 2)} · Totale: ${formatSeconds(totalMs, 2)}`;
     },
+  },
+  "traffic-light": {
+    title: "Semaforo",
+    instruction:
+      "Il semaforo è rosso: appena diventa verde premi il pulsante, più veloce che puoi. Se premi sul rosso è falsa partenza!",
+    Play: TrafficLightPlay,
+    formatResult(result) {
+      if (result === null) return null;
+      const { falseStart, reactionMs } = result as {
+        falseStart: boolean;
+        reactionMs: number | null;
+      };
+      return falseStart
+        ? { value: "", detail: "Falsa partenza!" }
+        : { value: formatSeconds(reactionMs!), detail: "Tempo di reazione" };
+    },
+    describeReveal: (reveal) =>
+      `Verde dopo ${formatSeconds((reveal as { redMs: number }).redMs, 1)}`,
+    timedOutLabel: "Non ha premuto",
+  },
+  "last-to-let-go": {
+    title: "Ultimo a mollare",
+    instruction:
+      "Tieni premuto più a lungo degli altri, ma molla prima che esploda la bomba a tempo segreto!",
+    Play: LastToLetGoPlay,
+    formatResult(result) {
+      if (result === null) return null;
+      const { holdMs, exploded } = result as { holdMs: number; exploded: boolean };
+      return { value: formatSeconds(holdMs, 2), detail: exploded ? "BOOM!" : "Salvo" };
+    },
+    describeReveal: (reveal) =>
+      `BOOM a ${formatSeconds((reveal as { explodeMs: number }).explodeMs, 2)}`,
+    timedOutLabel: "BOOM! Era ancora premuto",
+  },
+  "rapid-fire": {
+    title: "Raffica",
+    instruction: "Hai 5 secondi: tocca il pulsante più volte che puoi!",
+    Play: RapidFirePlay,
+    formatResult: (result) =>
+      result === null ? null : { value: `${(result as { taps: number }).taps} tocchi` },
+    describeReveal: () => null,
+    timedOutLabel: "Nessun tocco",
   },
 };

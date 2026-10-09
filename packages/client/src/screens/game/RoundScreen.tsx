@@ -23,8 +23,11 @@ export function RoundScreen({ snapshot }: { snapshot: LobbySnapshot }) {
 
   useTicks(`countdown-${round.id}`, countdown, snapshot.phase === "countdown");
   useEffect(() => {
-    if (snapshot.phase === "playing") sound.playOnce(`go-${round.id}`, "go");
-  }, [snapshot.phase, round.id]);
+    // The traffic light plays its own "go" when it turns green.
+    if (snapshot.phase === "playing" && round.challenge !== "traffic-light") {
+      sound.playOnce(`go-${round.id}`, "go");
+    }
+  }, [snapshot.phase, round.id, round.challenge]);
 
   let content;
   if (snapshot.phase === "intro") {

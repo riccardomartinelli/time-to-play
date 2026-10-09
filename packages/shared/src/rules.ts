@@ -31,10 +31,29 @@ export const STOP_THE_CLOCK_TARGET_STEP_MS = 100;
 export const HIDDEN_TIMER_LIMIT_MIN_MS = 5_000;
 export const HIDDEN_TIMER_LIMIT_MAX_MS = 15_000;
 
+export const TRAFFIC_LIGHT_RED_MIN_MS = 2_000;
+export const TRAFFIC_LIGHT_RED_MAX_MS = 6_000;
+/** Time to react once the light turns green. */
+export const TRAFFIC_LIGHT_REACTION_MS = 3_000;
+
+export const LAST_TO_LET_GO_MIN_MS = 3_000;
+export const LAST_TO_LET_GO_MAX_MS = 10_000;
+
+export const RAPID_FIRE_MS = 5_000;
+/** Above any human tapping speed: higher counts are rejected as invalid. */
+export const RAPID_FIRE_MAX_TAPS = 150;
+
 export const GAME_MODES = ["score", "elimination"] as const;
 export type GameMode = (typeof GAME_MODES)[number];
 
-export const CHALLENGE_IDS = ["stop-the-clock", "double-click", "hidden-timer"] as const;
+export const CHALLENGE_IDS = [
+  "stop-the-clock",
+  "double-click",
+  "hidden-timer",
+  "traffic-light",
+  "last-to-let-go",
+  "rapid-fire",
+] as const;
 export type ChallengeId = (typeof CHALLENGE_IDS)[number];
 
 /** Challenges the server draws from: only those whose screens are ready in the client. */

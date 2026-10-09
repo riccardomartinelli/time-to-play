@@ -28,7 +28,12 @@ export function RoundResultsScreen({ snapshot }: { snapshot: LobbySnapshot }) {
       nickname: nicknameOf(snapshot, entry.playerId),
       position: entry.position,
       value: formatted?.value || undefined,
-      detail: entry.status === "played" ? formatted?.detail : STATUS_TEXT[entry.status],
+      detail:
+        entry.status === "played"
+          ? formatted?.detail
+          : entry.status === "timedOut"
+            ? (challenge.timedOutLabel ?? STATUS_TEXT.timedOut)
+            : STATUS_TEXT[entry.status],
       badge: entry.eliminated ? (
         <Pill variant="primary">Eliminato</Pill>
       ) : game.mode === "score" ? (

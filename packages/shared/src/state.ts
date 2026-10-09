@@ -57,6 +57,8 @@ export interface RoundSnapshot {
   /** Who plays this round (eliminated players watch). */
   players: PlayerId[];
   publicParams: unknown;
+  /** Time to play shown to the players, `null` when it is secret or not started. */
+  playMs: number | null;
   /** Players whose result was received (simultaneous) or who already played a turn. */
   played: PlayerId[];
   /** Hidden timer only: whose turn it is. */
