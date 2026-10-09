@@ -19,6 +19,20 @@ server {
     proxy_read_timeout 1h;
   }
 
+  # Container healthcheck: answered by nginx itself, kept out of the access log.
+  location = /healthz {
+    access_log off;
+    default_type text/plain;
+    return 200 "ok";
+  }
+
+  # No .ico file: answer 404 instead of the game page (the icon is linked in index.html).
+  location = /favicon.ico {
+    access_log off;
+    log_not_found off;
+    return 404;
+  }
+
   # Hashed build files never change.
   location /assets/ {
     expires 1y;

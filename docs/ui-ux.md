@@ -48,6 +48,12 @@ L'app ha **obbligatoriamente** una versione chiara e una scura.
 
 Regola: sopra i colori pieni il testo è sempre scuro (`--color-on-color`), mai bianco, per garantire il contrasto.
 
+### Icona del gioco
+Un **cronometro** in stile Caramella: quadrante giallo, contorno spesso, lancette, pulsante corallo in cima e lo "spessore" sotto come i pulsanti del gioco.
+- Al centro della **home** (`GameIcon`, disegnata con i token del tema: nel tema scuro il contorno è crema).
+- Icona del browser: `packages/client/public/icon.svg`, che cambia contorno da sola se il sistema è in modalità scura.
+- Icona per la schermata Home di iPhone: `public/apple-touch-icon.png` (180×180), generata da `icons/apple-touch-icon.svg` con `npm run icons -w @ttp/client` (macOS).
+
 ### Tipografia
 
 | Uso | Font | Pesi |

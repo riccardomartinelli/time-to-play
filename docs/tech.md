@@ -44,6 +44,8 @@ Variabili d'ambiente:
 - server: `SERVER_PORT` (default 3001), `CLIENT_ORIGIN` (origine ammessa dal CORS, default tutte);
 - client: `SERVER_URL`, indirizzo del server visto da nginx (default `http://server:3001`).
 
+Controlli di salute: il server risponde su `/health`, nginx su `/healthz` (escluso dai log di accesso).
+
 Il client si collega al server sullo **stesso indirizzo** da cui è stato caricato: è nginx a inoltrare le connessioni in tempo reale. Così i telefoni usano un solo indirizzo e non serve configurare il CORS.
 
 `docker-compose.yml` avvia entrambi: il gioco risponde su `http://<host>:8080`. In produzione serve HTTPS davanti al client (proxy o servizio di hosting).

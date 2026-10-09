@@ -18,4 +18,4 @@ ENV SERVER_URL=http://server:3001
 COPY packages/client/docker/default.conf.template /etc/nginx/templates/default.conf.template
 COPY --from=build /app/packages/client/dist /usr/share/nginx/html
 EXPOSE 80
-HEALTHCHECK --interval=15s --timeout=3s CMD wget -qO- http://127.0.0.1/ >/dev/null || exit 1
+HEALTHCHECK --interval=15s --timeout=3s CMD wget -qO- http://127.0.0.1/healthz >/dev/null || exit 1

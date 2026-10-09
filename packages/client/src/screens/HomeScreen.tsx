@@ -2,6 +2,7 @@ import { LOBBY_CODE_LENGTH, NICKNAME_MAX_LENGTH, normalizeNickname } from "@ttp/
 import { useState, type FormEvent } from "react";
 import { Button } from "../components/Button";
 import { CodeInput } from "../components/CodeInput";
+import { GameIcon } from "../components/GameIcon";
 import { Screen } from "../components/Screen";
 import { TextField } from "../components/TextField";
 import { errorMessage } from "../errors";
@@ -63,7 +64,7 @@ export function HomeScreen() {
     return (
       <Screen>
         <div className={styles.hero}>
-          <div className={styles.clock} aria-hidden="true" />
+          <GameIcon className={styles.icon} />
           <h1 className={styles.title}>Time to Play</h1>
           <p className={styles.tagline}>Sfide a tempo tra amici, ognuno dal suo telefono</p>
         </div>

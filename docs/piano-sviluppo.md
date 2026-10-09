@@ -198,7 +198,8 @@ Non sono nelle specifiche: vanno approvate prima di essere realizzate.
 - [x] Immagini Docker di server e client; nginx serve il client e inoltra `/socket.io` al server (un solo indirizzo). Vedi [tech.md](tech.md).
 - [ ] HTTPS davanti al client.
 - [ ] Configurazione di produzione (variabili d'ambiente, log).
-- [ ] Nome definitivo, icona e anteprima per la condivisione del link.
+- [x] Icona del gioco (cronometro): home, scheda del browser, schermata Home di iPhone.
+- [ ] Nome definitivo e anteprima per la condivisione del link.
 - [ ] Prova finale con un gruppo reale sull'indirizzo pubblico.
 
 **Fatto quando**: chiunque apre il link dal telefono e gioca.
