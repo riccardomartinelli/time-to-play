@@ -61,15 +61,16 @@ Principi validi per tutte le fasi:
 ## Fase 3: Server, lobby e connessione
 **Obiettivo**: si crea una lobby, si entra con il codice e si avvia la partita.
 
-- [ ] Archivio in memoria delle lobby.
-- [ ] Generazione del codice di 4 lettere senza collisioni con lobby attive.
-- [ ] Creazione lobby (chi crea è host e ne fa parte subito).
-- [ ] Ingresso con codice e nickname, con errori chiari: codice inesistente, lobby piena, partita già iniziata, nickname già usato.
-- [ ] Configurazione dell'host: modalità e numero di round.
-- [ ] Avvio della partita (solo host, almeno 2 giocatori).
-- [ ] Passaggio del ruolo di host se l'host si disconnette prima dell'avvio.
-- [ ] Identificativo del giocatore e rientro nella lobby dopo una disconnessione.
-- [ ] Test di integrazione con più client Socket.IO simulati.
+- [x] Archivio in memoria delle lobby.
+- [x] Generazione del codice di 4 lettere senza collisioni con lobby attive.
+- [x] Creazione lobby (chi crea è host e ne fa parte subito).
+- [x] Ingresso con codice e nickname, con errori chiari: codice inesistente, lobby piena, partita già iniziata, nickname già usato.
+- [x] Configurazione dell'host: modalità e numero di round.
+- [x] Avvio della partita (solo host, almeno 2 giocatori connessi; i disconnessi restano fuori).
+- [x] Uscita dalla sala d'attesa ("Esci").
+- [x] Passaggio del ruolo di host se l'host si disconnette prima dell'avvio.
+- [x] Identificativo del giocatore e rientro nella lobby dopo una disconnessione.
+- [x] Test di integrazione con più client Socket.IO simulati.
 
 **Fatto quando**: i test simulano una lobby completa con ingresso, uscita, rientro e avvio.
 

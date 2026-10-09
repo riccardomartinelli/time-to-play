@@ -14,6 +14,8 @@ Permettere a più giocatori di ritrovarsi nella stessa partita tramite un codice
 - Giocatori per lobby: **minimo 2, massimo 10**.
 - L'host configura la partita: modalità e, in modalità Punteggio, numero di round (vedi [002](002-modalita-di-gioco.md)).
 - **Solo l'host avvia la partita.**
+- In sala d'attesa c'è un pulsante **"Esci"**: il giocatore lascia la lobby e torna alla home, dove può inserire un altro codice. Se esce l'host, il ruolo passa a un altro giocatore connesso; se esce l'ultimo giocatore, la lobby viene chiusa.
+- Partecipano alla partita **solo i giocatori connessi al momento dell'avvio**. Chi in quel momento è disconnesso viene tolto dalla lobby e, se riapre l'app, torna alla home.
 - Dopo l'avvio **non possono entrare nuovi giocatori**: partecipano solo quelli presenti nella lobby al momento dell'avvio (i rientri dopo una disconnessione restano possibili).
 - Il "matchmaking" consiste **solo** nell'ingresso tramite codice: non esistono partite pubbliche.
 
@@ -33,6 +35,8 @@ Permettere a più giocatori di ritrovarsi nella stessa partita tramite un codice
 - [ ] Inserendo un codice non valido si riceve un errore.
 - [ ] Ogni giocatore ha un nickname visibile agli altri, di 1-12 caratteri e unico nella lobby.
 - [ ] Solo l'host può avviare la partita.
+- [ ] In sala d'attesa "Esci" toglie il giocatore dalla lobby e lo riporta alla home.
+- [ ] Un giocatore disconnesso al momento dell'avvio non partecipa alla partita.
 - [ ] Dopo l'avvio un codice valido non permette l'ingresso di nuovi giocatori.
 - [ ] Se l'host si disconnette prima dell'avvio, un altro giocatore connesso diventa host.
 - [ ] Non si può entrare in una lobby che ha già 10 giocatori.

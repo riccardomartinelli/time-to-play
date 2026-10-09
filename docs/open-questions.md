@@ -6,7 +6,6 @@ Punti ancora da decidere. Quando una domanda viene risolta, spostala nel documen
 - Stop al secondo e Doppio clic: se **nessuno** gioca entro i 10 secondi, tutti sono ultimi a pari merito, cioè tutti primi: con la regola attuale prendono tutti N-1 punti. Va bene, oppure chi va in timeout deve prendere sempre 0 punti?
 
 ## Flusso di gioco
-- In sala d'attesa (prima dell'avvio) c'è un modo per uscire dalla lobby, o anche lì l'unico modo è chiudere la pagina? Un giocatore disconnesso in sala d'attesa partecipa comunque alla partita quando l'host la avvia?
 - Durate di presentazione sfida (3 s), risultati del round (6 s) e classifica (5 s): valori provvisori da regolare provando il gioco.
 
 ## Prima del rilascio

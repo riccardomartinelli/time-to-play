@@ -170,7 +170,7 @@ I tipi sono in `packages/shared/src/events.ts`. Le richieste del client usano l'
 | `lobby:create` | `{ nickname }` | `{ session }` | tutti |
 | `lobby:join` | `{ code, nickname }` | `{ session }` | tutti |
 | `session:resume` | `{ code, playerId, secret }` | `{ ok }` | tutti |
-| `lobby:leave` | | `{ ok }` | in `gameOver` ("Torna alla home") |
+| `lobby:leave` | | `{ ok }` | in `lobby` ("Esci") e in `gameOver` ("Torna alla home") |
 | `lobby:settings` | `{ mode, rounds }` | `{ ok }` | host, in `lobby` |
 | `game:start` | | `{ ok }` | host, in `lobby` |
 | `round:submit` | `{ roundId, submission }` | `{ ok }` | giocatori del round, in `playing` |

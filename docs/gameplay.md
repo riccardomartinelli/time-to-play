@@ -29,6 +29,7 @@ Il sistema deve permettere di aggiungere nuove sfide in futuro. I nomi sono prov
 | 3 | **Timer nascosto** | A turno aggiungere tempo a un totale condiviso senza superare un limite segreto | [005](specs/005-sfida-timer-nascosto.md) |
 
 ## Uscita
+- In sala d'attesa un pulsante **"Esci"** riporta alla home, per entrare eventualmente in un'altra lobby.
 - Durante la partita **non esiste un pulsante per uscire**: l'unico modo è chiudere la pagina, che equivale a una disconnessione (vedi [specs/001](specs/001-lobby-e-matchmaking.md)).
 - A fine partita, dopo la schermata del vincitore, un pulsante **"Torna alla home"** riporta alla pagina principale e chiude la sessione su quel dispositivo.
 
