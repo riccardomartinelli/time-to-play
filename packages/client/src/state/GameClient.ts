@@ -88,6 +88,13 @@ export class GameClient {
     return this.request<object>((ack) => this.socket.emit("game:start", ack));
   }
 
+  /** Sends this player's result for the round being played. */
+  submit(roundId: string, submission: unknown): Promise<ClientResult> {
+    return this.request<object>((ack) =>
+      this.socket.emit("round:submit", { roundId, submission }, ack),
+    );
+  }
+
   private async resume(): Promise<void> {
     const session = loadSession();
     if (!session) {

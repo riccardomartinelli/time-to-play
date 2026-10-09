@@ -1,6 +1,6 @@
 import { createServer, type Server as HttpServer } from "node:http";
 import type { AddressInfo } from "node:net";
-import { mathRandom, type Random } from "@ttp/shared";
+import { ENABLED_CHALLENGES, mathRandom, type ChallengeId, type Random } from "@ttp/shared";
 import { Server } from "socket.io";
 import { DEFAULT_TIMINGS, type Timings } from "./game/timings.js";
 import { cryptoIds, type IdGenerator } from "./lobby/ids.js";
@@ -11,6 +11,7 @@ export interface GameServerOptions {
   rng?: Random;
   ids?: IdGenerator;
   timings?: Partial<Timings>;
+  challenges?: readonly ChallengeId[];
   corsOrigin?: string | boolean;
   log?: (...args: unknown[]) => void;
 }
@@ -37,6 +38,7 @@ export function createGameServer(options: GameServerOptions = {}): GameServer {
     rng: options.rng ?? mathRandom,
     ids: options.ids ?? cryptoIds,
     timings: { ...DEFAULT_TIMINGS, ...options.timings },
+    challenges: options.challenges ?? ENABLED_CHALLENGES,
   });
   registerHandlers(io, store, options.log ?? console.error);
 

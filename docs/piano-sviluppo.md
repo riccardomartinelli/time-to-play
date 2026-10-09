@@ -124,11 +124,11 @@ Principi validi per tutte le fasi:
 ## Fase 7: Prima partita giocabile 🎯
 **Obiettivo**: una partita vera, dall'inizio alla fine, con una sola sfida.
 
-- [ ] Sfida **Stop al secondo** completa (schermata, misurazione, invio risultato).
-- [ ] Modalità **Punteggio**.
-- [ ] Schermata risultati del round (tempi di tutti, posizioni, punti guadagnati).
-- [ ] Classifica generale tra un round e l'altro.
-- [ ] Schermata di fine partita con vincitore o vincitori.
+- [x] Sfida **Stop al secondo** completa (schermata, misurazione, invio risultato).
+- [x] Modalità **Punteggio**.
+- [x] Schermata risultati del round (tempi di tutti, posizioni, punti guadagnati).
+- [x] Classifica generale tra un round e l'altro.
+- [x] Schermata di fine partita con vincitore o vincitori.
 - [ ] Prova reale su almeno 2 telefoni.
 
 **Fatto quando**: un gruppo gioca una partita completa senza aiuti.
@@ -137,7 +137,7 @@ Principi validi per tutte le fasi:
 
 ## Fase 8: Sfida Doppio clic
 - [ ] Schermata e misurazione tra primo e secondo rilascio.
-- [ ] Inserimento nell'estrazione casuale.
+- [ ] Inserimento nell'estrazione casuale (`ENABLED_CHALLENGES` in `packages/shared/src/rules.ts`).
 - [ ] Prova reale.
 
 ## Fase 9: Sfida Timer nascosto

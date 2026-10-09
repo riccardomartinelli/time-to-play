@@ -19,6 +19,7 @@ beforeEach(async () => {
   server = createGameServer({
     rng: seededRandom(1),
     log: () => {},
+    challenges: ["stop-the-clock", "double-click", "hidden-timer"],
     timings: { introMs: 20, countdownMs: 20, roundResultsMs: 50, standingsMs: 50 },
   });
   url = `http://localhost:${await server.listen(0)}`;

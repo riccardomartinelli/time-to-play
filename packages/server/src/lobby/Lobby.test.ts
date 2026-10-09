@@ -12,6 +12,7 @@ function lobbyWith(...nicknames: string[]): Lobby {
     ids: sequentialIds(),
     rng: seededRandom(1),
     timings: DEFAULT_TIMINGS,
+    challenges: ["stop-the-clock"],
   });
   for (const nickname of nicknames) {
     const joined = lobby.join(nickname);

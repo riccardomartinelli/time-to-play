@@ -1,0 +1,22 @@
+import { describe, expect, it } from "vitest";
+import { formatDifference, formatSeconds, secondsLeft } from "./format";
+
+describe("format", () => {
+  it("shows seconds with a decimal comma", () => {
+    expect(formatSeconds(2700)).toBe("2,700 s");
+    expect(formatSeconds(2700, 1)).toBe("2,7 s");
+    expect(formatSeconds(12_345)).toBe("12,345 s");
+  });
+
+  it("shows signed differences", () => {
+    expect(formatDifference(50)).toBe("+0,050 s");
+    expect(formatDifference(-120)).toBe("−0,120 s");
+    expect(formatDifference(0)).toBe("±0,000 s");
+  });
+
+  it("rounds the seconds left up", () => {
+    expect(secondsLeft(2100)).toBe(3);
+    expect(secondsLeft(3000)).toBe(3);
+    expect(secondsLeft(-5)).toBe(0);
+  });
+});

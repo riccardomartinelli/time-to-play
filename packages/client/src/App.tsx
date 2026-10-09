@@ -1,6 +1,7 @@
 import { ConnectionBanner } from "./components/ConnectionBanner";
 import { Screen } from "./components/Screen";
 import { Gallery } from "./screens/Gallery";
+import { GameScreen } from "./screens/game/GameScreen";
 import { HomeScreen } from "./screens/HomeScreen";
 import { LobbyScreen } from "./screens/LobbyScreen";
 import { useClientState } from "./state/GameClientContext";
@@ -19,13 +20,7 @@ function CurrentScreen() {
   }
   if (!snapshot) return <HomeScreen />;
   if (snapshot.phase === "lobby") return <LobbyScreen snapshot={snapshot} />;
-  // Game screens arrive with phase 7 (docs/piano-sviluppo.md).
-  return (
-    <Screen centered showThemeToggle={false}>
-      <h1>Si parte!</h1>
-      <p>La partita sta per iniziare.</p>
-    </Screen>
-  );
+  return <GameScreen snapshot={snapshot} />;
 }
 
 export function App() {

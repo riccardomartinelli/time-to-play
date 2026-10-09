@@ -1,0 +1,26 @@
+import { rankResults, type LobbySnapshot, type PlayerId } from "@ttp/shared";
+
+export function nicknameOf(snapshot: LobbySnapshot, playerId: PlayerId): string {
+  return snapshot.players.find((player) => player.id === playerId)?.nickname ?? "Giocatore";
+}
+
+export function isConnected(snapshot: LobbySnapshot, playerId: PlayerId): boolean {
+  return snapshot.players.find((player) => player.id === playerId)?.connected ?? false;
+}
+
+/** Overall standings by score, ties sharing the position. */
+export function scoreStandings(snapshot: LobbySnapshot) {
+  const game = snapshot.game!;
+  const scores = new Map(game.participants.map((id) => [id, game.scores[id] ?? 0]));
+  return rankResults(scores, (a, b) => b - a).map((entry) => ({
+    ...entry,
+    score: scores.get(entry.playerId) ?? 0,
+  }));
+}
+
+export function roundLabel(snapshot: LobbySnapshot): string {
+  const game = snapshot.game!;
+  return game.totalRounds
+    ? `Round ${game.roundNumber} di ${game.totalRounds}`
+    : `Round ${game.roundNumber}`;
+}

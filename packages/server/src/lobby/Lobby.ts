@@ -5,6 +5,7 @@ import {
   isValidSettings,
   normalizeNickname,
   validateNickname,
+  type ChallengeId,
   type GamePhase,
   type GameSettings,
   type LobbySnapshot,
@@ -28,6 +29,7 @@ export interface LobbyDeps {
   ids: IdGenerator;
   rng: Random;
   timings: Timings;
+  challenges: readonly ChallengeId[];
 }
 
 /** A lobby and its players, independent from the network layer. See docs/specs/001. */
@@ -132,6 +134,7 @@ export class Lobby {
       settings: this.settings,
       rng: this.deps.rng,
       timings: this.deps.timings,
+      challenges: this.deps.challenges,
       isConnected: (id) => this.players.get(id)?.connected ?? false,
       onChange: () => this.onChange(),
     });

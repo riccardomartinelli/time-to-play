@@ -214,7 +214,7 @@ interface SimultaneousChallenge<Params, Submission, Result> {
 - Tutte le durate ricevute dal client sono arrotondate al **millisecondo**: due risultati uguali al millisecondo sono un pareggio.
 - Nel client ogni sfida ha un componente che riceve `publicParams`, gestisce il pulsante e invia `submission`.
 
-Aggiungere una sfida significa: una cartella in `shared/src/challenges/`, una in `client/src/challenges/`, e una riga nei due registri.
+Aggiungere una sfida significa: la logica in `shared/src/challenges/`, l'interfaccia in `client/src/challenges/` (registro `registry.ts`), e l'inserimento in `ENABLED_CHALLENGES` (`shared/src/rules.ts`), l'elenco delle sfide che il server estrae davvero: una sfida entra lì solo quando le sue schermate sono pronte.
 
 ## Risultato di un round
 
