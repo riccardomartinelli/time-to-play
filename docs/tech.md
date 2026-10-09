@@ -32,5 +32,23 @@ Dettaglio completo in [architecture.md](architecture.md).
 ## Sicurezza
 - **Anti-cheat fuori scope**: i giocatori sono fisicamente nella stessa stanza, quindi il server si fida dei tempi inviati dai client.
 
+## Deploy con Docker
+Due immagini, entrambe costruite dalla radice del repository:
+
+| Immagine | Dockerfile | Contenuto | Porta |
+|----------|------------|-----------|-------|
+| `time-to-play-server` | `packages/server/Dockerfile` | Server Node.js compilato, solo dipendenze di produzione, utente non root | 3001 |
+| `time-to-play-client` | `packages/client/Dockerfile` | Pagine statiche servite da nginx, che inoltra `/socket.io/` al server | 80 |
+
+Variabili d'ambiente:
+- server: `SERVER_PORT` (default 3001), `CLIENT_ORIGIN` (origine ammessa dal CORS, default tutte);
+- client: `SERVER_URL`, indirizzo del server visto da nginx (default `http://server:3001`).
+
+Il client si collega al server sullo **stesso indirizzo** da cui è stato caricato: è nginx a inoltrare le connessioni in tempo reale. Così i telefoni usano un solo indirizzo e non serve configurare il CORS.
+
+`docker-compose.yml` avvia entrambi: il gioco risponde su `http://<host>:8080`. In produzione serve HTTPS davanti al client (proxy o servizio di hosting).
+
+Lo stato delle partite è in memoria: usare **una sola istanza** del server (più istanze non condividerebbero le lobby).
+
 ## Persistenza / backend
 - Lo stato di lobby e partite è tenuto **solo in memoria** sul server, senza database. Un riavvio del server fa perdere le partite in corso: accettato per un party game.

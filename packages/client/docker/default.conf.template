@@ -1,0 +1,32 @@
+# ${SERVER_URL} is filled in when the container starts (nginx envsubst templates).
+server {
+  listen 80;
+  server_name _;
+  root /usr/share/nginx/html;
+
+  gzip on;
+  gzip_types text/css application/javascript application/json image/svg+xml;
+
+  # Real-time connection to the game server: same origin for the phones.
+  location /socket.io/ {
+    proxy_pass ${SERVER_URL};
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_read_timeout 1h;
+  }
+
+  # Hashed build files never change.
+  location /assets/ {
+    expires 1y;
+    add_header Cache-Control "public, immutable";
+  }
+
+  location / {
+    try_files $uri /index.html;
+    add_header Cache-Control "no-cache";
+  }
+}

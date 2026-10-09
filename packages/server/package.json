@@ -10,10 +10,10 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@ttp/shared": "*",
     "socket.io": "^4.8.1"
   },
   "devDependencies": {
+    "@ttp/shared": "*",
     "@types/node": "^20.17.0",
     "socket.io-client": "^4.8.4",
     "tsup": "^8.5.0",
