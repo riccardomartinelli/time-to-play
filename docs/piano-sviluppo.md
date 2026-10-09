@@ -111,11 +111,11 @@ Principi validi per tutte le fasi:
 ## Fase 6: Motore dei round (server)
 **Obiettivo**: il server conduce la partita round dopo round.
 
-- [ ] Macchina a stati della partita (fase 1) con timer lato server per ogni fase.
-- [ ] Estrazione della sfida, conto alla rovescia di 3 s, finestra di gioco (10 s, o turni da 30 s nel Timer nascosto).
-- [ ] Raccolta dei risultati, chiusura anticipata del round quando tutti hanno giocato.
-- [ ] Calcolo di classifica, punti ed eliminazioni usando la logica della fase 2.
-- [ ] Invio a tutti di risultati, classifica e fine partita.
+- [x] Macchina a stati della partita (fase 1) con timer lato server per ogni fase.
+- [x] Estrazione della sfida, conto alla rovescia di 3 s, finestra di gioco (10 s, o turni da 30 s nel Timer nascosto).
+- [x] Raccolta dei risultati, chiusura anticipata del round quando tutti hanno giocato.
+- [x] Calcolo di classifica, punti ed eliminazioni usando la logica della fase 2.
+- [x] Invio a tutti di risultati, classifica e fine partita.
 
 **Fatto quando**: i test simulano una partita intera con client finti.
 

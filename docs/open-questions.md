@@ -6,7 +6,6 @@ Punti ancora da decidere. Quando una domanda viene risolta, spostala nel documen
 - Stop al secondo e Doppio clic: se **nessuno** gioca entro i 10 secondi, tutti sono ultimi a pari merito, cioè tutti primi: con la regola attuale prendono tutti N-1 punti. Va bene, oppure chi va in timeout deve prendere sempre 0 punti?
 
 ## Flusso di gioco
-- Host in sala d'attesa: oggi il ruolo passa a un altro giocatore appena l'host si disconnette, anche solo per aver ricaricato la pagina o bloccato il telefono un attimo. Proposta: passare il ruolo solo se l'host resta disconnesso per più di 10 secondi.
 - Durate di presentazione sfida (3 s), risultati del round (6 s) e classifica (5 s): valori provvisori da regolare provando il gioco.
 
 ## Prima del rilascio

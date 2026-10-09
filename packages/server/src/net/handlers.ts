@@ -61,6 +61,8 @@ export function registerHandlers(io: GameIo, store: LobbyStore, log: (...args: u
     return { code: lobby.code, playerId: player.id, secret: player.secret };
   }
 
+  store.onLobbyChange = broadcast;
+
   io.on("connection", (socket) => {
     // Payloads are untrusted, so handlers receive `unknown` arguments and validate them.
     // An exception in a handler is logged and never brings the server down.
@@ -152,9 +154,16 @@ export function registerHandlers(io: GameIo, store: LobbyStore, log: (...args: u
       const current = currentLobby(socket);
       if (!current) return ack(fail("SESSION_INVALID"));
       const started = current.lobby.start(current.playerId);
-      if (!started.ok) return ack(started);
-      ack({ ok: true });
-      broadcast(current.lobby);
+      // On success the game engine already sent the new state.
+      ack(started.ok ? { ok: true } : started);
+    });
+
+    on("round:submit", (payload, ack) => {
+      if (typeof ack !== "function") return;
+      const current = currentLobby(socket);
+      if (!current) return ack(fail("SESSION_INVALID"));
+      if (!isObject(payload)) return ack(fail("INVALID_SUBMISSION"));
+      ack(current.lobby.submit(current.playerId, payload.roundId, payload.submission));
     });
 
     socket.on("disconnect", () => {

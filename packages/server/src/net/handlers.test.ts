@@ -16,7 +16,11 @@ let url: string;
 const clients: Client[] = [];
 
 beforeEach(async () => {
-  server = createGameServer({ rng: seededRandom(1), log: () => {} });
+  server = createGameServer({
+    rng: seededRandom(1),
+    log: () => {},
+    timings: { introMs: 20, countdownMs: 20, roundResultsMs: 50, standingsMs: 50 },
+  });
   url = `http://localhost:${await server.listen(0)}`;
 });
 
@@ -185,5 +189,49 @@ describe("lobby over Socket.IO", () => {
     await join(guest, firstCode, "Anna");
     await guest.emitWithAck("lobby:leave");
     await expect(join(guest, secondCode, "Anna")).resolves.toMatchObject({ code: secondCode });
+  });
+
+  it("plays a round: results go to everybody, late submissions are refused", async () => {
+    const host = await client();
+    const { code } = await create(host, "Giulia");
+    const guest = await client();
+    await join(guest, code, "Marco");
+
+    const playing = nextState(host, (s) => s.phase === "playing");
+    await host.emitWithAck("game:start");
+    const { game } = await playing;
+    const round = game!.round!;
+
+    const submission =
+      round.challenge === "stop-the-clock"
+        ? { durationMs: 1_000 }
+        : round.challenge === "double-click"
+          ? { intervalMs: 150 }
+          : { durationMs: 100 };
+
+    const finished = nextState(guest, (s) => s.phase === "roundResults");
+    if (round.challenge === "hidden-timer") {
+      // Turn-based: whoever is first plays a duration that surely exceeds the limit.
+      const first = round.turn!.playerId === (await playing).you ? host : guest;
+      expect(
+        await first.emitWithAck("round:submit", {
+          roundId: round.id,
+          submission: { durationMs: 20_000 },
+        }),
+      ).toEqual({ ok: true });
+    } else {
+      expect(await host.emitWithAck("round:submit", { roundId: round.id, submission })).toEqual({
+        ok: true,
+      });
+      expect(await guest.emitWithAck("round:submit", { roundId: round.id, submission })).toEqual({
+        ok: true,
+      });
+    }
+    const results = (await finished).game!.round!.results!;
+    expect(results.entries).toHaveLength(2);
+    expect(await host.emitWithAck("round:submit", { roundId: round.id, submission })).toEqual({
+      ok: false,
+      error: "WRONG_PHASE",
+    });
   });
 });

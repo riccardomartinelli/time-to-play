@@ -1,9 +1,18 @@
-import { describe, expect, it } from "vitest";
+import { seededRandom } from "@ttp/shared";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { DEFAULT_TIMINGS } from "../game/timings.js";
 import { Lobby } from "./Lobby.js";
 import { sequentialIds } from "./testIds.js";
 
+beforeEach(() => vi.useFakeTimers());
+afterEach(() => vi.useRealTimers());
+
 function lobbyWith(...nicknames: string[]): Lobby {
-  const lobby = new Lobby("ABCD", sequentialIds());
+  const lobby = new Lobby("ABCD", {
+    ids: sequentialIds(),
+    rng: seededRandom(1),
+    timings: DEFAULT_TIMINGS,
+  });
   for (const nickname of nicknames) {
     const joined = lobby.join(nickname);
     if (!joined.ok) throw new Error(joined.error);
@@ -82,7 +91,7 @@ describe("Lobby", () => {
       const lobby = lobbyWith("Giulia", "Marco", "Anna");
       lobby.disconnect("p3", "socket-p3");
       expect(lobby.start("p1")).toEqual({ ok: true, removed: ["p3"] });
-      expect(lobby.game).toEqual({ participants: ["p1", "p2"], initialPlayerCount: 2 });
+      expect(lobby.engine?.snapshot().participants).toEqual(["p1", "p2"]);
       expect(lobby.players.has("p3")).toBe(false);
       expect(lobby.phase).toBe("intro");
     });

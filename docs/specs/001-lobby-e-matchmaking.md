@@ -23,6 +23,7 @@ Permettere a più giocatori di ritrovarsi nella stessa partita tramite un codice
 - Un giocatore che perde la connessione può **rientrare** nella partita e ritrova il proprio punteggio.
 - L'host disconnesso è trattato come qualsiasi altro giocatore: può rientrare allo stesso modo.
 - Se l'host si disconnette **prima dell'avvio**, il ruolo di host **passa a un altro giocatore** connesso, così la partita può comunque partire.
+  Il passaggio è immediato, anche per una disconnessione breve (es. pagina ricaricata): non è un problema perché tutti i giocatori restano comunque nella lobby.
 - Un giocatore che non rientra **non viene mai rimosso**: resta in partita e prende 0 punti nei round a cui non partecipa.
 - **Rientro automatico**: il dispositivo ricorda il **codice dell'ultima lobby** (insieme a un identificativo del giocatore ricevuto dal server). Riaprendo il gioco, il giocatore viene riportato in quella lobby senza reinserire codice e nickname (vedi [decisions/004](../decisions/004-socket-io.md)).
 - **La partita non si ferma**: mentre un giocatore è disconnesso gli altri continuano a giocare.

@@ -3,6 +3,7 @@ import { seededRandom } from "../random.js";
 import {
   applyHiddenTimerTimeout,
   applyHiddenTimerTurn,
+  skipCurrentTurn,
   createHiddenTimerParams,
   hiddenTimerOutcome,
   initialHiddenTimerState,
@@ -73,6 +74,14 @@ describe("hidden timer", () => {
     const state = applyHiddenTimerTimeout(started);
     expect(state.loser).toEqual({ playerId: "a", reason: "timeout" });
     expect(state.finished).toBe(true);
+  });
+
+  it("skips the current player when they disconnect during their turn", () => {
+    const started = startNextTurn(params, initialHiddenTimerState(), everybody);
+    const skipped = skipCurrentTurn(started);
+    expect(skipped.current).toBeNull();
+    expect(skipped.skipped).toEqual(["a"]);
+    expect(startNextTurn(params, skipped, (id) => id !== "a").current).toBe("b");
   });
 
   it("ignores turns from the wrong player", () => {

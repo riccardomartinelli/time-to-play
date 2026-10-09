@@ -20,6 +20,7 @@ A turno, aggiungere tempo a un totale condiviso senza superare un limite che nes
 - Un giocatore saltato perché disconnesso che **rientra** in tempo per un giro successivo gioca normalmente: se non sfora è tra i vincitori.
 - Chi sfora è sempre ultimo, anche se gli altri giocatori sono tutti disconnessi. In Eliminazione, se in finale un giocatore è disconnesso e l'altro sfora, escono entrambi e quindi il round viene ripetuto.
 - Se nessun giocatore è connesso, il round termina senza perdenti e senza risultati.
+- Se il giocatore di turno si disconnette **durante** il proprio turno, il turno viene saltato subito come per un disconnesso.
 
 ## Classifica del round
 - Il giocatore che sfora è **ultimo**.

@@ -42,7 +42,7 @@ packages/
     lobby/LobbyStore.ts tutte le lobby in memoria, generazione codici
     lobby/Lobby.ts      giocatori, host, impostazioni, sessioni
     game/GameEngine.ts  macchina a stati della partita
-    game/clock.ts       orologio e timer iniettabili (per i test)
+    game/timings.ts     durate delle fasi (più brevi nei test)
     snapshot.ts         proiezione dello stato per ciascun giocatore
   client/src/
     net/                socket, sessione salvata, sincronizzazione orologio
@@ -130,7 +130,7 @@ Ogni cambio di fase invia uno snapshot con `phase` e `phaseEndsAt`.
 ### Timer nascosto dentro `playing`
 Nel Timer nascosto la fase `playing` contiene una sottosequenza di **turni**:
 - lo snapshot indica `currentTurn: { playerId, endsAt }`;
-- i giocatori disconnessi vengono saltati subito;
+- i giocatori disconnessi vengono saltati subito, anche se si disconnettono durante il proprio turno;
 - quando il giocatore di turno invia la sua durata, il server la somma al totale: se supera il limite il round finisce, altrimenti passa al successivo (ricominciando il giro se necessario);
 - se il turno scade (30 s) il giocatore perde e il round finisce.
 
@@ -250,7 +250,7 @@ interface GameModeDefinition {
 ## Testabilità
 
 - Le funzioni di `shared` sono pure: input → output, testate con Vitest.
-- Il `GameEngine` riceve **orologio** e **generatore casuale** dall'esterno: nei test si usano timer finti (`vi.useFakeTimers`) e un generatore con seme fisso, così una partita intera si simula in pochi millisecondi.
+- Il `GameEngine` riceve dall'esterno **durate delle fasi**, **generatore casuale** ed eventualmente l'elenco delle **sfide** da estrarre: nei test si usano timer finti (`vi.useFakeTimers`), un generatore con seme fisso e una sfida scelta, così una partita intera si simula in pochi millisecondi.
 - I test di integrazione avviano il server su una porta libera e collegano più client Socket.IO.
 
 ## Gestione degli errori

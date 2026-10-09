@@ -118,6 +118,15 @@ export function applyHiddenTimerTurn(
   };
 }
 
+/** The player whose turn it is disconnected: their turn is skipped like any disconnected player. */
+export function skipCurrentTurn(state: HiddenTimerState): HiddenTimerState {
+  if (state.finished || state.current === null) return state;
+  const skipped = state.skipped.includes(state.current)
+    ? state.skipped
+    : [...state.skipped, state.current];
+  return { ...state, skipped, current: null };
+}
+
 /** The player whose turn it is did not play within the turn time limit: they lose. */
 export function applyHiddenTimerTimeout(state: HiddenTimerState): HiddenTimerState {
   if (state.finished || state.current === null) return state;

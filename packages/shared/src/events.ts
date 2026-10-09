@@ -24,4 +24,6 @@ export interface ClientToServerEvents {
   "lobby:leave": (ack: Ack) => void;
   "lobby:settings": (payload: GameSettings, ack: Ack) => void;
   "game:start": (ack: Ack) => void;
+  /** `submission` is challenge specific, e.g. `{ durationMs }` or `{ intervalMs }`. */
+  "round:submit": (payload: { roundId: string; submission: unknown }, ack: Ack) => void;
 }

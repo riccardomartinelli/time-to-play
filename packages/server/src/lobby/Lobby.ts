@@ -9,8 +9,11 @@ import {
   type GameSettings,
   type LobbySnapshot,
   type PlayerId,
+  type Random,
   type Result,
 } from "@ttp/shared";
+import { GameEngine } from "../game/GameEngine.js";
+import type { Timings } from "../game/timings.js";
 import type { IdGenerator } from "./ids.js";
 
 export interface Player {
@@ -21,9 +24,10 @@ export interface Player {
   socketId: string | null;
 }
 
-export interface Game {
-  participants: PlayerId[];
-  initialPlayerCount: number;
+export interface LobbyDeps {
+  ids: IdGenerator;
+  rng: Random;
+  timings: Timings;
 }
 
 /** A lobby and its players, independent from the network layer. See docs/specs/001. */
@@ -31,14 +35,18 @@ export class Lobby {
   readonly players = new Map<PlayerId, Player>();
   hostId: PlayerId = "";
   settings: GameSettings = { ...DEFAULT_SETTINGS };
-  phase: GamePhase = "lobby";
-  phaseEndsAt: number | null = null;
-  game: Game | null = null;
+  engine: GameEngine | null = null;
+  /** Called when the game changes on its own (timers), to send the new state. */
+  onChange: () => void = () => {};
 
   constructor(
     readonly code: string,
-    private readonly ids: IdGenerator,
+    private readonly deps: LobbyDeps,
   ) {}
+
+  get phase(): GamePhase {
+    return this.engine?.phase ?? "lobby";
+  }
 
   get isEmpty(): boolean {
     return this.players.size === 0;
@@ -53,8 +61,8 @@ export class Lobby {
     if (error) return { ok: false, error };
 
     const player: Player = {
-      id: this.ids.playerId(),
-      secret: this.ids.secret(),
+      id: this.deps.ids.playerId(),
+      secret: this.deps.ids.secret(),
       nickname,
       connected: false,
       socketId: null,
@@ -86,6 +94,7 @@ export class Lobby {
     player.connected = false;
     player.socketId = null;
     if (this.phase === "lobby" && playerId === this.hostId) this.reassignHost();
+    this.engine?.playerDisconnected(playerId);
     return true;
   }
 
@@ -118,9 +127,15 @@ export class Lobby {
       .map((player) => player.id);
     for (const id of removed) this.players.delete(id);
 
-    const participants = connected.map((player) => player.id);
-    this.game = { participants, initialPlayerCount: participants.length };
-    this.phase = "intro";
+    this.engine = new GameEngine({
+      participants: connected.map((player) => player.id),
+      settings: this.settings,
+      rng: this.deps.rng,
+      timings: this.deps.timings,
+      isConnected: (id) => this.players.get(id)?.connected ?? false,
+      onChange: () => this.onChange(),
+    });
+    this.engine.start();
     return { ok: true, removed };
   }
 
@@ -137,9 +152,18 @@ export class Lobby {
       })),
       settings: { ...this.settings },
       phase: this.phase,
-      phaseEndsAt: this.phaseEndsAt,
-      game: this.game ? { participants: [...this.game.participants] } : null,
+      phaseEndsAt: this.engine?.phaseEndsAt ?? null,
+      game: this.engine?.snapshot() ?? null,
     };
+  }
+
+  submit(playerId: PlayerId, roundId: unknown, submission: unknown): Result {
+    if (!this.engine) return { ok: false, error: "WRONG_PHASE" };
+    return this.engine.submit(playerId, roundId, submission);
+  }
+
+  dispose(): void {
+    this.engine?.dispose();
   }
 
   /** The earliest joined connected player becomes host, or the earliest joined if none is. */
