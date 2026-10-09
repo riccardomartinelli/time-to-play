@@ -57,6 +57,8 @@ Le costanti in `packages/shared/src/rules.ts` devono restare allineate alle spec
 
 Prima di ogni commit `npm run check` deve passare.
 
+In sviluppo, `http://localhost:5173/?gallery` mostra tutti i componenti del client: usarla per verificarli in tema chiaro e scuro e a misura di telefono.
+
 Stile "Caramella" con tema chiaro e scuro obbligatorio (vedi `docs/ui-ux.md`): usare solo i token CSS di `packages/client/src/styles/theme.css`, mai colori scritti a mano, e verificare ogni schermata in entrambi i temi.
 
 La logica delle regole (punti, pareggi, eliminazioni) va scritta come funzioni pure in `shared` e coperta da test.

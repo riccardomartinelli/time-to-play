@@ -71,6 +71,8 @@ body {
   font-family: var(--font-body);
   font-weight: 500;
   -webkit-tap-highlight-color: transparent;
+  /* No double-tap zoom: taps must react immediately. */
+  touch-action: manipulation;
 }
 
 h1,
@@ -78,6 +80,16 @@ h2,
 h3 {
   font-family: var(--font-display);
   font-weight: 700;
+  margin: 0;
+  line-height: 1.15;
+}
+
+h1 {
+  font-size: 32px;
+}
+
+h2 {
+  font-size: 22px;
 }
 
 /* Timers must not jitter while digits change. */

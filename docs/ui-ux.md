@@ -29,6 +29,7 @@ Stile cartoon, chiaro e giocoso: colori pieni, **contorni spessi**, forme arroto
 L'app ha **obbligatoriamente** una versione chiara e una scura.
 - Di default segue l'impostazione del sistema operativo.
 - Il giocatore può forzare Chiaro o Scuro; la scelta è salvata sul dispositivo.
+- La scelta del tema (Auto, Chiaro, Scuro) è in alto a destra in tutte le schermate, tranne durante il gioco per lasciare lo schermo pulito.
 - Nel tema scuro i contorni diventano color crema e i colori sono leggermente più chiari, per mantenere lo stesso carattere.
 
 ### Palette

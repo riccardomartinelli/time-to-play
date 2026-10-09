@@ -1,0 +1,31 @@
+.group {
+  display: inline-flex;
+  border: var(--outline-width) solid var(--color-outline);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  background: var(--color-surface);
+}
+
+.option {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 14px;
+  min-height: 36px;
+  padding: 4px 12px;
+  cursor: pointer;
+}
+
+.option[aria-pressed="true"] {
+  background: var(--color-secondary);
+  color: var(--color-on-color);
+  font-weight: 700;
+}
+
+.option:focus-visible {
+  outline: 3px solid var(--color-secondary);
+  outline-offset: -3px;
+}

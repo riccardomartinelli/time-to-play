@@ -1,50 +1,24 @@
-import { useEffect, useState } from "react";
-import { MAX_PLAYERS, MIN_PLAYERS } from "@ttp/shared";
-import { socket } from "./socket";
-import { applyThemePreference, readThemePreference, type ThemePreference } from "./theme";
+import { ConnectionBanner } from "./components/ConnectionBanner";
+import { Screen } from "./components/Screen";
+import { Gallery } from "./screens/Gallery";
+import { useClientState } from "./state/GameClientContext";
 
-const THEME_LABELS: Record<ThemePreference, string> = {
-  system: "Automatico",
-  light: "Chiaro",
-  dark: "Scuro",
-};
+const showGallery = import.meta.env.DEV && new URLSearchParams(location.search).has("gallery");
 
 export function App() {
-  const [connected, setConnected] = useState(socket.connected);
-  const [theme, setTheme] = useState(readThemePreference);
+  const { connection, resuming, snapshot } = useClientState();
+  if (showGallery) return <Gallery />;
 
-  useEffect(() => {
-    const onConnect = () => setConnected(true);
-    const onDisconnect = () => setConnected(false);
-    socket.on("connect", onConnect);
-    socket.on("disconnect", onDisconnect);
-    return () => {
-      socket.off("connect", onConnect);
-      socket.off("disconnect", onDisconnect);
-    };
-  }, []);
-
-  const chooseTheme = (next: ThemePreference) => {
-    applyThemePreference(next);
-    setTheme(next);
-  };
+  // Screens for each phase arrive in the next development phases (docs/piano-sviluppo.md).
+  let content;
+  if (resuming) content = <p>Rientro nella partita...</p>;
+  else if (!snapshot) content = <h1>Time to Play</h1>;
+  else content = <p className="numeric">Lobby {snapshot.code}</p>;
 
   return (
-    <main style={{ padding: 16 }}>
-      <h1>Time to Play</h1>
-      <p>
-        Da <span className="numeric">{MIN_PLAYERS}</span> a{" "}
-        <span className="numeric">{MAX_PLAYERS}</span> giocatori.
-      </p>
-      <p>Server: {connected ? "connesso" : "non connesso"}</p>
-      <p>
-        Tema:{" "}
-        {(Object.keys(THEME_LABELS) as ThemePreference[]).map((option) => (
-          <button key={option} onClick={() => chooseTheme(option)} disabled={option === theme}>
-            {THEME_LABELS[option]}
-          </button>
-        ))}
-      </p>
-    </main>
+    <>
+      <ConnectionBanner status={connection} />
+      <Screen centered>{content}</Screen>
+    </>
   );
 }

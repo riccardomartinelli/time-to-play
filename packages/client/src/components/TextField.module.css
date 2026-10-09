@@ -1,0 +1,35 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.input {
+  min-height: 52px;
+  padding: 10px 16px;
+  border: var(--outline-width-strong) solid var(--color-outline);
+  border-radius: 16px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-weight: 700;
+  /* 16px or more prevents iOS from zooming into the field. */
+  font-size: 18px;
+}
+
+.input:focus-visible {
+  outline: 3px solid var(--color-secondary);
+  outline-offset: 2px;
+}
+
+.error {
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 14px;
+}

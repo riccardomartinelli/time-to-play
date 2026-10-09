@@ -1,0 +1,50 @@
+.button {
+  appearance: none;
+  min-height: 52px;
+  padding: 10px 22px;
+  border: var(--outline-width-strong) solid var(--color-outline);
+  border-bottom-width: var(--press-depth);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--color-on-color);
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  transition:
+    transform 80ms ease-out,
+    border-bottom-width 80ms ease-out;
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(calc(var(--press-depth) - var(--outline-width-strong)));
+  border-bottom-width: var(--outline-width-strong);
+}
+
+.button:focus-visible {
+  outline: 3px solid var(--color-secondary);
+  outline-offset: 3px;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.primary {
+  background: var(--color-primary);
+}
+
+.secondary {
+  background: var(--color-secondary);
+}
+
+.neutral {
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.block {
+  width: 100%;
+}

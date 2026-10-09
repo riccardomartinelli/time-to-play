@@ -79,16 +79,16 @@ Principi validi per tutte le fasi:
 ## Fase 4: Base del client
 **Obiettivo**: i mattoni dell'interfaccia, pronti per tutte le schermate.
 
-- [ ] Gestione delle schermate guidata dallo stato inviato dal server (niente navigazione manuale fra le schermate di gioco).
-- [ ] Componenti Caramella: pulsante "tasto fisico", pulsante di gioco grande, pill, card, campo di testo, campo per il codice a 4 lettere, classifica.
-- [ ] **Pulsante di gioco affidabile su telefono**:
+- [x] Gestione delle schermate guidata dallo stato inviato dal server (niente navigazione manuale fra le schermate di gioco).
+- [x] Componenti Caramella: pulsante "tasto fisico", pulsante di gioco grande, pill, card, campo di testo, campo per il codice a 4 lettere, classifica.
+- [x] **Pulsante di gioco affidabile su telefono**:
   - eventi `pointerdown`/`pointerup` con tempo da `performance.now()`;
   - nessun ritardo al tocco (`touch-action: manipulation`), niente zoom con doppio tocco, niente menu o selezione del testo con pressione prolungata;
   - gestione di dito che esce dal pulsante o tocco annullato;
   - barra spaziatrice su desktop.
-- [ ] Indicatore di connessione (es. "Riconnessione in corso...").
-- [ ] Salvataggio sul dispositivo di codice lobby e identificativo per il rientro automatico.
-- [ ] Posizione definitiva della scelta del tema (Automatico, Chiaro, Scuro).
+- [x] Indicatore di connessione (es. "Riconnessione in corso...").
+- [x] Salvataggio sul dispositivo di codice lobby e identificativo per il rientro automatico.
+- [x] Posizione definitiva della scelta del tema (Automatico, Chiaro, Scuro).
 
 **Fatto quando**: i componenti sono visibili in una pagina di prova, in entrambi i temi, e il pulsante misura i tempi correttamente su telefono.
 
