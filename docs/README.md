@@ -7,6 +7,7 @@ Indice della documentazione del gioco. Ogni file ha uno scopo preciso: aggiorna 
 | [vision.md](vision.md) | Idea del gioco, pubblico, pilastri di design, cosa NON è il gioco |
 | [gameplay.md](gameplay.md) | Core loop, regole, meccaniche, condizioni di vittoria/sconfitta |
 | [ui-ux.md](ui-ux.md) | Schermate, flussi, controlli, stile visivo e audio |
+| [architecture.md](architecture.md) | Stato del server, macchina a stati, eventi, interfacce di sfide e modalità |
 | [tech.md](tech.md) | Stack tecnico, architettura, vincoli (browser, mobile, performance) |
 | [piano-sviluppo.md](piano-sviluppo.md) | Fasi di sviluppo passo per passo, con stato di avanzamento |
 | [roadmap.md](roadmap.md) | Milestone, MVP, backlog |

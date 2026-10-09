@@ -13,6 +13,8 @@
 - `packages/client`: React + Vite.
 
 ## Architettura
+Dettaglio completo in [architecture.md](architecture.md).
+
 - Il backend gestisce creazione lobby, generazione del codice lobby e ingresso dei giocatori.
 - Il gioco è multigiocatore: i client devono ricevere aggiornamenti sullo stato della lobby e della partita.
 - Lobby da 2 a 10 giocatori.

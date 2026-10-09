@@ -35,7 +35,7 @@ Il lavoro segue `docs/piano-sviluppo.md`, fase per fase. Spuntare le attività c
 - Frontend: web app React in TypeScript, mobile-first (uso principale da smartphone, supportato anche desktop).
 - Backend: server Node.js in TypeScript.
 
-Dettagli in `docs/tech.md`.
+Dettagli in `docs/tech.md`; architettura (stato, fasi, eventi, interfacce di sfide e modalità) in `docs/architecture.md`.
 
 ## Struttura
 
@@ -52,6 +52,10 @@ Le costanti in `packages/shared/src/rules.ts` devono restare allineate alle spec
 - `npm test`: test (Vitest), file `*.test.ts` dentro `packages/*/src`
 - `npm run typecheck`: controllo dei tipi su tutti i pacchetti
 - `npm run build`: build di server e client
+- `npm run lint` / `npm run format`: ESLint e Prettier
+- `npm run check`: typecheck, lint, formattazione e test (lo stesso controllo della CI)
+
+Prima di ogni commit `npm run check` deve passare.
 
 Stile "Caramella" con tema chiaro e scuro obbligatorio (vedi `docs/ui-ux.md`): usare solo i token CSS di `packages/client/src/styles/theme.css`, mai colori scritti a mano, e verificare ogni schermata in entrambi i temi.
 

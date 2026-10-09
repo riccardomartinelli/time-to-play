@@ -33,8 +33,8 @@ export function App() {
     <main style={{ padding: 16 }}>
       <h1>Time to Play</h1>
       <p>
-        Da <span className="numeric">{MIN_PLAYERS}</span> a <span className="numeric">{MAX_PLAYERS}</span>{" "}
-        giocatori.
+        Da <span className="numeric">{MIN_PLAYERS}</span> a{" "}
+        <span className="numeric">{MAX_PLAYERS}</span> giocatori.
       </p>
       <p>Server: {connected ? "connesso" : "non connesso"}</p>
       <p>

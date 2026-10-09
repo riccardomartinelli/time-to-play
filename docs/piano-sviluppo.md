@@ -25,15 +25,15 @@ Principi validi per tutte le fasi:
 ## Fase 1: Architettura e strumenti
 **Obiettivo**: decidere com'è fatto il sistema prima di scrivere le funzionalità.
 
-- [ ] Scrivere `docs/architecture.md`:
+- [x] Scrivere [`docs/architecture.md`](architecture.md) (in attesa di approvazione):
   - modello dello stato sul server (lobby, giocatore, partita, round, risultati);
   - **macchina a stati della partita**: lobby → introduzione sfida → conto alla rovescia → gioco → risultati del round → classifica → (round successivo | fine partita);
   - elenco completo degli eventi Socket.IO, con direzione e contenuto;
   - **interfaccia comune delle sfide** (come si avvia, che risultato produce, come si ordina la classifica) e **delle modalità** (come si assegnano punti, chi viene eliminato, quando finisce la partita), per poterne aggiungere di nuove senza toccare il resto;
   - protocollo dei tempi: il server decide *quando* inizia una fase, il client misura *quanto* dura la giocata con `performance.now()` e invia solo il risultato;
   - identità del giocatore e rientro (identificativo salvato sul dispositivo insieme al codice lobby).
-- [ ] Aggiungere ESLint e Prettier con comandi `lint` e `format`.
-- [ ] Configurare la CI (GitHub Actions): typecheck, lint, test a ogni push.
+- [x] Aggiungere ESLint e Prettier con comandi `lint` e `format`.
+- [x] Configurare la CI (GitHub Actions): typecheck, lint, test a ogni push. (Attiva quando il repository sarà su GitHub.)
 
 **Fatto quando**: l'architettura è approvata e la CI è verde.
 
