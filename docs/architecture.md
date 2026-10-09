@@ -119,7 +119,7 @@ Tutto vive **in memoria** (vedi [tech.md](tech.md)): un riavvio del server cance
 | `playing` | I giocatori giocano | 10 s (Timer nascosto: turni da 30 s) | tutti hanno giocato o tempo scaduto |
 | `roundResults` | Risultati e posizioni del round, eliminazioni | 6 s * | timer |
 | `standings` | Classifica generale | 5 s * | timer |
-| `gameOver` | Vincitore o vincitori | libera | i giocatori escono |
+| `gameOver` | Vincitore o vincitori | libera | ogni giocatore preme "Torna alla home" |
 
 \* Durate provvisorie, da regolare provando il gioco (costanti in `rules.ts`).
 
@@ -170,7 +170,7 @@ I tipi sono in `packages/shared/src/events.ts`. Le richieste del client usano l'
 | `lobby:create` | `{ nickname }` | `{ session }` | tutti |
 | `lobby:join` | `{ code, nickname }` | `{ session }` | tutti |
 | `session:resume` | `{ code, playerId, secret }` | `{ ok }` | tutti |
-| `lobby:leave` | | `{ ok }` | tutti |
+| `lobby:leave` | | `{ ok }` | in `gameOver` ("Torna alla home") |
 | `lobby:settings` | `{ mode, rounds }` | `{ ok }` | host, in `lobby` |
 | `game:start` | | `{ ok }` | host, in `lobby` |
 | `round:submit` | `{ roundId, submission }` | `{ ok }` | giocatori del round, in `playing` |
@@ -197,21 +197,21 @@ Lo snapshot è una **proiezione** dello stato del server, calcolata per ogni gio
 ## Interfaccia delle sfide
 
 ```ts
-interface ChallengeDefinition<Params, Submission, Result> {
+interface SimultaneousChallenge<Params, Submission, Result> {
   id: ChallengeId
-  kind: "simultaneous" | "turnBased"
-  createParams(rng: Random, players: PlayerId[]): Params
+  kind: "simultaneous"
+  createParams(rng: Random): Params
   publicParams(params: Params): unknown       // cosa vede il client durante il round
   revealParams(params: Params): unknown       // cosa si rivela nei risultati
   parseSubmission(raw: unknown): Submission | null   // validazione dell'input del client
-  // simultaneous: ordina i risultati; turnBased: gestisce i turni (vedi sotto)
-  evaluate(params: Params, submissions: Map<PlayerId, Submission>): Map<PlayerId, Result>
+  evaluate(params: Params, submission: Submission): Result
   compare(a: Result, b: Result): number       // < 0 se a è migliore di b, 0 se pari
 }
 ```
 
-- Le sfide **simultanee** (Stop al secondo, Doppio clic) si limitano a valutare e confrontare i risultati: il motore costruisce la classifica con `ranking.ts`.
-- Le sfide **a turni** (Timer nascosto) implementano in più `startTurn`, `applyTurn` e `isFinished`, e producono direttamente la loro classifica (tutti primi tranne chi sfora).
+- Le sfide **simultanee** (Stop al secondo, Doppio clic) implementano `SimultaneousChallenge`: il motore raccoglie i risultati e costruisce l'esito con `buildSimultaneousOutcome` (classifica, timeout, disconnessi).
+- Le sfide **a turni** (oggi solo il Timer nascosto) hanno funzioni dedicate: `startNextTurn`, `applyHiddenTimerTurn`, `applyHiddenTimerTimeout`, `hiddenTimerOutcome`. Se in futuro arriveranno altre sfide a turni, si estrarrà un'interfaccia comune.
+- Tutte le durate ricevute dal client sono arrotondate al **millisecondo**: due risultati uguali al millisecondo sono un pareggio.
 - Nel client ogni sfida ha un componente che riceve `publicParams`, gestisce il pulsante e invia `submission`.
 
 Aggiungere una sfida significa: una cartella in `shared/src/challenges/`, una in `client/src/challenges/`, e una riga nei due registri.

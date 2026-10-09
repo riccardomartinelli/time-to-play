@@ -42,14 +42,14 @@ Principi validi per tutte le fasi:
 ## Fase 2: Logica di gioco pura (`packages/shared`)
 **Obiettivo**: tutte le regole del gioco come funzioni senza rete né interfaccia, coperte da test.
 
-- [ ] Validazioni: nickname (1-12 caratteri, unico), codice lobby (4 lettere maiuscole), numero di round (3-20, predefinito 5), giocatori (2-10).
-- [ ] **Classifica del round** con pareggi senza salto di posizione (es. 1, 1, 2, 3).
-- [ ] **Punti**: posizione P vale N-P, con N = giocatori a inizio partita; 0 punti a chi non ha inviato un risultato.
-- [ ] Chi non gioca entro il tempo limite è ultimo (a pari merito con gli altri nella stessa situazione).
-- [ ] **Eliminazione**: esce l'ultimo classificato tra chi ha giocato, più i disconnessi senza risultato; pari merito all'ultimo posto sono salvi; se resta un solo giocatore vince; se non resta nessuno il round si ripete.
-- [ ] Fine partita e vincitori (compresi i pari merito in modalità Punteggio).
-- [ ] Estrazione casuale della sfida senza ripetere quella del round precedente.
-- [ ] Calcolo del risultato di ciascuna sfida:
+- [x] Validazioni: nickname (1-12 caratteri, unico), codice lobby (4 lettere maiuscole), numero di round (3-20, predefinito 5), giocatori (2-10).
+- [x] **Classifica del round** con pareggi senza salto di posizione (es. 1, 1, 2, 3).
+- [x] **Punti**: posizione P vale N-P, con N = giocatori a inizio partita; 0 punti a chi non ha inviato un risultato.
+- [x] Chi non gioca entro il tempo limite è ultimo (a pari merito con gli altri nella stessa situazione).
+- [x] **Eliminazione**: esce l'ultimo classificato tra chi ha giocato, più i disconnessi senza risultato; pari merito all'ultimo posto sono salvi; se resta un solo giocatore vince; se non resta nessuno il round si ripete.
+- [x] Fine partita e vincitori (compresi i pari merito in modalità Punteggio).
+- [x] Estrazione casuale della sfida senza ripetere quella del round precedente.
+- [x] Calcolo del risultato di ciascuna sfida:
   - Stop al secondo: `|tempo fermato - obiettivo|`, obiettivo casuale 1,0-5,0 s;
   - Doppio clic: intervallo tra primo e secondo rilascio;
   - Timer nascosto: limite casuale 5-15 s, ordine casuale, totale accumulato, giri ripetuti, turni saltati, timeout di 30 s, classifica "tutti primi tranne chi sfora" (che prende 0).

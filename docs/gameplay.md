@@ -28,6 +28,10 @@ Il sistema deve permettere di aggiungere nuove sfide in futuro. I nomi sono prov
 | 2 | **Doppio clic** | Fare due clic in sequenza nel minor tempo possibile | [004](specs/004-sfida-doppio-clic.md) |
 | 3 | **Timer nascosto** | A turno aggiungere tempo a un totale condiviso senza superare un limite segreto | [005](specs/005-sfida-timer-nascosto.md) |
 
+## Uscita
+- Durante la partita **non esiste un pulsante per uscire**: l'unico modo è chiudere la pagina, che equivale a una disconnessione (vedi [specs/001](specs/001-lobby-e-matchmaking.md)).
+- A fine partita, dopo la schermata del vincitore, un pulsante **"Torna alla home"** riporta alla pagina principale e chiude la sessione su quel dispositivo.
+
 ## Vittoria / sconfitta
 - Modalità punteggio: vince chi ha il punteggio totale più alto.
 - Modalità eliminazione: vince l'ultimo giocatore rimasto dopo la finale a due.

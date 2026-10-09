@@ -16,6 +16,11 @@ A turno, aggiungere tempo a un totale condiviso senza superare un limite che nes
 - Ogni turno dura al massimo **30 secondi**: se il giocatore di turno non gioca entro questo tempo, **perde** come se avesse sforato.
 - Se tocca a un giocatore **disconnesso**, il suo turno viene saltato e si passa al giocatore successivo. Il giocatore saltato non ha un risultato: in Punteggio prende **0 punti**, in Eliminazione viene **eliminato** (regola generale dei disconnessi, vedi [002](002-modalita-di-gioco.md)).
 
+## Casi particolari
+- Un giocatore saltato perché disconnesso che **rientra** in tempo per un giro successivo gioca normalmente: se non sfora è tra i vincitori.
+- Chi sfora è sempre ultimo, anche se gli altri giocatori sono tutti disconnessi. In Eliminazione, se in finale un giocatore è disconnesso e l'altro sfora, escono entrambi e quindi il round viene ripetuto.
+- Se nessun giocatore è connesso, il round termina senza perdenti e senza risultati.
+
 ## Classifica del round
 - Il giocatore che sfora è **ultimo**.
 - **Tutti gli altri vincono**: sono primi a pari merito.

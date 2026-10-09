@@ -45,6 +45,10 @@ Al termine di ogni sfida, i giocatori vengono ordinati in una **classifica del r
 - Gli ultimi due si sfidano nella **finale**: è un round normale, uguale agli altri, giocato solo da due giocatori. Chi perde viene eliminato e l'altro vince la partita. In caso di pareggio si passa alla sfida successiva, come da regola generale.
 - Se in un round **nessuno** resta in gara (es. entrambi i finalisti disconnessi senza risultato), il round **viene ripetuto** con gli stessi giocatori, così che possano rientrare.
 
+## Fine partita
+- Dopo la schermata del vincitore c'è un pulsante **"Torna alla home"**: riporta alla pagina principale e il dispositivo dimentica la lobby (niente rientro automatico).
+- Non esiste un pulsante per uscire durante la partita: chiudere la pagina equivale a una disconnessione.
+
 ## Criteri di accettazione
 - [ ] L'host sceglie la modalità prima di avviare la partita.
 - [ ] In modalità Punteggio, l'host sceglie il numero di round tra 3 e 20; se non lo modifica, vale 5. La partita termina dopo quel numero di round.

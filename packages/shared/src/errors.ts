@@ -1,0 +1,15 @@
+export const ERROR_CODES = [
+  "LOBBY_NOT_FOUND",
+  "LOBBY_FULL",
+  "GAME_ALREADY_STARTED",
+  "NICKNAME_INVALID",
+  "NICKNAME_TAKEN",
+  "NOT_HOST",
+  "NOT_ENOUGH_PLAYERS",
+  "INVALID_SETTINGS",
+  "INVALID_SUBMISSION",
+  "WRONG_PHASE",
+  "SESSION_INVALID",
+] as const;
+
+export type ErrorCode = (typeof ERROR_CODES)[number];
