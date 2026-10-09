@@ -1,0 +1,88 @@
+/* Caramella theme tokens. See docs/ui-ux.md for the palette and usage rules. */
+
+:root {
+  color-scheme: light;
+
+  --font-display: "Fredoka", system-ui, sans-serif;
+  --font-body: "Nunito", system-ui, sans-serif;
+
+  --color-bg: #fff4e0;
+  --color-surface: #ffffff;
+  --color-text: #1b1b3a;
+  --color-text-muted: #5b5878;
+  --color-outline: #1b1b3a;
+
+  --color-primary: #ff5a5f;
+  --color-secondary: #ffc93c;
+  --color-success: #3ddc97;
+  --color-on-color: #1b1b3a;
+
+  --outline-width: 2px;
+  --outline-width-strong: 3px;
+  --press-depth: 6px;
+  --radius-pill: 999px;
+  --radius-card: 20px;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-bg: #1b1a33;
+  --color-surface: #2a2850;
+  --color-text: #fff4e0;
+  --color-text-muted: #cfc8e8;
+  --color-outline: #fff4e0;
+
+  --color-primary: #ff6b70;
+  --color-secondary: #ffd45c;
+  --color-success: #4be3a2;
+  --color-on-color: #1b1a33;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --color-bg: #1b1a33;
+    --color-surface: #2a2850;
+    --color-text: #fff4e0;
+    --color-text-muted: #cfc8e8;
+    --color-outline: #fff4e0;
+
+    --color-primary: #ff6b70;
+    --color-secondary: #ffd45c;
+    --color-success: #4be3a2;
+    --color-on-color: #1b1a33;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-weight: 500;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+/* Timers must not jitter while digits change. */
+.numeric {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}

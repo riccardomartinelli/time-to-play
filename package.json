@@ -1,0 +1,22 @@
+{
+  "name": "time-to-play",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/shared",
+    "packages/server",
+    "packages/client"
+  ],
+  "scripts": {
+    "dev": "concurrently -n server,client -c blue,magenta \"npm run dev -w @ttp/server\" \"npm run dev -w @ttp/client\"",
+    "build": "npm run build -w @ttp/server && npm run build -w @ttp/client",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  }
+}
