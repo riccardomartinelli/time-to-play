@@ -136,15 +136,15 @@ Principi validi per tutte le fasi:
 ---
 
 ## Fase 8: Sfida Doppio clic
-- [ ] Schermata e misurazione tra primo e secondo rilascio.
-- [ ] Inserimento nell'estrazione casuale (`ENABLED_CHALLENGES` in `packages/shared/src/rules.ts`).
+- [x] Schermata e misurazione tra primo e secondo rilascio.
+- [x] Inserimento nell'estrazione casuale (`ENABLED_CHALLENGES` in `packages/shared/src/rules.ts`).
 - [ ] Prova reale.
 
 ## Fase 9: Sfida Timer nascosto
-- [ ] Gestione a turni: ordine casuale, indicazione chiara di "tocca a te" e di chi sta giocando.
-- [ ] Tenere premuto per aggiungere tempo, senza mostrare totale né limite.
-- [ ] Giri ripetuti, turni saltati per i disconnessi, timeout di 30 s.
-- [ ] Rivelazione finale di limite e totale.
+- [x] Gestione a turni: ordine casuale, indicazione chiara di "tocca a te" e di chi sta giocando.
+- [x] Tenere premuto per aggiungere tempo, senza mostrare totale né limite.
+- [x] Giri ripetuti, turni saltati per i disconnessi, timeout di 30 s.
+- [x] Rivelazione finale di limite e totale.
 - [ ] Prova reale.
 
 ## Fase 10: Modalità Eliminazione

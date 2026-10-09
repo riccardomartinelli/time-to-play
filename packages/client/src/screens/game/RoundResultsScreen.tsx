@@ -20,14 +20,14 @@ export function RoundResultsScreen({ snapshot }: { snapshot: LobbySnapshot }) {
 
   const entries: LeaderboardEntry[] = results.entries.map((entry) => {
     const formatted =
-      entry.status === "played" && entry.result !== null
-        ? challenge.formatResult(entry.result, results.reveal)
+      entry.status === "played"
+        ? challenge.formatResult(entry.result, results.reveal, entry.playerId)
         : null;
     return {
       id: entry.playerId,
       nickname: nicknameOf(snapshot, entry.playerId),
       position: entry.position,
-      value: formatted?.value,
+      value: formatted?.value || undefined,
       detail: entry.status === "played" ? formatted?.detail : STATUS_TEXT[entry.status],
       badge: entry.eliminated ? (
         <Pill variant="primary">Eliminato</Pill>

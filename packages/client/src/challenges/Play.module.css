@@ -39,3 +39,18 @@
   color: var(--color-text-muted);
   font-weight: 700;
 }
+
+.order {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.turnTitle {
+  font-size: 30px;
+  line-height: 1.1;
+}

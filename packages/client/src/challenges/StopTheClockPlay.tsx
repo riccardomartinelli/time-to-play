@@ -2,7 +2,7 @@ import { useState } from "react";
 import { GameButton } from "../components/GameButton";
 import { TimeBar } from "../components/TimeBar";
 import { formatSeconds } from "../format";
-import styles from "./StopTheClockPlay.module.css";
+import styles from "./Play.module.css";
 import type { PlayProps } from "./types";
 import { usePlayWindow } from "./usePlayWindow";
 

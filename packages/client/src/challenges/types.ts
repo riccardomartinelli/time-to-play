@@ -20,7 +20,8 @@ export interface ChallengeUi {
   instruction: string;
   /** Missing while the challenge screens are not ready. */
   Play?: ComponentType<PlayProps>;
-  formatResult(result: unknown, reveal: unknown): FormattedResult | null;
+  /** `result` is `null` when the player has no result of their own. */
+  formatResult(result: unknown, reveal: unknown, playerId: string): FormattedResult | null;
   /** What the round results reveal (e.g. the target time). */
   describeReveal(reveal: unknown): string | null;
 }

@@ -38,7 +38,7 @@ export const CHALLENGE_IDS = ["stop-the-clock", "double-click", "hidden-timer"] 
 export type ChallengeId = (typeof CHALLENGE_IDS)[number];
 
 /** Challenges the server draws from: only those whose screens are ready in the client. */
-export const ENABLED_CHALLENGES: readonly ChallengeId[] = ["stop-the-clock"];
+export const ENABLED_CHALLENGES: readonly ChallengeId[] = CHALLENGE_IDS;
 
 export type PlayerId = string;
 
