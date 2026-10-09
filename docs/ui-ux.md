@@ -76,8 +76,10 @@ Sintetizzati nel browser (Web Audio API): brevi, allegri, in stile "cartoon". Ne
 | Ultimi 3 secondi per giocare, finché non hai giocato | Tick di fretta |
 | Risultati del round: sei primo | Successo (tre note ascendenti) |
 | Risultati del round: non sei primo, tempo scaduto o eliminato | Fallimento (tre note discendenti) |
-| Fine partita: hai vinto | Fanfara |
-| Fine partita: non hai vinto | Fallimento |
+| Fine partita: hai vinto (anche a pari merito) | Fanfara lunga con accordo finale |
+| Fine partita: non hai vinto | Melodia lenta "game over" che scende |
+
+I suoni di fine partita sono volutamente diversi da quelli di vittoria e sconfitta del singolo round, così si capisce subito che la partita è finita.
 
 - Chi guarda soltanto (eliminato) non sente successo o fallimento.
 - Il pulsante con l'altoparlante, in alto in tutte le schermate, **disattiva i suoni**; la scelta resta salvata sul dispositivo.

@@ -26,7 +26,7 @@ export function cueFor(snapshot: LobbySnapshot): SoundCue | null {
 
   if (snapshot.phase === "gameOver" && game.winners) {
     const won = game.winners.includes(snapshot.you);
-    return { key: `over-${snapshot.code}`, sound: won ? "win" : "fail" };
+    return { key: `over-${snapshot.code}`, sound: won ? "gameWin" : "gameLose" };
   }
 
   return null;

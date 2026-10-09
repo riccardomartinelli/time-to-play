@@ -1,6 +1,7 @@
 // Cartoon sounds synthesized with the Web Audio API: no audio files to download or license.
 
-export type SoundName = "gameStart" | "tick" | "go" | "success" | "fail" | "win";
+/** `success` / `fail` close a round; `gameWin` / `gameLose` close the whole game. */
+export type SoundName = "gameStart" | "tick" | "go" | "success" | "fail" | "gameWin" | "gameLose";
 
 interface Note {
   /** Hz. */
@@ -20,6 +21,9 @@ const G5 = 783.99;
 const C6 = 1046.5;
 const E6 = 1318.51;
 const G6 = 1567.98;
+const C4 = 261.63;
+const E4 = 329.63;
+const A4 = 440.0;
 const G4 = 392.0;
 const FS4 = 369.99;
 const F4 = 349.23;
@@ -46,15 +50,30 @@ const SOUNDS: Record<SoundName, Note[]> = {
     { frequency: FS4, at: 0.24, duration: 0.22, type: "sawtooth", volume: 0.12 },
     { frequency: F4, at: 0.48, duration: 0.5, type: "sawtooth", volume: 0.12, glideTo: 300 },
   ],
-  win: [
-    { frequency: C5, at: 0, duration: 0.12 },
-    { frequency: E5, at: 0.12, duration: 0.12 },
-    { frequency: G5, at: 0.24, duration: 0.12 },
-    { frequency: C6, at: 0.36, duration: 0.2 },
-    { frequency: G5, at: 0.58, duration: 0.1 },
-    { frequency: C6, at: 0.68, duration: 0.1 },
-    { frequency: E6, at: 0.78, duration: 0.1 },
-    { frequency: G6, at: 0.88, duration: 0.45, volume: 0.3 },
+  // Fanfare: "ta-ta-ta-taaa" in square waves, then a full major chord held long.
+  gameWin: [
+    { frequency: G5, at: 0, duration: 0.12, type: "square", volume: 0.12 },
+    { frequency: G5, at: 0.15, duration: 0.12, type: "square", volume: 0.12 },
+    { frequency: G5, at: 0.3, duration: 0.12, type: "square", volume: 0.12 },
+    { frequency: C6, at: 0.45, duration: 0.5, type: "square", volume: 0.14 },
+    { frequency: A4, at: 1.0, duration: 0.14 },
+    { frequency: C5, at: 1.0, duration: 0.14 },
+    { frequency: C5, at: 1.18, duration: 1.1, volume: 0.2 },
+    { frequency: E5, at: 1.18, duration: 1.1, volume: 0.2 },
+    { frequency: G5, at: 1.18, duration: 1.1, volume: 0.2 },
+    { frequency: C6, at: 1.18, duration: 1.1, volume: 0.2 },
+    { frequency: E6, at: 1.4, duration: 0.9, volume: 0.12 },
+    { frequency: G6, at: 1.6, duration: 0.7, volume: 0.1 },
+  ],
+  // Slow "game over" melody walking down to a low note: gentler than a lost round.
+  gameLose: [
+    { frequency: C5, at: 0, duration: 0.3, volume: 0.22 },
+    { frequency: G4, at: 0.32, duration: 0.3, volume: 0.22 },
+    { frequency: E4, at: 0.64, duration: 0.3, volume: 0.22 },
+    { frequency: A4, at: 0.98, duration: 0.18, volume: 0.2 },
+    { frequency: G4, at: 1.18, duration: 0.18, volume: 0.2 },
+    { frequency: C4, at: 1.4, duration: 1.0, volume: 0.24 },
+    { frequency: E4, at: 1.4, duration: 1.0, volume: 0.12 },
   ],
 };
 

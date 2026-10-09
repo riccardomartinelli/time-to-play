@@ -74,9 +74,10 @@ describe("game sound cues", () => {
     expect(cueFor(withResults([{ playerId: "b", position: 1 }]))).toBeNull();
   });
 
-  it("celebrates the winner at the end of the game", () => {
-    expect(cueFor(snapshot({ phase: "gameOver" }, { winners: ["a"] }))?.sound).toBe("win");
-    expect(cueFor(snapshot({ phase: "gameOver" }, { winners: ["b"] }))?.sound).toBe("fail");
+  it("closes the game with its own sounds, different from the round ones", () => {
+    expect(cueFor(snapshot({ phase: "gameOver" }, { winners: ["a"] }))?.sound).toBe("gameWin");
+    expect(cueFor(snapshot({ phase: "gameOver" }, { winners: ["b"] }))?.sound).toBe("gameLose");
+    expect(cueFor(snapshot({ phase: "gameOver" }, { winners: ["a", "b"] }))?.sound).toBe("gameWin");
   });
 
   it("uses a different key for every round", () => {
