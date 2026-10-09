@@ -63,5 +63,8 @@ Regola: sopra i colori pieni il testo è sempre scuro (`--color-on-color`), mai 
 - Pill (badge, nickname in classifica): angoli completamente arrotondati.
 - Card: raggio 20px.
 
-## Audio
-_Da definire._
+## Audio e vibrazione
+- **Suoni** sugli eventi di gioco: conto alla rovescia, pressione e rilascio del pulsante, risultati, eliminazione, vittoria.
+- **Vibrazione** sugli stessi momenti chiave. Disponibile su Android; su iOS il browser non permette di far vibrare il telefono.
+- Il giocatore può **disattivare i suoni**; la scelta resta salvata sul dispositivo.
+- Stile dei suoni: da definire, coerente con lo stile Caramella (allegri, brevi, "cartoon").

@@ -26,6 +26,10 @@ Quando l'utente detta specifiche:
 
 Non aggiungere dettagli di design non richiesti: proponili come domande, non come fatti.
 
+## Sviluppo
+
+Il lavoro segue `docs/piano-sviluppo.md`, fase per fase. Spuntare le attività completate e non realizzare le "proposte da confermare" senza approvazione.
+
 ## Stack tecnico
 
 - Frontend: web app React in TypeScript, mobile-first (uso principale da smartphone, supportato anche desktop).

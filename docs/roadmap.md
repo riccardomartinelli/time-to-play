@@ -1,5 +1,7 @@
 # Roadmap
 
+Il dettaglio passo per passo è in [piano-sviluppo.md](piano-sviluppo.md).
+
 ## MVP
 - [ ] Lobby con codice e matchmaking (backend)
 - [ ] Modalità punteggio

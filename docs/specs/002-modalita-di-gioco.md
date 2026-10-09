@@ -38,6 +38,7 @@ Al termine di ogni sfida, i giocatori vengono ordinati in una **classifica del r
 - **Pareggio per l'ultimo posto**: i giocatori a pari merito sono tutti salvi, nessuno di loro viene eliminato, e si passa alla sfida successiva. I disconnessi vengono comunque eliminati.
 - **Disconnessione**: un giocatore disconnesso che non ha inviato il risultato del round viene **eliminato** e non conta nella classifica del round. Viene eliminato **in aggiunta** all'ultimo classificato tra chi ha giocato, quindi in un round possono uscire più giocatori.
   - Esempio con 6 giocatori, uno disconnesso: esce il disconnesso ed esce anche l'ultimo dei 5 che hanno giocato.
+- I giocatori eliminati **restano nella lobby come spettatori**: vedono sfide, risultati e classifica fino alla fine della partita, ma non giocano.
 - Un giocatore che si disconnette **dopo** aver inviato il risultato **resta in gara** e può rientrare.
 - Se dopo le eliminazioni di un round resta **un solo giocatore**, quel giocatore **vince** la partita, senza finale.
 - Si prosegue finché restano due giocatori.
@@ -57,6 +58,7 @@ Al termine di ogni sfida, i giocatori vengono ordinati in una **classifica del r
 - [ ] In Punteggio, la classifica finale riflette la somma dei punti di tutti i round.
 - [ ] In Eliminazione, a ogni round esce l'ultimo classificato tra chi ha giocato (se non c'è pareggio), più eventuali giocatori disconnessi senza risultato.
 - [ ] In Eliminazione, un giocatore disconnesso senza aver inviato il risultato del round viene eliminato.
+- [ ] In Eliminazione, gli eliminati continuano a vedere la partita come spettatori fino alla fine.
 - [ ] In Eliminazione, chi si disconnette dopo aver inviato il risultato resta in gara.
 - [ ] In Eliminazione, se resta un solo giocatore, vince la partita.
 - [ ] In Eliminazione, se due o più giocatori sono a pari merito all'ultimo posto, nessuno di loro viene eliminato e si gioca la sfida successiva.

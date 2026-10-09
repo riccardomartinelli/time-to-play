@@ -8,6 +8,7 @@ Indice della documentazione del gioco. Ogni file ha uno scopo preciso: aggiorna 
 | [gameplay.md](gameplay.md) | Core loop, regole, meccaniche, condizioni di vittoria/sconfitta |
 | [ui-ux.md](ui-ux.md) | Schermate, flussi, controlli, stile visivo e audio |
 | [tech.md](tech.md) | Stack tecnico, architettura, vincoli (browser, mobile, performance) |
+| [piano-sviluppo.md](piano-sviluppo.md) | Fasi di sviluppo passo per passo, con stato di avanzamento |
 | [roadmap.md](roadmap.md) | Milestone, MVP, backlog |
 | [glossary.md](glossary.md) | Termini del gioco e loro significato univoco |
 | [open-questions.md](open-questions.md) | Domande aperte e punti da decidere |
