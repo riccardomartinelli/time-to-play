@@ -1,9 +1,12 @@
-import type { LobbySnapshot } from "@ttp/shared";
+import { COUNTDOWN_MS, type LobbySnapshot } from "@ttp/shared";
+import { useEffect } from "react";
 import { CHALLENGES } from "../../challenges/registry";
 import { Pill } from "../../components/Pill";
 import { Screen } from "../../components/Screen";
 import { secondsLeft } from "../../format";
 import { useRemaining } from "../../hooks/useRemaining";
+import { sound } from "../../feedback/sound";
+import { useTicks } from "../../feedback/useGameSounds";
 import { useGameClient } from "../../state/GameClientContext";
 import styles from "./Game.module.css";
 import { roundLabel } from "./players";
@@ -15,6 +18,13 @@ export function RoundScreen({ snapshot }: { snapshot: LobbySnapshot }) {
   const challenge = CHALLENGES[round.challenge];
   const remaining = useRemaining(snapshot.phaseEndsAt);
   const playing = round.players.includes(snapshot.you);
+  // Never above 3, even for the instant before the remaining time is refreshed.
+  const countdown = Math.min(secondsLeft(remaining ?? 0), COUNTDOWN_MS / 1000);
+
+  useTicks(`countdown-${round.id}`, countdown, snapshot.phase === "countdown");
+  useEffect(() => {
+    if (snapshot.phase === "playing") sound.playOnce(`go-${round.id}`, "go");
+  }, [snapshot.phase, round.id]);
 
   let content;
   if (snapshot.phase === "intro") {
@@ -30,7 +40,7 @@ export function RoundScreen({ snapshot }: { snapshot: LobbySnapshot }) {
       <div className={styles.center}>
         <p className={styles.muted}>{challenge.title}</p>
         <div className={`${styles.countdown} numeric`} aria-live="assertive">
-          {secondsLeft(remaining ?? 0) || "Via!"}
+          {countdown || "Via!"}
         </div>
       </div>
     );

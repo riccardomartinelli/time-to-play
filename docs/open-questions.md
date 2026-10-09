@@ -10,7 +10,6 @@ Punti ancora da decidere. Quando una domanda viene risolta, spostala nel documen
 
 ## Prima del rilascio
 - Animazioni: dettaglio per schermata.
-- Suoni: da dove prenderli (libreria gratuita, generati, creati su misura).
 - Serve un interruttore separato per la vibrazione?
 - Nome definitivo del gioco.
 - Hosting: dove pubblicare client e server (serve supporto a connessioni WebSocket persistenti).

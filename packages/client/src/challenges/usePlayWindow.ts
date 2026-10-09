@@ -1,10 +1,14 @@
 import { PLAY_TIMEOUT_MS, type LobbySnapshot, type RoundSnapshot } from "@ttp/shared";
 import { useState } from "react";
 import { errorMessage } from "../errors";
+import { useTicks } from "../feedback/useGameSounds";
+import { secondsLeft } from "../format";
 import { useRemaining } from "../hooks/useRemaining";
 import type { ClientResult } from "../state/GameClient";
 
 export type SendState = "idle" | "sending" | "sent";
+
+const URGENT_SECONDS = 3;
 
 /** Shared state of a simultaneous challenge: time left, sending once, errors. */
 export function usePlayWindow(
@@ -29,10 +33,15 @@ export function usePlayWindow(
     setError(result.error === "WRONG_PHASE" ? "Troppo tardi!" : errorMessage(result.error));
   };
 
+  const done = state !== "idle" || alreadyPlayed;
+  // Hurry up: ticks in the last 3 seconds, until this player has played.
+  const left = secondsLeft(remainingMs);
+  useTicks(`hurry-${round.id}`, left, !done && left <= URGENT_SECONDS);
+
   return {
     remainingMs,
     totalMs: PLAY_TIMEOUT_MS,
-    done: state !== "idle" || alreadyPlayed,
+    done,
     error,
     send,
     playedLabel: `${round.played.length}/${round.players.length} hanno giocato`,

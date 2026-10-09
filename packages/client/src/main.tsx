@@ -9,9 +9,11 @@ import { App } from "./App";
 import { createSocket } from "./net/socket";
 import { GameClient } from "./state/GameClient";
 import { GameClientProvider } from "./state/GameClientContext";
+import { installSoundUnlock } from "./feedback/sound";
 import { applyThemePreference, readThemePreference } from "./theme";
 
 applyThemePreference(readThemePreference());
+installSoundUnlock();
 
 const client = new GameClient(createSocket());
 

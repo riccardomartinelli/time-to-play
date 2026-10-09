@@ -4,6 +4,7 @@ import { Gallery } from "./screens/Gallery";
 import { GameScreen } from "./screens/game/GameScreen";
 import { HomeScreen } from "./screens/HomeScreen";
 import { LobbyScreen } from "./screens/LobbyScreen";
+import { useGameSounds } from "./feedback/useGameSounds";
 import { useClientState } from "./state/GameClientContext";
 
 const showGallery = import.meta.env.DEV && new URLSearchParams(location.search).has("gallery");
@@ -24,7 +25,8 @@ function CurrentScreen() {
 }
 
 export function App() {
-  const { connection } = useClientState();
+  const { connection, snapshot } = useClientState();
+  useGameSounds(snapshot);
   if (showGallery) return <Gallery />;
   return (
     <>

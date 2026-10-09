@@ -8,8 +8,14 @@ export function useRemaining(endsAt: number | null, refreshMs = 100): number | n
 
   useEffect(() => {
     if (endsAt === null) return;
-    const timer = setInterval(() => setNow(client.serverNow()), refreshMs);
-    return () => clearInterval(timer);
+    const refresh = () => setNow(client.serverNow());
+    // Refresh right away: the time saved before the phase changed is stale.
+    const first = requestAnimationFrame(refresh);
+    const timer = setInterval(refresh, refreshMs);
+    return () => {
+      cancelAnimationFrame(first);
+      clearInterval(timer);
+    };
   }, [client, endsAt, refreshMs]);
 
   return endsAt === null ? null : Math.max(0, endsAt - now);

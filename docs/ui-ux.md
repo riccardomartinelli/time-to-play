@@ -65,7 +65,23 @@ Regola: sopra i colori pieni il testo è sempre scuro (`--color-on-color`), mai 
 - Card: raggio 20px.
 
 ## Audio e vibrazione
-- **Suoni** sugli eventi di gioco: conto alla rovescia, pressione e rilascio del pulsante, risultati, eliminazione, vittoria.
-- **Vibrazione** sugli stessi momenti chiave. Disponibile su Android; su iOS il browser non permette di far vibrare il telefono.
-- Il giocatore può **disattivare i suoni**; la scelta resta salvata sul dispositivo.
-- Stile dei suoni: da definire, coerente con lo stile Caramella (allegri, brevi, "cartoon").
+### Suoni
+Sintetizzati nel browser (Web Audio API): brevi, allegri, in stile "cartoon". Nessun file audio da scaricare né da licenziare.
+
+| Momento | Suono |
+|---------|-------|
+| Avvio della partita (presentazione del primo round) | Arpeggio ascendente |
+| Conto alla rovescia 3, 2, 1 | Tick |
+| Inizio della giocata ("Via!") | Doppio beep ascendente |
+| Ultimi 3 secondi per giocare, finché non hai giocato | Tick di fretta |
+| Risultati del round: sei primo | Successo (tre note ascendenti) |
+| Risultati del round: non sei primo, tempo scaduto o eliminato | Fallimento (tre note discendenti) |
+| Fine partita: hai vinto | Fanfara |
+| Fine partita: non hai vinto | Fallimento |
+
+- Chi guarda soltanto (eliminato) non sente successo o fallimento.
+- Il pulsante con l'altoparlante, in alto in tutte le schermate, **disattiva i suoni**; la scelta resta salvata sul dispositivo.
+- I browser permettono l'audio solo dopo un tocco: i suoni partono dal primo tocco sulla pagina. Su iPhone l'interruttore del silenzioso li disattiva.
+
+### Vibrazione
+- **Vibrazione** sui momenti chiave. Disponibile su Android; su iOS il browser non permette di far vibrare il telefono.

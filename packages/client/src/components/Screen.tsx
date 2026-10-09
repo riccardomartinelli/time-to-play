@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import styles from "./Screen.module.css";
+import { SoundToggle } from "./SoundToggle";
 import { ThemeToggle } from "./ThemeToggle";
 
 interface ScreenProps {
@@ -17,7 +18,10 @@ export function Screen({ children, header, showThemeToggle = true, centered }: S
     <div className={styles.screen}>
       <header className={styles.header}>
         <div>{header}</div>
-        {showThemeToggle && <ThemeToggle />}
+        <div className={styles.settings}>
+          <SoundToggle />
+          {showThemeToggle && <ThemeToggle />}
+        </div>
       </header>
       <main className={[styles.content, centered && styles.centered].filter(Boolean).join(" ")}>
         {children}

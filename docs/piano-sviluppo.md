@@ -171,7 +171,7 @@ Principi validi per tutte le fasi:
 - [ ] Rispetto di "riduci movimento" del sistema (`prefers-reduced-motion`).
 - [ ] Schermo sempre acceso durante la partita (Screen Wake Lock API).
 - [ ] **Vibrazione** al tocco del pulsante e agli eventi importanti (via, eliminazione, vittoria). Funziona su Android; su iOS il browser non la supporta.
-- [ ] **Suoni** per conto alla rovescia, pressione, risultati e vittoria, con interruttore per disattivarli (scelta salvata sul dispositivo).
+- [x] **Suoni** per avvio partita, conto alla rovescia, ultimi secondi, successo, fallimento e vittoria, con interruttore per disattivarli (scelta salvata sul dispositivo).
 - [ ] Testi e microcopy con tono giocoso e coerente.
 - [ ] Accessibilità: contrasti, dimensioni minime dei tocchi, etichette per lettori di schermo.
 - [ ] Revisione grafica di tutte le schermate in tema chiaro e scuro, su telefoni piccoli e grandi e su desktop.
