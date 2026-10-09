@@ -1,0 +1,46 @@
+.group {
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  gap: 8px;
+}
+
+.option {
+  appearance: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-height: 52px;
+  padding: 10px 14px;
+  border: var(--outline-width-strong) solid var(--color-outline);
+  border-radius: 16px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+  text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.option[aria-checked="true"] {
+  background: var(--color-secondary);
+  color: var(--color-on-color);
+}
+
+.option:disabled {
+  cursor: default;
+}
+
+.option:focus-visible {
+  outline: 3px solid var(--color-secondary);
+  outline-offset: 2px;
+}
+
+.description {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 13px;
+}

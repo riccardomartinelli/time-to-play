@@ -1,0 +1,51 @@
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.step {
+  appearance: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: var(--outline-width-strong) solid var(--color-outline);
+  border-bottom-width: 5px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.step:active:not(:disabled) {
+  transform: translateY(2px);
+  border-bottom-width: var(--outline-width-strong);
+}
+
+.step:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.value {
+  min-width: 2ch;
+  text-align: center;
+  font-size: 28px;
+}

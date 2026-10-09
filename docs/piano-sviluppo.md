@@ -97,12 +97,12 @@ Principi validi per tutte le fasi:
 ## Fase 5: Schermate della lobby
 **Obiettivo**: il flusso prima della partita, usabile da telefono.
 
-- [ ] Home: "Crea partita" e "Entra con codice".
-- [ ] Inserimento nickname.
-- [ ] Inserimento codice (tastiera in maiuscolo, 4 caselle).
-- [ ] Sala d'attesa: codice ben visibile e facile da dettare, elenco giocatori in tempo reale, segno dell'host.
-- [ ] Pannello host: modalità, numero di round, pulsante di avvio (disponibile con almeno 2 giocatori).
-- [ ] Messaggi di errore comprensibili.
+- [x] Home: "Crea partita" e "Entra con codice".
+- [x] Inserimento nickname.
+- [x] Inserimento codice (tastiera in maiuscolo, 4 caselle).
+- [x] Sala d'attesa: codice ben visibile e facile da dettare, elenco giocatori in tempo reale, segno dell'host.
+- [x] Pannello host: modalità, numero di round, pulsante di avvio (disponibile con almeno 2 giocatori).
+- [x] Messaggi di errore comprensibili.
 
 **Fatto quando**: da due telefoni si crea una lobby, si entra e l'host avvia.
 

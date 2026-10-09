@@ -1,0 +1,21 @@
+.code {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.letter {
+  width: 62px;
+  height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--outline-width-strong) solid var(--color-outline);
+  border-bottom-width: var(--press-depth);
+  border-radius: 16px;
+  background: var(--color-secondary);
+  color: var(--color-on-color);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 40px;
+}
