@@ -35,6 +35,21 @@ Dettaglio completo in [architecture.md](architecture.md).
 ## Lingue
 Testi del client in dizionari per lingua (`packages/client/src/i18n/`: `it.ts` di riferimento, `en.ts`), con `useT()` nei componenti e `messages()` fuori da React. Il server non ha testi: invia codici di errore che il client traduce. Vedi [decisions/006-multilingua.md](decisions/006-multilingua.md).
 
+## Privacy e cookie
+Il gioco **non usa cookie** (verificato: nessun `Set-Cookie` dalla pagina né da Socket.IO), non ha statistiche né tracciamenti e non contatta servizi di terze parti (i font sono inclusi nell'app).
+
+Sul dispositivo salva solo, in `localStorage`:
+
+| Chiave | Contenuto | Motivo |
+|--------|-----------|--------|
+| `ttp-session` | codice lobby, id e chiave del giocatore | rientrare dopo una disconnessione (necessario) |
+| `ttp-nickname` | ultimo nickname | precompilare il campo (preferenza) |
+| `ttp-theme` | tema scelto | preferenza dell'utente |
+| `ttp-sound` | suoni attivi o no | preferenza dell'utente |
+| `ttp-language` | lingua scelta | preferenza dell'utente |
+
+Sono dati strettamente necessari o preferenze scelte dall'utente: non richiedono un consenso, solo trasparenza. **Se in futuro si aggiungono cookie, statistiche o tracciamenti**, va mostrato al primo accesso un pop-up di consenso e quei dati si attivano solo dopo l'accettazione (regola anche in `CLAUDE.md`).
+
 ## Deploy con Docker
 Due immagini, entrambe costruite dalla radice del repository:
 

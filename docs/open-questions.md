@@ -13,6 +13,7 @@ Punti ancora da decidere. Quando una domanda viene risolta, spostala nel documen
 - Durate di presentazione sfida (6 s, allungata da 3 s su richiesta), pausa dopo l'ultima giocata (2,5 s), risultati del round (6 s) e classifica (5 s): valori provvisori da regolare provando il gioco.
 
 ## Prima del rilascio
+- Privacy: serve una breve informativa (pagina o nota nella home) che spieghi i dati salvati sul dispositivo? Da far verificare a chi si occupa di privacy prima della pubblicazione.
 - Animazioni: dettaglio per schermata.
 - Serve un interruttore separato per la vibrazione?
 - Nome definitivo del gioco.
