@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { seededRandom } from "../random.js";
-import { angularDistance, needle, needleAngle } from "./needle.js";
+import { angularDistance, needle, needleAngle, needleZone } from "./needle.js";
 import { visibleStopwatch } from "./visibleStopwatch.js";
 
 describe("needle", () => {
@@ -27,6 +27,16 @@ describe("needle", () => {
     const late = needle.evaluate(params, { elapsedMs: 400 });
     expect(late.errorDeg).toBe(18);
     expect(needle.compare(hit, late)).toBeLessThan(0);
+  });
+
+  it("tells the target zone, the center being the narrowest", () => {
+    expect(needleZone(0)).toBe("center");
+    expect(needleZone(4)).toBe("center");
+    expect(needleZone(4.1)).toBe("inner");
+    expect(needleZone(12)).toBe("inner");
+    expect(needleZone(20)).toBe("outer");
+    expect(needleZone(25.1)).toBe("miss");
+    expect(needle.evaluate(params, { elapsedMs: 400 }).zone).toBe("outer");
   });
 
   it("puts start and target anywhere on the dial", () => {

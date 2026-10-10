@@ -1,20 +1,27 @@
-import { angularDistance, type NeedleParams } from "@ttp/shared";
+import { angularDistance, type NeedleParams, type NeedleZone } from "@ttp/shared";
 
-/** Within this distance from the target the tension (zoom and sound) starts to build. */
+/** Within this distance from the target the hype sound starts to build. */
 export const HYPE_RANGE_DEG = 70;
-const MAX_ZOOM = 0.24;
-/** Closeness above which the dial glows. */
-const HOT_FROM = 0.85;
 
-export interface NeedleHype {
-  /** 0 far from the target, 1 right on its center: drives the sound. */
-  closeness: number;
-  /** Dial scale, growing faster as the needle gets really close. */
-  zoom: number;
-  hot: boolean;
+/** 0 far from the target, 1 right on its center: drives the hype sound while spinning. */
+export function needleCloseness(params: NeedleParams, angleDeg: number): number {
+  return Math.max(0, 1 - angularDistance(angleDeg, params.targetDeg) / HYPE_RANGE_DEG);
 }
 
-export function needleHype(params: NeedleParams, angleDeg: number): NeedleHype {
-  const closeness = Math.max(0, 1 - angularDistance(angleDeg, params.targetDeg) / HYPE_RANGE_DEG);
-  return { closeness, zoom: 1 + MAX_ZOOM * closeness * closeness, hot: closeness > HOT_FROM };
-}
+/**
+ * After the stop the dial zooms on the needle tip, like a magnifying glass: the better the
+ * zone, the closer the look, to show how near the real center it landed.
+ */
+export const STOP_ZOOM: Record<NeedleZone, number> = {
+  center: 2.8,
+  inner: 2.2,
+  outer: 1.8,
+  miss: 1.4,
+};
+
+export const ZONE_LABEL: Record<NeedleZone, string> = {
+  center: "CENTRO!",
+  inner: "OTTIMO!",
+  outer: "BERSAGLIO",
+  miss: "FUORI",
+};

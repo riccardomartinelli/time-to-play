@@ -1,4 +1,4 @@
-import type { ChallengeId } from "@ttp/shared";
+import type { ChallengeId, NeedleZone } from "@ttp/shared";
 import { formatDifference, formatSeconds } from "../format";
 import { DoubleClickPlay } from "./DoubleClickPlay";
 import { HiddenTimerPlay } from "./HiddenTimerPlay";
@@ -9,6 +9,13 @@ import { StopTheClockPlay } from "./StopTheClockPlay";
 import { TrafficLightPlay } from "./TrafficLightPlay";
 import { VisibleStopwatchPlay } from "./VisibleStopwatchPlay";
 import type { ChallengeUi } from "./types";
+
+const NEEDLE_ZONE_RESULT: Record<NeedleZone, string> = {
+  center: "Centro!",
+  inner: "Zona vicina",
+  outer: "Bersaglio",
+  miss: "Fuori bersaglio",
+};
 
 interface HiddenTimerReveal {
   limitMs: number;
@@ -108,14 +115,14 @@ export const CHALLENGES: Record<ChallengeId, ChallengeUi> = {
   needle: {
     title: "Lancetta",
     instruction:
-      "La lancetta gira sul quadrante: premi per fermarla proprio sul centro del bersaglio verde. Più ti avvicini, più sale la tensione!",
+      "La lancetta gira sul quadrante: premi per fermarla sul bersaglio. La zona rossa al centro è la più piccola e la più difficile: centrala!",
     Play: NeedlePlay,
     formatResult(result) {
       if (result === null) return null;
-      const { errorDeg } = result as { errorDeg: number };
+      const { errorDeg, zone } = result as { errorDeg: number; zone: NeedleZone };
       return {
         value: `${errorDeg.toLocaleString("it-IT", { maximumFractionDigits: 1 })}°`,
-        detail: errorDeg <= 3 ? "Centro pieno!" : "dal centro",
+        detail: NEEDLE_ZONE_RESULT[zone],
       };
     },
     describeReveal: () => null,

@@ -1,5 +1,11 @@
 import { randomInt } from "../random.js";
-import { NEEDLE_SPEED_DEG_PER_S, PLAY_TIMEOUT_MS, SUBMIT_GRACE_MS } from "../rules.js";
+import {
+  NEEDLE_SPEED_DEG_PER_S,
+  NEEDLE_ZONES,
+  PLAY_TIMEOUT_MS,
+  SUBMIT_GRACE_MS,
+  type NeedleZone,
+} from "../rules.js";
 import { parseDuration, type SimultaneousChallenge } from "./types.js";
 
 // Stop a spinning needle on the target. See docs/specs/009-sfida-lancetta.md.
@@ -19,8 +25,15 @@ export interface NeedleSubmission {
 
 export interface NeedleResult {
   angleDeg: number;
-  /** Distance from the target center, 0-180, one decimal. */
+  /** Distance from the target center, 0-180, one decimal. Ranks the players. */
   errorDeg: number;
+  /** Target zone the needle stopped in (shown to the players). */
+  zone: NeedleZone;
+}
+
+/** Innermost zone containing a stop `errorDeg` away from the target center. */
+export function needleZone(errorDeg: number): NeedleZone {
+  return NEEDLE_ZONES.find((zone) => errorDeg <= zone.halfWidthDeg)?.id ?? "miss";
 }
 
 /** Where the needle is after `elapsedMs`, in [0, 360). */
@@ -55,7 +68,7 @@ export const needle: SimultaneousChallenge<NeedleParams, NeedleSubmission, Needl
   evaluate(params, { elapsedMs }) {
     const angleDeg = needleAngle(params, elapsedMs);
     const errorDeg = Math.round(angularDistance(angleDeg, params.targetDeg) * 10) / 10;
-    return { angleDeg, errorDeg };
+    return { angleDeg, errorDeg, zone: needleZone(errorDeg) };
   },
 
   compare: (a, b) => a.errorDeg - b.errorDeg,

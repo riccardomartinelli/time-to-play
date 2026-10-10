@@ -1,64 +1,42 @@
-import { needle, needleAngle, NEEDLE_TARGET_HALF_WIDTH_DEG, type NeedleParams } from "@ttp/shared";
+import { needle, needleAngle, type NeedleParams } from "@ttp/shared";
 import { useEffect, useRef, useState } from "react";
 import { GameButton } from "../components/GameButton";
 import { sound } from "../feedback/sound";
 import { useHoldSound } from "../feedback/useGameSounds";
+import { CENTER, NEEDLE_LENGTH, NeedleDial, point, ZONE_FILL, type Stop } from "./NeedleDial";
+import { needleCloseness, ZONE_LABEL } from "./needleHype";
 import styles from "./Play.module.css";
 import type { PlayProps } from "./types";
-import { needleHype } from "./needleHype";
 import { usePlayWindow } from "./usePlayWindow";
 
-const SIZE = 240;
-const CENTER = SIZE / 2;
-const RADIUS = 104;
-
-function point(angleDeg: number, radius: number): [number, number] {
-  const radians = ((angleDeg - 90) * Math.PI) / 180;
-  return [CENTER + radius * Math.cos(radians), CENTER + radius * Math.sin(radians)];
-}
-
-/** Pie slice of the target, centered on `targetDeg`. */
-function slicePath(targetDeg: number): string {
-  const [x1, y1] = point(targetDeg - NEEDLE_TARGET_HALF_WIDTH_DEG, RADIUS);
-  const [x2, y2] = point(targetDeg + NEEDLE_TARGET_HALF_WIDTH_DEG, RADIUS);
-  return `M${CENTER} ${CENTER} L${x1} ${y1} A${RADIUS} ${RADIUS} 0 0 1 ${x2} ${y2} Z`;
-}
-
-/** Stop the spinning needle on the target; the closer it gets, the higher the tension. */
+/** Stop the spinning needle on the target; once stopped, the dial zooms on the needle tip. */
 export function NeedlePlay({ snapshot, round, submit }: PlayProps) {
   const params = round.publicParams as NeedleParams;
   const play = usePlayWindow(snapshot, round, submit, { hurry: false });
-  const [errorDeg, setErrorDeg] = useState<number | null>(null);
+  const [stop, setStop] = useState<Stop | null>(null);
+  const [zoomed, setZoomed] = useState(false);
   const goAt = useRef(0);
   const stopped = useRef(false);
   const needleRef = useRef<SVGGElement>(null);
-  const dialRef = useRef<HTMLDivElement>(null);
   const hype = useHoldSound("hype");
   const hypeRef = useRef(hype);
   useEffect(() => {
     hypeRef.current = hype;
   });
 
-  const draw = (angle: number) => {
+  const draw = (angle: number) =>
     needleRef.current?.setAttribute("transform", `rotate(${angle} ${CENTER} ${CENTER})`);
-    const hype = needleHype(params, angle);
-    const dial = dialRef.current;
-    if (dial) {
-      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-      dial.style.transform = reduce ? "" : `scale(${hype.zoom})`;
-      dial.dataset.hot = String(hype.hot);
-    }
-    return hype.closeness;
-  };
 
-  // The needle runs on animation frames, outside React renders.
+  // The needle runs on animation frames, outside React renders. No zoom while it spins:
+  // only the hype sound follows how close it is.
   useEffect(() => {
     goAt.current = performance.now();
     hypeRef.current.start();
     let frame = requestAnimationFrame(function tick(now) {
       if (stopped.current) return;
-      const close = draw(needleAngle(params, now - goAt.current));
-      hypeRef.current.setIntensity(close);
+      const angle = needleAngle(params, now - goAt.current);
+      draw(angle);
+      hypeRef.current.setIntensity(needleCloseness(params, angle));
       frame = requestAnimationFrame(tick);
     });
     return () => cancelAnimationFrame(frame);
@@ -66,115 +44,46 @@ export function NeedlePlay({ snapshot, round, submit }: PlayProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  let status = "Fermala sul centro del bersaglio verde!";
-  let perfect = false;
-  if (errorDeg !== null) {
-    perfect = errorDeg <= 3;
-    status = perfect
-      ? "Centro pieno!"
-      : errorDeg <= 10
-        ? `Vicinissimo: ${errorDeg.toLocaleString("it-IT")}° dal centro`
-        : `${errorDeg.toLocaleString("it-IT")}° dal centro`;
-  }
-  if (play.error) status = play.error;
+  // Zoom on the next frame, so the dial animates from its normal size.
+  useEffect(() => {
+    if (!stop) return;
+    const frame = requestAnimationFrame(() => setZoomed(true));
+    return () => cancelAnimationFrame(frame);
+  }, [stop]);
 
-  const [tx, ty] = point(params.targetDeg, RADIUS + 2);
+  let status = "Fermala sul centro del bersaglio!";
+  if (stop) status = `${stop.errorDeg.toLocaleString("it-IT")}° dal centro`;
+  if (play.error) status = play.error;
 
   return (
     <div className={styles.play}>
-      <div ref={dialRef} className={styles.dialWrap}>
-        <svg
-          width={SIZE}
-          height={SIZE}
-          viewBox={`0 0 ${SIZE} ${SIZE}`}
-          role="img"
-          aria-label="Quadrante con lancetta e bersaglio"
-        >
-          <circle cx={CENTER} cy={CENTER + 6} r={RADIUS + 8} fill="var(--color-outline)" />
-          <circle
-            cx={CENTER}
-            cy={CENTER}
-            r={RADIUS + 8}
-            fill="var(--color-surface)"
-            stroke="var(--color-outline)"
-            strokeWidth="4"
-          />
-          <path
-            d={slicePath(params.targetDeg)}
-            fill="var(--color-success)"
-            stroke="var(--color-outline)"
-            strokeWidth="3"
-            strokeLinejoin="round"
-          />
-          <line
-            x1={CENTER}
-            y1={CENTER}
-            x2={tx}
-            y2={ty}
-            stroke="var(--color-outline)"
-            strokeWidth="2"
-            strokeDasharray="4 4"
-          />
-          {Array.from({ length: 12 }, (_, index) => {
-            const [x1, y1] = point(index * 30, RADIUS - 2);
-            const [x2, y2] = point(index * 30, RADIUS + 6);
-            return (
-              <line
-                key={index}
-                x1={x1}
-                y1={y1}
-                x2={x2}
-                y2={y2}
-                stroke="var(--color-outline)"
-                strokeWidth="3"
-                strokeLinecap="round"
-              />
-            );
-          })}
-          <g ref={needleRef} transform={`rotate(${params.startDeg} ${CENTER} ${CENTER})`}>
-            <line
-              x1={CENTER}
-              y1={CENTER + 16}
-              x2={CENTER}
-              y2={CENTER - RADIUS + 10}
-              stroke="var(--color-outline)"
-              strokeWidth="8"
-              strokeLinecap="round"
-            />
-            <line
-              x1={CENTER}
-              y1={CENTER + 16}
-              x2={CENTER}
-              y2={CENTER - RADIUS + 10}
-              stroke="var(--color-primary)"
-              strokeWidth="4"
-              strokeLinecap="round"
-            />
-          </g>
-          <circle
-            cx={CENTER}
-            cy={CENTER}
-            r="12"
-            fill="var(--color-secondary)"
-            stroke="var(--color-outline)"
-            strokeWidth="3"
-          />
-        </svg>
-      </div>
-      {perfect && <div className={styles.perfect}>PERFETTO!</div>}
+      <NeedleDial
+        params={params}
+        angleDeg={params.startDeg}
+        needleRef={needleRef}
+        stop={stop}
+        zoomed={zoomed}
+      />
+      {stop && (
+        <div className={styles.zoneLabel} style={{ background: ZONE_FILL[stop.zone] }}>
+          {ZONE_LABEL[stop.zone]}
+        </div>
+      )}
       <GameButton
-        disabled={play.done || errorDeg !== null}
+        disabled={play.done || stop !== null}
         onPressStart={(time) => {
           stopped.current = true;
           const elapsedMs = Math.max(0, time - goAt.current);
-          draw(needleAngle(params, elapsedMs));
+          const angle = needleAngle(params, elapsedMs);
+          draw(angle);
           hype.stop();
           sound.play("clack");
-          setErrorDeg(needle.evaluate(params, { elapsedMs: Math.round(elapsedMs) }).errorDeg);
+          const { errorDeg, zone } = needle.evaluate(params, { elapsedMs: Math.round(elapsedMs) });
+          setStop({ errorDeg, zone, tip: point(angle, NEEDLE_LENGTH) });
           void play.send({ elapsedMs });
         }}
       >
-        {errorDeg === null ? "STOP!" : "Fermata"}
+        {stop === null ? "STOP!" : "Fermata"}
       </GameButton>
       <p
         className={[styles.status, play.error && styles.error].filter(Boolean).join(" ")}

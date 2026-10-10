@@ -1,27 +1,25 @@
 import { describe, expect, it } from "vitest";
-import { needleHype } from "./needleHype";
+import { needleCloseness, STOP_ZOOM } from "./needleHype";
 
 const params = { startDeg: 0, targetDeg: 90, speedDegPerS: 270 };
 
-describe("needleHype", () => {
-  it("stays calm far from the target", () => {
-    expect(needleHype(params, 270)).toEqual({ closeness: 0, zoom: 1, hot: false });
-    expect(needleHype(params, 20).zoom).toBe(1);
+describe("needleCloseness", () => {
+  it("is 0 far from the target and 1 on its center", () => {
+    expect(needleCloseness(params, 270)).toBe(0);
+    expect(needleCloseness(params, 90)).toBe(1);
   });
 
-  it("builds up as the needle gets closer, from both sides", () => {
-    const far = needleHype(params, 45);
-    const near = needleHype(params, 80);
-    expect(near.zoom).toBeGreaterThan(far.zoom);
-    expect(needleHype(params, 100)).toEqual(near);
+  it("grows as the needle gets closer, from both sides", () => {
+    expect(needleCloseness(params, 80)).toBeGreaterThan(needleCloseness(params, 45));
+    expect(needleCloseness(params, 100)).toBe(needleCloseness(params, 80));
   });
+});
 
-  it("peaks on the target center", () => {
-    expect(needleHype(params, 90)).toEqual({ closeness: 1, zoom: 1.24, hot: true });
-  });
-
-  it("glows only when really close", () => {
-    expect(needleHype(params, 85).hot).toBe(true);
-    expect(needleHype(params, 75).hot).toBe(false);
+describe("STOP_ZOOM", () => {
+  it("looks closer the better the zone", () => {
+    expect(STOP_ZOOM.center).toBeGreaterThan(STOP_ZOOM.inner);
+    expect(STOP_ZOOM.inner).toBeGreaterThan(STOP_ZOOM.outer);
+    expect(STOP_ZOOM.outer).toBeGreaterThan(STOP_ZOOM.miss);
+    expect(STOP_ZOOM.miss).toBeGreaterThan(1);
   });
 });

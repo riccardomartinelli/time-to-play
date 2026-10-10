@@ -48,8 +48,16 @@ export const RAPID_FIRE_MAX_TAPS = 150;
 
 /** Provisional, to be tuned by playtesting (docs/open-questions.md). */
 export const NEEDLE_SPEED_DEG_PER_S = 270;
-/** Half width of the target slice drawn on the dial. */
-export const NEEDLE_TARGET_HALF_WIDTH_DEG = 12;
+/**
+ * Nested target zones, from the hardest (narrowest, in the middle) to the widest: half width
+ * in degrees on each side of the target center.
+ */
+export const NEEDLE_ZONES = [
+  { id: "center", halfWidthDeg: 4 },
+  { id: "inner", halfWidthDeg: 12 },
+  { id: "outer", halfWidthDeg: 25 },
+] as const;
+export type NeedleZone = (typeof NEEDLE_ZONES)[number]["id"] | "miss";
 
 export const STOPWATCH_TARGET_MIN_MS = 3_000;
 export const STOPWATCH_TARGET_MAX_MS = 8_000;

@@ -65,7 +65,7 @@ Ogni sfida ha un'icona Caramella (`ChallengeIcon`), disegnata con i token del te
 | Semaforo | Semaforo orizzontale stile Formula 1 (una rossa, quattro verdi) |
 | Ultimo a mollare | Bomba con miccia accesa |
 | Raffica | Fulmine |
-| Lancetta | Quadrante con spicchio verde e lancetta |
+| Lancetta | Quadrante con bersaglio e lancetta |
 | Cronometro a vista | Cronometro digitale con display LCD |
 
 Compare nella presentazione della sfida (grande, con un piccolo "pop"), nel conto alla rovescia e nei risultati del round.
@@ -81,8 +81,12 @@ Nella classifica tra un round e l'altro e in quella di fine partita:
 ### Limite del Timer nascosto
 Il limite è disegnato come un **cartello stradale di limite**: anello rosso, numero grande al centro con "secondi", etichetta gialla "LIMITE" sotto. Un simbolo che tutti leggono come "da non superare".
 
-### Lancetta: hype
-Avvicinandosi al bersaglio il quadrante **si ingrandisce** (fino a +24%) e si illumina di giallo quando è molto vicino; il suono di hype sale insieme. Il quadrante ha lo spazio per ingrandirsi senza coprire il pulsante e non intercetta i tocchi. Con "riduci movimento" lo zoom è disattivato.
+### Lancetta: bersaglio a zone e lente
+- Bersaglio a **zone annidate**: rossa al centro (la più piccola), verde, gialla.
+- Mentre gira: solo il **suono di hype** sale avvicinandosi al bersaglio, **nessuno zoom**.
+- Dopo lo stop: il quadrante diventa una **lente d'ingrandimento** sulla punta della lancetta, portata al centro della vista (zoom ×2,8 nella zona centrale, ×2,2 vicina, ×1,8 esterna, ×1,4 fuori) e compare l'etichetta della zona (CENTRO!, OTTIMO!, BERSAGLIO, FUORI).
+- La lancetta è scura e piena, leggibile su tutte le zone. Il quadrante non intercetta i tocchi.
+- Esempi dei tre casi nella pagina dei componenti (`/?gallery`).
 
 ### Cronometro a vista: stile anni '80
 Cassa da cronometro digitale con due pulsantini, display **LCD a 7 segmenti** (segmenti spenti appena visibili, leggera inclinazione) per obiettivo e tempo, con secondi e millisecondi. I colori del display sono token dedicati: `--color-lcd-bg`, `--color-lcd-on`, `--color-lcd-off` (chiaro e scuro).
@@ -142,7 +146,7 @@ Ogni sfida ha i suoi effetti, per renderla più divertente:
 | Raffica | ogni tocco | "pew" che sale di tono con il conteggio |
 | Raffica | tempo scaduto | fischio |
 | Lancetta | mentre gira | ronzio di "hype" che sale di tono e volume avvicinandosi al bersaglio |
-| Lancetta | stop | "clack" |
+| Lancetta | stop | "clack", poi zoom sulla punta |
 | Cronometro a vista | avvio e stop | beep elettronico anni '80 |
 
 Tutti i suoni sono sintetizzati (anche rumore per miccia ed esplosione). Se qualcuno risultasse troppo "sintetico", si può sostituire con un file audio (candidati: esplosione e miccia).

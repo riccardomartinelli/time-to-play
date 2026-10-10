@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { Button } from "../components/Button";
 import { CHALLENGE_IDS } from "@ttp/shared";
+import { NeedleDial, NEEDLE_LENGTH, point } from "../challenges/NeedleDial";
 import { CHALLENGES } from "../challenges/registry";
 import { Card } from "../components/Card";
 import { ChallengeIcon } from "../components/ChallengeIcon";
@@ -38,6 +39,29 @@ export function Gallery() {
             </div>
           ))}
         </div>
+      </section>
+
+      <section style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
+        <h2>Lancetta dopo lo stop</h2>
+        {(
+          [
+            [90, "center", 1.5],
+            [99, "inner", 9],
+            [130, "miss", 40],
+          ] as const
+        ).map(([angle, zone, errorDeg]) => (
+          <NeedleDial
+            key={zone}
+            params={{ startDeg: 0, targetDeg: 90, speedDegPerS: 270 }}
+            angleDeg={angle - (zone === "center" ? 1.5 : 0)}
+            stop={{
+              errorDeg,
+              zone,
+              tip: point(angle - (zone === "center" ? 1.5 : 0), NEEDLE_LENGTH),
+            }}
+            zoomed
+          />
+        ))}
       </section>
 
       <section style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
