@@ -4,12 +4,9 @@ import { it, type Messages } from "./it";
 
 export type Language = "it" | "en";
 
-export const LANGUAGES: { value: Language; label: string }[] = [
-  { value: "it", label: "IT" },
-  { value: "en", label: "EN" },
-];
+export const LANGUAGES: Language[] = ["it", "en"];
 
-const DICTIONARIES: Record<Language, Messages> = { it, en };
+export const DICTIONARIES: Record<Language, Messages> = { it, en };
 const STORAGE_KEY = "ttp-language";
 
 /** Italian phones start in Italian, everybody else in English. */

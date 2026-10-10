@@ -5,7 +5,7 @@
 - **Decisione**: un piccolo sistema di traduzione scritto apposta (`packages/client/src/i18n/`):
   - un dizionario per lingua (`it.ts` è quello di riferimento, `en.ts` deve avere le stesse chiavi: lo garantisce il tipo `Messages` e un test);
   - testi semplici come stringhe, testi con parti variabili come funzioni (es. `round(2, 5)` → "Round 2 di 5" / "Round 2 of 5");
-  - lingua iniziale da quella del telefono (italiano se il telefono è in italiano, altrimenti inglese), scelta manuale IT / EN salvata sul dispositivo;
+  - lingua iniziale da quella del telefono (italiano se il telefono è in italiano, altrimenti inglese), scelta manuale con le bandiere salvata sul dispositivo;
   - numeri formattati con la lingua scelta (`2,700 s` / `2.700 s`).
 - **Alternative considerate**: librerie come react-i18next o FormatJS. Scartate: per pochi testi aggiungono peso e configurazione, e senza il tipo `Messages` una traduzione mancante si scoprirebbe solo giocando.
 - **Conseguenze**:

@@ -19,6 +19,18 @@
   cursor: pointer;
 }
 
+/* Flag buttons: a bit narrower, the flag is the label. */
+.flagOption {
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+}
+
+/* The language not in use is dimmed. */
+.flagOption:not([aria-pressed="true"]) > * {
+  opacity: 0.55;
+}
+
 .option[aria-pressed="true"] {
   background: var(--color-secondary);
   color: var(--color-on-color);

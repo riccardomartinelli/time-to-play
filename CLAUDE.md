@@ -65,7 +65,7 @@ In sviluppo, `http://localhost:5173/?gallery` mostra tutti i componenti del clie
 
 Multilingua (italiano e inglese): **nessun testo visibile scritto direttamente nei componenti**. Ogni testo va nei dizionari `packages/client/src/i18n/it.ts` e `en.ts` (stesse chiavi, garantite dal tipo `Messages`), letto con `useT()` nei componenti o `messages()` fuori da React. Numeri sempre con i formattatori di `format.ts`, che seguono la lingua.
 
-Stile "Caramella" con tema chiaro e scuro obbligatorio (vedi `docs/ui-ux.md`): usare solo i token CSS di `packages/client/src/styles/theme.css`, mai colori scritti a mano, e verificare ogni schermata in entrambi i temi.
+Stile "Caramella" con tema chiaro e scuro obbligatorio (vedi `docs/ui-ux.md`): usare solo i token CSS di `packages/client/src/styles/theme.css`, mai colori scritti a mano (unica eccezione: i colori ufficiali delle bandiere in `Flag.tsx`), e verificare ogni schermata in entrambi i temi.
 
 **Cookie e privacy**: oggi il gioco non usa cookie, solo localStorage strettamente necessario o per preferenze scelte dall'utente (elenco in `docs/tech.md`). Se si aggiungono cookie, statistiche, tracciamenti o servizi di terze parti, va mostrato **al primo accesso alla pagina principale un pop-up di consenso**, e quei cookie si attivano solo dopo l'accettazione. Ogni nuovo dato salvato sul dispositivo va aggiunto all'elenco in `docs/tech.md`.
 

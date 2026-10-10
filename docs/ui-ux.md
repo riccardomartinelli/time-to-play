@@ -24,7 +24,8 @@ _Da definire._
 ## Lingue
 - Il gioco è in **italiano** e **inglese** (vedi [decisions/006-multilingua.md](decisions/006-multilingua.md)).
 - **Lingua iniziale**: quella del telefono; se non è l'italiano si parte in inglese.
-- **Selettore IT / EN** in alto, accanto a suoni e tema (nascosto durante il gioco, come il tema); la scelta resta salvata sul dispositivo.
+- **Selettore con le bandiere** in alto, accanto a suoni e tema: Italia per l'italiano, Regno Unito per l'inglese (il gioco usa l'inglese britannico). La lingua non attiva è attenuata; nascosto durante il gioco, come il tema; la scelta resta salvata sul dispositivo.
+- Le bandiere sono disegnate in SVG (le emoji delle bandiere non funzionano su Windows) e mantengono i **colori ufficiali** in entrambi i temi: sono l'unica eccezione alla regola dei token di colore.
 - I numeri seguono la lingua: virgola decimale in italiano ("2,700 s"), punto in inglese ("2.700 s").
 - "Time to Play" resta uguale in tutte le lingue.
 
