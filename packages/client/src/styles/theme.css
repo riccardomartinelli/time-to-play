@@ -17,6 +17,9 @@
   --color-success: #3ddc97;
   --color-on-color: #1b1b3a;
 
+  /* Road signs keep their light text and ring in both themes. */
+  --color-on-sign: #fff4e0;
+
   /* 80s LCD (visible stopwatch). */
   --color-lcd-bg: #c7d3a4;
   --color-lcd-on: #1f2a14;

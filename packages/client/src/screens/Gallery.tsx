@@ -9,6 +9,7 @@ import { GameButton } from "../components/GameButton";
 import { Leaderboard } from "../components/Leaderboard";
 import { Pill } from "../components/Pill";
 import { Screen } from "../components/Screen";
+import { StopSign } from "../components/StopSign";
 import { TextField } from "../components/TextField";
 import { messages } from "../i18n";
 
@@ -41,6 +42,11 @@ export function Gallery() {
             </div>
           ))}
         </div>
+      </section>
+
+      <section style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
+        <h2>Cartello di stop</h2>
+        <StopSign label="Rilascia esattamente a 2,7 s">2,7 s</StopSign>
       </section>
 
       <section style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>

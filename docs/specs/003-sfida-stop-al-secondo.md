@@ -6,7 +6,7 @@
 Fermare il tempo il più vicino possibile a un tempo obiettivo.
 
 ## Comportamento
-- Il **tempo obiettivo** è estratto a caso tra **1 e 5 secondi**, con un decimale (es. 2,7 s), ed è mostrato a schermo.
+- Il **tempo obiettivo** è estratto a caso tra **1 e 5 secondi**, con un decimale (es. 2,7 s), ed è mostrato a schermo **dentro un cartello stradale di STOP** rosso e ottagonale, al posto della scritta "STOP".
 - Tutti i giocatori giocano **in contemporanea**, dopo un **conto alla rovescia di 3 secondi**.
 - Il giocatore **preme** il pulsante per avviare il cronometro e lo **rilascia** quando pensa di aver raggiunto il tempo obiettivo.
 - Il cronometro **non è visibile** mentre scorre: si gioca alla cieca.

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { GameButton } from "../components/GameButton";
+import { StopSign } from "../components/StopSign";
 import { TimeBar } from "../components/TimeBar";
 import { sound } from "../feedback/sound";
 import { formatSeconds } from "../format";
@@ -24,7 +25,9 @@ export function StopTheClockPlay({ snapshot, round, submit }: PlayProps) {
   return (
     <div className={styles.play}>
       <p className={styles.label}>{texts.releaseAt}</p>
-      <div className={`${styles.target} numeric`}>{formatSeconds(targetMs, 1)}</div>
+      <StopSign label={`${texts.releaseAt} ${formatSeconds(targetMs, 1)}`}>
+        {formatSeconds(targetMs, 1)}
+      </StopSign>
       <GameButton
         disabled={play.done}
         onPressStart={() => {

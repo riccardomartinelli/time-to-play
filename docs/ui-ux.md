@@ -85,6 +85,9 @@ Nella classifica tra un round e l'altro e in quella di fine partita:
 - a pari merito la corona (o la faccina) va a tutti i giocatori di quella posizione; se sono tutti a pari merito nessuno ha corona o faccina;
 - con "riduci movimento" attivo le icone restano ma le animazioni sono disattivate.
 
+### Obiettivo di Stop al secondo
+Il tempo da raggiungere è scritto dentro un **cartello di STOP** stradale: ottagono rosso con bordo chiaro interno, contorno e spessore Caramella, numero chiaro al posto della scritta "STOP". Testo e bordo interno usano il token `--color-on-sign`, uguale nei due temi come sui cartelli veri.
+
 ### Limite del Timer nascosto
 Il limite è disegnato come un **cartello stradale di limite**: anello rosso, numero grande al centro con "secondi", etichetta gialla "LIMITE" sotto. Un simbolo che tutti leggono come "da non superare".
 
