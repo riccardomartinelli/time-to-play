@@ -6,7 +6,12 @@ const secondsFormat = (decimals: number) =>
 
 /** 2700 → "2,700 s" */
 export function formatSeconds(ms: number, decimals = 3): string {
-  return `${secondsFormat(decimals).format(ms / 1000)} s`;
+  return `${secondsValue(ms, decimals)} s`;
+}
+
+/** Just the number, without the unit: 4900 → "4,9" (with one decimal). */
+export function secondsValue(ms: number, decimals = 3): string {
+  return secondsFormat(decimals).format(ms / 1000);
 }
 
 /** Difference from a target: 50 → "+0,050 s", -120 → "−0,120 s". */

@@ -76,6 +76,9 @@ Nella classifica tra un round e l'altro e in quella di fine partita:
 - a pari merito la corona (o la faccina) va a tutti i giocatori di quella posizione; se sono tutti a pari merito nessuno ha corona o faccina;
 - con "riduci movimento" attivo le icone restano ma le animazioni sono disattivate.
 
+### Limite del Timer nascosto
+Il limite è disegnato come un **cartello stradale di limite**: anello rosso, numero grande al centro con "secondi", etichetta gialla "LIMITE" sotto. Un simbolo che tutti leggono come "da non superare".
+
 ### Presentazione della sfida
 Dura **6 secondi**. Mostra l'icona, la scritta "Prossima sfida", il nome e le **regole in grande su un adesivo giallo** leggermente inclinato, più "Si parte tra N...". L'animazione dell'icona è disattivata con "riduci movimento".
 

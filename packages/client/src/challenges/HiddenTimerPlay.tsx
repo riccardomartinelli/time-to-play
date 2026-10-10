@@ -6,7 +6,7 @@ import { TimeBar } from "../components/TimeBar";
 import { errorMessage } from "../errors";
 import { sound } from "../feedback/sound";
 import { useHoldSound, useTicks } from "../feedback/useGameSounds";
-import { formatSeconds, secondsLeft } from "../format";
+import { formatSeconds, secondsLeft, secondsValue } from "../format";
 import { useRemaining } from "../hooks/useRemaining";
 import { nicknameOf } from "../screens/game/players";
 import styles from "./Play.module.css";
@@ -52,8 +52,20 @@ export function HiddenTimerPlay({ snapshot, round, submit }: PlayProps) {
 
   return (
     <div className={styles.play}>
-      <p className={styles.label}>Limite</p>
-      <div className={`${styles.limit} numeric`}>{formatSeconds(limitMs, 1)}</div>
+      {/* The limit as a road sign: everybody reads it as "do not go over". */}
+      <div
+        className={styles.limitSign}
+        role="img"
+        aria-label={`Limite da non superare: ${formatSeconds(limitMs, 1)}`}
+      >
+        <div className={styles.limitRing}>
+          <div className={styles.limitFace}>
+            <span className={`${styles.limitValue} numeric`}>{secondsValue(limitMs, 1)}</span>
+            <span className={styles.limitUnit}>secondi</span>
+          </div>
+        </div>
+        <span className={styles.limitTag}>Limite</span>
+      </div>
       <h1 className={styles.turnTitle}>{title}</h1>
       <ol className={styles.order} aria-label="Ordine dei turni">
         {order.map((playerId) => (

@@ -8,7 +8,7 @@
 A turno, aggiungere tempo a un totale condiviso senza superare un limite noto a tutti, senza sapere quanto tempo hanno già consumato gli altri.
 
 ## Comportamento
-- All'inizio della sfida viene estratto a caso un **limite** tra **3 e 8 secondi** (con un decimale, es. 6,4 s). Il limite è **visibile** a tutti.
+- All'inizio della sfida viene estratto a caso un **limite** tra **3 e 8 secondi** (con un decimale, es. 6,4 s). Il limite è **visibile** a tutti, disegnato come un cartello stradale di limite (vedi [ui-ux.md](../ui-ux.md)).
 - I giocatori giocano **a turno**, in **ordine casuale** estratto all'inizio della sfida.
 - Nel proprio turno, il giocatore **tiene premuto** il pulsante: il tempo che passa tra pressione e rilascio si aggiunge al **totale accumulato**.
 - Il **totale accumulato non è visibile**: nessuno sa a che punto è il timer, perché non vede quanto hanno tenuto premuto gli altri.
