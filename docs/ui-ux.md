@@ -54,6 +54,23 @@ Un **cronometro** in stile Caramella: quadrante giallo, contorno spesso, lancett
 - Icona del browser: `packages/client/public/icon.svg`, che cambia contorno da sola se il sistema è in modalità scura.
 - Icona per la schermata Home di iPhone: `public/apple-touch-icon.png` (180×180), generata da `icons/apple-touch-icon.svg` con `npm run icons -w @ttp/client` (macOS).
 
+### Icone delle sfide
+Ogni sfida ha un'icona Caramella (`ChallengeIcon`), disegnata con i token del tema:
+
+| Sfida | Icona |
+|-------|-------|
+| Stop al secondo | Bersaglio |
+| Doppio clic | Pulsante toccato con badge "×2" |
+| Timer nascosto | Clessidra |
+| Semaforo | Semaforo |
+| Ultimo a mollare | Bomba con miccia accesa |
+| Raffica | Fulmine |
+
+Compare nella presentazione della sfida (grande, con un piccolo "pop"), nel conto alla rovescia e nei risultati del round.
+
+### Presentazione della sfida
+Dura **6 secondi**. Mostra l'icona, la scritta "Prossima sfida", il nome e le **regole in grande su un adesivo giallo** leggermente inclinato, più "Si parte tra N...". L'animazione dell'icona è disattivata con "riduci movimento".
+
 ### Tipografia
 
 | Uso | Font | Pesi |

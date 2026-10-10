@@ -1,6 +1,7 @@
 import { COUNTDOWN_MS, type LobbySnapshot } from "@ttp/shared";
 import { useEffect } from "react";
 import { CHALLENGES } from "../../challenges/registry";
+import { ChallengeIcon } from "../../components/ChallengeIcon";
 import { Pill } from "../../components/Pill";
 import { Screen } from "../../components/Screen";
 import { secondsLeft } from "../../format";
@@ -33,14 +34,20 @@ export function RoundScreen({ snapshot }: { snapshot: LobbySnapshot }) {
   if (snapshot.phase === "intro") {
     content = (
       <div className={styles.center}>
+        <ChallengeIcon challenge={round.challenge} size={120} className={styles.introIcon} />
+        <p className={styles.kicker}>Prossima sfida</p>
         <h1 className={styles.title}>{challenge.title}</h1>
-        <p className={styles.instruction}>{challenge.instruction}</p>
+        <p className={styles.rules}>{challenge.instruction}</p>
         {!playing && <p className={styles.muted}>Sei fuori dal gioco: guarda gli altri!</p>}
+        <p className={styles.startsIn}>
+          Si parte tra <span className="numeric">{secondsLeft(remaining ?? 0)}</span>...
+        </p>
       </div>
     );
   } else if (snapshot.phase === "countdown") {
     content = (
       <div className={styles.center}>
+        <ChallengeIcon challenge={round.challenge} size={64} />
         <p className={styles.muted}>{challenge.title}</p>
         <div className={`${styles.countdown} numeric`} aria-live="assertive">
           {countdown || "Via!"}

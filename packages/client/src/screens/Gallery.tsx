@@ -1,6 +1,9 @@
 import { useRef, useState } from "react";
 import { Button } from "../components/Button";
+import { CHALLENGE_IDS } from "@ttp/shared";
+import { CHALLENGES } from "../challenges/registry";
 import { Card } from "../components/Card";
+import { ChallengeIcon } from "../components/ChallengeIcon";
 import { CodeInput } from "../components/CodeInput";
 import { GameButton } from "../components/GameButton";
 import { Leaderboard } from "../components/Leaderboard";
@@ -21,6 +24,21 @@ export function Gallery() {
   return (
     <Screen header={<Pill variant="secondary">Round 2 di 5</Pill>}>
       <h1>Componenti</h1>
+
+      <section>
+        <h2>Icone delle sfide</h2>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
+          {CHALLENGE_IDS.map((id) => (
+            <div
+              key={id}
+              style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+            >
+              <ChallengeIcon challenge={id} size={88} />
+              <span style={{ fontSize: 13, fontWeight: 700 }}>{CHALLENGES[id].title}</span>
+            </div>
+          ))}
+        </div>
+      </section>
 
       <section style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
         <h2>Pulsante di gioco</h2>

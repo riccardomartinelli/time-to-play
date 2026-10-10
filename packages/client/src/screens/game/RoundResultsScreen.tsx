@@ -1,5 +1,6 @@
 import type { LobbySnapshot, RoundResultEntry } from "@ttp/shared";
 import { CHALLENGES } from "../../challenges/registry";
+import { ChallengeIcon } from "../../components/ChallengeIcon";
 import { Leaderboard, type LeaderboardEntry } from "../../components/Leaderboard";
 import { Pill } from "../../components/Pill";
 import { Screen } from "../../components/Screen";
@@ -50,7 +51,13 @@ export function RoundResultsScreen({ snapshot }: { snapshot: LobbySnapshot }) {
       showThemeToggle={false}
     >
       <div className={styles.section}>
-        <h1>Risultati</h1>
+        <div className={styles.resultsTitle}>
+          <ChallengeIcon challenge={round.challenge} size={48} />
+          <div>
+            <h1>Risultati</h1>
+            <p className={styles.muted}>{challenge.title}</p>
+          </div>
+        </div>
         {reveal && <div className={styles.reveal}>{reveal}</div>}
         {results.repeat && (
           <p className={styles.banner}>Non è rimasto nessuno in gara: si ripete il round!</p>

@@ -20,7 +20,7 @@ export const HIDDEN_TIMER_TURN_TIMEOUT_MS = 30_000;
 export const SUBMIT_GRACE_MS = 1_000;
 
 // Provisional durations, to be tuned by playtesting (see docs/architecture.md).
-export const INTRO_MS = 3_000;
+export const INTRO_MS = 6_000;
 export const ROUND_RESULTS_MS = 6_000;
 export const STANDINGS_MS = 5_000;
 

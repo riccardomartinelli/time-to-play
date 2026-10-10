@@ -114,7 +114,7 @@ Tutto vive **in memoria** (vedi [tech.md](tech.md)): un riavvio del server cance
 | Fase | Cosa succede | Durata | Avanza quando |
 |------|--------------|--------|---------------|
 | `lobby` | Ingresso giocatori, impostazioni dell'host | libera | l'host avvia |
-| `intro` | Viene estratta e presentata la sfida | 3 s * | timer |
+| `intro` | Viene estratta e presentata la sfida (icona, nome, regole) | 6 s * | timer |
 | `countdown` | 3, 2, 1... | 3 s | timer |
 | `playing` | I giocatori giocano | dipende dalla sfida (10 s di base; Timer nascosto: turni da 30 s) | tutti hanno giocato o tempo scaduto |
 | `roundResults` | Risultati e posizioni del round, eliminazioni | 6 s * | timer |
