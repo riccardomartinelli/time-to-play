@@ -70,5 +70,31 @@ Il client si collega al server sullo **stesso indirizzo** da cui è stato carica
 
 Lo stato delle partite è in memoria: usare **una sola istanza** del server (più istanze non condividerebbero le lobby).
 
+## Rilascio
+Un solo comando porta una nuova versione su Docker Hub (vedi [decisions/007-rilascio-docker-hub.md](decisions/007-rilascio-docker-hub.md)):
+
+```bash
+DOCKERHUB_NAMESPACE=<utente> npm run release            # patch: 0.1.0 -> 0.1.1
+DOCKERHUB_NAMESPACE=<utente> npm run release -- minor   # oppure major, o una versione esatta x.y.z
+```
+
+Lo script `scripts/release.mjs`:
+1. si ferma se ci sono modifiche non salvate in git o se il tag della versione esiste già;
+2. esegue `npm run check` (gli stessi controlli della CI);
+3. porta **alla stessa versione** la radice e tutti i pacchetti (`shared`, `server`, `client`), aggiornando anche `package-lock.json`;
+4. costruisce le due immagini per `linux/amd64` e `linux/arm64` e le pubblica come `<utente>/time-to-play-server` e `<utente>/time-to-play-client`, con i tag `<versione>` e `latest`;
+5. crea il commit `Release v<versione>` e il tag `v<versione>`, e li invia a GitHub.
+
+Se la build o la pubblicazione delle immagini fallisce, i file di versione vengono ripristinati e non si crea né commit né tag.
+
+Variabili:
+- `DOCKERHUB_NAMESPACE` (obbligatoria): utente o organizzazione su Docker Hub;
+- `DOCKER_PLATFORMS`: architetture (default `linux/amd64,linux/arm64`);
+- `DOCKER_BUILDER`: builder di buildx da usare (default quello attivo).
+
+Opzioni: `--dry-run` costruisce le immagini solo per l'architettura locale, senza cambiare file, pubblicare o creare commit; `--no-git-push` crea commit e tag senza inviarli a GitHub.
+
+Prima del primo rilascio serve `docker login` con un account che può pubblicare nel namespace scelto.
+
 ## Persistenza / backend
 - Lo stato di lobby e partite è tenuto **solo in memoria** sul server, senza database. Un riavvio del server fa perdere le partite in corso: accettato per un party game.

@@ -61,6 +61,8 @@ Prima di ogni commit `npm run check` deve passare.
 
 Docker: `docker compose up --build` avvia server e client (nginx) su `http://localhost:8080`. Dettagli in `docs/tech.md`.
 
+Rilascio: `DOCKERHUB_NAMESPACE=<utente> npm run release [-- patch|minor|major|x.y.z]` porta tutti i pacchetti alla stessa nuova versione, pubblica le immagini su Docker Hub, crea commit e tag `v<versione>`. Prova senza effetti con `--dry-run`. Dettagli in `docs/tech.md`.
+
 In sviluppo, `http://localhost:5173/?gallery` mostra tutti i componenti del client: usarla per verificarli in tema chiaro e scuro e a misura di telefono.
 
 Multilingua (italiano e inglese): **nessun testo visibile scritto direttamente nei componenti**. Ogni testo va nei dizionari `packages/client/src/i18n/it.ts` e `en.ts` (stesse chiavi, garantite dal tipo `Messages`), letto con `useT()` nei componenti o `messages()` fuori da React. Numeri sempre con i formattatori di `format.ts`, che seguono la lingua.

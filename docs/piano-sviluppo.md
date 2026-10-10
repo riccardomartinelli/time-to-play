@@ -206,6 +206,7 @@ Non sono nelle specifiche: vanno approvate prima di essere realizzate.
 ## Fase 14: Pubblicazione
 - [ ] Scelta dell'hosting con supporto alle connessioni WebSocket persistenti.
 - [x] Immagini Docker di server e client; nginx serve il client e inoltra `/socket.io` al server (un solo indirizzo). Vedi [tech.md](tech.md).
+- [x] Rilascio con un comando (`npm run release`): versione unica per tutti i pacchetti, immagini multi-architettura pubblicate su Docker Hub. Vedi [tech.md](tech.md#rilascio).
 - [ ] HTTPS davanti al client.
 - [ ] Configurazione di produzione (variabili d'ambiente, log).
 - [x] Icona del gioco (cronometro): home, scheda del browser, schermata Home di iPhone.
