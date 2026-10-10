@@ -1,7 +1,7 @@
 # Web client: static build served by nginx, which also proxies /socket.io to the server.
 # Build from the repository root: docker build -f packages/client/Dockerfile -t time-to-play-client .
 
-FROM node:20.19-alpine AS build
+FROM node:24.21-alpine AS build
 WORKDIR /app
 COPY package.json package-lock.json tsconfig.base.json ./
 COPY packages/shared/package.json packages/shared/

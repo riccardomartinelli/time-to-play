@@ -6,6 +6,8 @@
 - **Frontend**: web app in **React** con **TypeScript** (vedi [decisions/001-web-app-react.md](decisions/001-web-app-react.md)).
 - **Linguaggio**: TypeScript su frontend e backend; i tipi dei messaggi scambiati sono condivisi.
 - **Backend**: server **Node.js** in **TypeScript** per lobby, matchmaking e stato della partita (vedi [decisions/003-backend-node-typescript.md](decisions/003-backend-node-typescript.md)).
+- **Versione di Node.js**: **24** (LTS), uguale in sviluppo (`.nvmrc`, `engines` in `package.json`), CI e immagini Docker (`node:24.21-alpine`). Vedi [decisions/008-node-24.md](decisions/008-node-24.md).
+- **Test**: Vitest 5.
 
 ## Struttura del repository
 - `packages/shared`: costanti, tipi degli eventi, logica pura condivisa.

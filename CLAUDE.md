@@ -36,6 +36,7 @@ Il lavoro segue `docs/piano-sviluppo.md`, fase per fase. Spuntare le attività c
 
 - Frontend: web app React in TypeScript, mobile-first (uso principale da smartphone, supportato anche desktop).
 - Backend: server Node.js in TypeScript.
+- Node.js 24 (LTS) ovunque: `.nvmrc`, `engines`, CI e Dockerfile vanno cambiati insieme. In locale `nvm use`.
 
 Dettagli in `docs/tech.md`; architettura (stato, fasi, eventi, interfacce di sfide e modalità) in `docs/architecture.md`.
 

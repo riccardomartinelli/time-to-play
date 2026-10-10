@@ -15,5 +15,6 @@ Indice della documentazione del gioco. Ogni file ha uno scopo preciso: aggiorna 
 | [open-questions.md](open-questions.md) | Domande aperte e punti da decidere |
 | [decisions/006-multilingua.md](decisions/006-multilingua.md) | Come funzionano le lingue del gioco |
 | [decisions/007-rilascio-docker-hub.md](decisions/007-rilascio-docker-hub.md) | Come si rilascia una versione su Docker Hub |
+| [decisions/008-node-24.md](decisions/008-node-24.md) | Versione di Node.js usata dal progetto |
 | [specs/](specs/) | Specifiche dettagliate per singola feature (`NNN-nome-feature.md`) |
 | [decisions/](decisions/) | Decisioni prese e motivazioni (`NNN-titolo.md`, formato ADR) |

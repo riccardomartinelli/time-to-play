@@ -1,7 +1,7 @@
 # Game server: Node.js + Socket.IO.
 # Build from the repository root: docker build -f packages/server/Dockerfile -t time-to-play-server .
 
-FROM node:20.19-alpine AS build
+FROM node:24.21-alpine AS build
 WORKDIR /app
 COPY package.json package-lock.json tsconfig.base.json ./
 COPY packages/shared/package.json packages/shared/
@@ -12,7 +12,7 @@ COPY packages/shared packages/shared
 COPY packages/server packages/server
 RUN npm run build --workspace=@ttp/server
 
-FROM node:20.19-alpine
+FROM node:24.21-alpine
 ENV NODE_ENV=production \
     SERVER_PORT=3001
 WORKDIR /app

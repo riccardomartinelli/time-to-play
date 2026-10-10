@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsup src/index.ts --format esm --target node20 --clean",
+    "build": "tsup src/index.ts --format esm --target node24 --clean",
     "start": "node dist/index.js",
     "typecheck": "tsc -p tsconfig.json"
   },
@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@ttp/shared": "*",
-    "@types/node": "^20.17.0",
+    "@types/node": "^24.19.2",
     "socket.io-client": "^4.8.4",
     "tsup": "^8.5.0",
     "tsx": "^4.20.3"
