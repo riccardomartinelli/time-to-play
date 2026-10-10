@@ -3,6 +3,7 @@ import { GameButton } from "../components/GameButton";
 import { TimeBar } from "../components/TimeBar";
 import { sound } from "../feedback/sound";
 import { formatSeconds } from "../format";
+import { useT } from "../i18n";
 import styles from "./Play.module.css";
 import type { PlayProps } from "./types";
 import { usePlayWindow } from "./usePlayWindow";
@@ -10,17 +11,19 @@ import { usePlayWindow } from "./usePlayWindow";
 /** Hold the button and release it when you think the target time has passed. */
 export function StopTheClockPlay({ snapshot, round, submit }: PlayProps) {
   const { targetMs } = round.publicParams as { targetMs: number };
+  const t = useT();
+  const texts = t.challenges["stop-the-clock"];
   const play = usePlayWindow(snapshot, round, submit);
   const [holding, setHolding] = useState(false);
 
-  let status = "Il cronometro è nascosto: conta nella tua testa!";
-  if (holding) status = "Rilascia al momento giusto...";
-  if (play.done) status = "Fatto! Aspettiamo gli altri...";
+  let status = texts.hiddenClock;
+  if (holding) status = texts.releaseNow;
+  if (play.done) status = t.game.doneWaiting;
   if (play.error) status = play.error;
 
   return (
     <div className={styles.play}>
-      <p className={styles.label}>Rilascia esattamente a</p>
+      <p className={styles.label}>{texts.releaseAt}</p>
       <div className={`${styles.target} numeric`}>{formatSeconds(targetMs, 1)}</div>
       <GameButton
         disabled={play.done}
@@ -34,7 +37,7 @@ export function StopTheClockPlay({ snapshot, round, submit }: PlayProps) {
           void play.send({ durationMs });
         }}
       >
-        {play.done ? "Inviato" : "Tieni premuto"}
+        {play.done ? t.game.sent : texts.hold}
       </GameButton>
       <p
         className={[styles.status, play.error && styles.error].filter(Boolean).join(" ")}
@@ -43,7 +46,7 @@ export function StopTheClockPlay({ snapshot, round, submit }: PlayProps) {
         {status}
       </p>
       <div className={styles.bar}>
-        <TimeBar remainingMs={play.remainingMs} totalMs={play.totalMs} label="Tempo per giocare" />
+        <TimeBar remainingMs={play.remainingMs} totalMs={play.totalMs} label={t.game.timeToPlay} />
       </div>
       <p className={styles.played}>{play.playedLabel}</p>
     </div>

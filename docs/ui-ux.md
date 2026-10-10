@@ -21,6 +21,13 @@ _Da definire._
 - Si gioca da **smartphone**: design mobile-first, pulsante grande e facile da toccare.
 - Il gioco funziona anche da **desktop** (uso secondario): layout responsive, pulsante cliccabile con il mouse. Su desktop il pulsante si può usare anche con la **barra spaziatrice** (premi e rilascia).
 
+## Lingue
+- Il gioco è in **italiano** e **inglese** (vedi [decisions/006-multilingua.md](decisions/006-multilingua.md)).
+- **Lingua iniziale**: quella del telefono; se non è l'italiano si parte in inglese.
+- **Selettore IT / EN** in alto, accanto a suoni e tema (nascosto durante il gioco, come il tema); la scelta resta salvata sul dispositivo.
+- I numeri seguono la lingua: virgola decimale in italiano ("2,700 s"), punto in inglese ("2.700 s").
+- "Time to Play" resta uguale in tutte le lingue.
+
 ## Stile visivo: "Caramella"
 
 Stile cartoon, chiaro e giocoso: colori pieni, **contorni spessi**, forme arrotondate, pulsanti che sembrano tasti fisici (bordo inferiore più spesso che si "schiaccia" quando premuti). Vedi [decisions/005-stile-caramella.md](decisions/005-stile-caramella.md).

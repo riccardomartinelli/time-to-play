@@ -3,8 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import { GameButton } from "../components/GameButton";
 import { sound } from "../feedback/sound";
 import { useHoldSound } from "../feedback/useGameSounds";
+import { formatDegrees } from "../format";
+import { useT } from "../i18n";
 import { CENTER, NEEDLE_LENGTH, NeedleDial, point, ZONE_FILL, type Stop } from "./NeedleDial";
-import { needleCloseness, ZONE_LABEL } from "./needleHype";
+import { needleCloseness } from "./needleHype";
 import styles from "./Play.module.css";
 import type { PlayProps } from "./types";
 import { usePlayWindow } from "./usePlayWindow";
@@ -12,6 +14,8 @@ import { usePlayWindow } from "./usePlayWindow";
 /** Stop the spinning needle on the target; once stopped, the dial zooms on the needle tip. */
 export function NeedlePlay({ snapshot, round, submit }: PlayProps) {
   const params = round.publicParams as NeedleParams;
+  const t = useT();
+  const texts = t.challenges.needle;
   const play = usePlayWindow(snapshot, round, submit, { hurry: false });
   const [stop, setStop] = useState<Stop | null>(null);
   const [zoomed, setZoomed] = useState(false);
@@ -51,8 +55,8 @@ export function NeedlePlay({ snapshot, round, submit }: PlayProps) {
     return () => cancelAnimationFrame(frame);
   }, [stop]);
 
-  let status = "Fermala sul centro del bersaglio!";
-  if (stop) status = `${stop.errorDeg.toLocaleString("it-IT")}° dal centro`;
+  let status = texts.stopOnTarget;
+  if (stop) status = texts.fromCenter(formatDegrees(stop.errorDeg));
   if (play.error) status = play.error;
 
   return (
@@ -66,7 +70,7 @@ export function NeedlePlay({ snapshot, round, submit }: PlayProps) {
       />
       {stop && (
         <div className={styles.zoneLabel} style={{ background: ZONE_FILL[stop.zone] }}>
-          {ZONE_LABEL[stop.zone]}
+          {texts.zoneLabel[stop.zone]}
         </div>
       )}
       <GameButton
@@ -83,7 +87,7 @@ export function NeedlePlay({ snapshot, round, submit }: PlayProps) {
           void play.send({ elapsedMs });
         }}
       >
-        {stop === null ? "STOP!" : "Fermata"}
+        {stop === null ? texts.stop : texts.stopped}
       </GameButton>
       <p
         className={[styles.status, play.error && styles.error].filter(Boolean).join(" ")}

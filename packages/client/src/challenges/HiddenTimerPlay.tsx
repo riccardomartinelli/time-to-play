@@ -4,6 +4,7 @@ import { GameButton } from "../components/GameButton";
 import { Pill } from "../components/Pill";
 import { TimeBar } from "../components/TimeBar";
 import { errorMessage } from "../errors";
+import { useT } from "../i18n";
 import { sound } from "../feedback/sound";
 import { useHoldSound, useTicks } from "../feedback/useGameSounds";
 import { formatSeconds, secondsLeft, secondsValue } from "../format";
@@ -16,6 +17,8 @@ const URGENT_SECONDS = 3;
 
 /** Turns: hold to add time to a secret total, without passing the secret limit. */
 export function HiddenTimerPlay({ snapshot, round, submit }: PlayProps) {
+  const t = useT();
+  const texts = t.challenges["hidden-timer"];
   const { order, limitMs } = round.publicParams as { order: string[]; limitMs: number };
   const turn = round.turn;
   const remainingMs = useRemaining(turn?.endsAt ?? null) ?? 0;
@@ -40,14 +43,14 @@ export function HiddenTimerPlay({ snapshot, round, submit }: PlayProps) {
     setError(result.ok ? null : errorMessage(result.error));
   };
 
-  let title = "Aspetta il tuo turno";
-  let status = "Nessuno sa quanto tempo è già passato...";
-  if (turn && !myTurn) title = `Tocca a ${nicknameOf(snapshot, turn.playerId)}`;
+  let title = texts.waitTurn;
+  let status = texts.secret;
+  if (turn && !myTurn) title = texts.turnOf(nicknameOf(snapshot, turn.playerId));
   if (myTurn) {
-    title = "Tocca a te!";
-    status = "Tieni premuto per aggiungere tempo. Gli altri quanto avranno usato?";
+    title = texts.yourTurn;
+    status = texts.addTime;
   }
-  if (myTurn && sent) status = "Fatto! Speriamo bene...";
+  if (myTurn && sent) status = texts.hopeSo;
   if (error) status = error;
 
   return (
@@ -56,18 +59,18 @@ export function HiddenTimerPlay({ snapshot, round, submit }: PlayProps) {
       <div
         className={styles.limitSign}
         role="img"
-        aria-label={`Limite da non superare: ${formatSeconds(limitMs, 1)}`}
+        aria-label={texts.limitLabel(formatSeconds(limitMs, 1))}
       >
         <div className={styles.limitRing}>
           <div className={styles.limitFace}>
             <span className={`${styles.limitValue} numeric`}>{secondsValue(limitMs, 1)}</span>
-            <span className={styles.limitUnit}>secondi</span>
+            <span className={styles.limitUnit}>{texts.seconds}</span>
           </div>
         </div>
-        <span className={styles.limitTag}>Limite</span>
+        <span className={styles.limitTag}>{texts.limit}</span>
       </div>
       <h1 className={styles.turnTitle}>{title}</h1>
-      <ol className={styles.order} aria-label="Ordine dei turni">
+      <ol className={styles.order} aria-label={texts.order}>
         {order.map((playerId) => (
           <li key={playerId}>
             <Pill
@@ -80,7 +83,7 @@ export function HiddenTimerPlay({ snapshot, round, submit }: PlayProps) {
               }
             >
               {nicknameOf(snapshot, playerId)}
-              {playerId === snapshot.you && " (tu)"}
+              {playerId === snapshot.you && ` ${t.lobby.you}`}
             </Pill>
           </li>
         ))}
@@ -93,7 +96,7 @@ export function HiddenTimerPlay({ snapshot, round, submit }: PlayProps) {
           void send(durationMs);
         }}
       >
-        {myTurn && !sent ? "Tieni premuto" : "Aspetta"}
+        {myTurn && !sent ? texts.hold : texts.wait}
       </GameButton>
       <p className={[styles.status, error && styles.error].filter(Boolean).join(" ")} role="status">
         {status}
@@ -103,7 +106,7 @@ export function HiddenTimerPlay({ snapshot, round, submit }: PlayProps) {
           <TimeBar
             remainingMs={remainingMs}
             totalMs={HIDDEN_TIMER_TURN_TIMEOUT_MS}
-            label="Tempo per il turno"
+            label={texts.turnTime}
           />
         </div>
       )}

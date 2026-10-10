@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import styles from "./Screen.module.css";
+import { LanguageToggle } from "./LanguageToggle";
 import { SoundToggle } from "./SoundToggle";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -7,7 +8,7 @@ interface ScreenProps {
   children: ReactNode;
   /** Left side of the header (e.g. the round badge). */
   header?: ReactNode;
-  /** The theme choice is hidden during play to keep the screen clean. */
+  /** Language and theme choices are hidden during play to keep the screen clean. */
   showThemeToggle?: boolean;
   centered?: boolean;
 }
@@ -20,6 +21,7 @@ export function Screen({ children, header, showThemeToggle = true, centered }: S
         <div>{header}</div>
         <div className={styles.settings}>
           <SoundToggle />
+          {showThemeToggle && <LanguageToggle />}
           {showThemeToggle && <ThemeToggle />}
         </div>
       </header>

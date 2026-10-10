@@ -6,6 +6,7 @@ import { GameIcon } from "../components/GameIcon";
 import { Screen } from "../components/Screen";
 import { TextField } from "../components/TextField";
 import { errorMessage } from "../errors";
+import { useT } from "../i18n";
 import { loadNickname, saveNickname } from "../net/nickname";
 import type { ClientResult } from "../state/GameClient";
 import { useGameClient } from "../state/GameClientContext";
@@ -32,6 +33,7 @@ function toFieldErrors(result: ClientResult): FieldErrors {
 }
 
 export function HomeScreen() {
+  const t = useT();
   const client = useGameClient();
   const [step, setStep] = useState<Step>("start");
   const [nickname, setNickname] = useState(loadNickname);
@@ -48,9 +50,8 @@ export function HomeScreen() {
     event.preventDefault();
     const name = normalizeNickname(nickname);
     const local: FieldErrors = {};
-    if (!name) local.nickname = "Scegli un nickname.";
-    if (step === "join" && code.length !== LOBBY_CODE_LENGTH)
-      local.code = "Il codice ha 4 lettere.";
+    if (!name) local.nickname = t.home.chooseNickname;
+    if (step === "join" && code.length !== LOBBY_CODE_LENGTH) local.code = t.home.codeLength;
     if (local.nickname || local.code) return setErrors(local);
 
     setBusy(true);
@@ -66,14 +67,14 @@ export function HomeScreen() {
         <div className={styles.hero}>
           <GameIcon className={styles.icon} />
           <h1 className={styles.title}>Time to Play</h1>
-          <p className={styles.tagline}>Sfide a tempo tra amici, ognuno dal suo telefono</p>
+          <p className={styles.tagline}>{t.home.tagline}</p>
         </div>
         <div className={styles.actions}>
           <Button block onClick={() => goTo("create")}>
-            Crea partita
+            {t.home.createGame}
           </Button>
           <Button variant="secondary" block onClick={() => goTo("join")}>
-            Entra con codice
+            {t.home.joinWithCode}
           </Button>
         </div>
       </Screen>
@@ -82,11 +83,11 @@ export function HomeScreen() {
 
   return (
     <Screen>
-      <h1>{step === "create" ? "Crea partita" : "Entra in partita"}</h1>
+      <h1>{step === "create" ? t.home.createGame : t.home.joinTitle}</h1>
       <form className={styles.form} onSubmit={submit} noValidate>
         {step === "join" && (
           <div>
-            <div className={styles.fieldLabel}>Codice partita</div>
+            <div className={styles.fieldLabel}>{t.home.gameCode}</div>
             <CodeInput value={code} onChange={setCode} autoFocus />
             {errors.code && (
               <p className={styles.formError} role="alert">
@@ -96,7 +97,7 @@ export function HomeScreen() {
           </div>
         )}
         <TextField
-          label="Il tuo nickname"
+          label={t.home.nickname}
           value={nickname}
           onChange={(event) => setNickname(event.target.value)}
           maxLength={NICKNAME_MAX_LENGTH}
@@ -112,10 +113,10 @@ export function HomeScreen() {
         )}
         <div className={styles.actions}>
           <Button type="submit" block disabled={busy}>
-            {step === "create" ? "Crea" : "Entra"}
+            {step === "create" ? t.home.create : t.home.join}
           </Button>
           <Button variant="neutral" block onClick={() => goTo("start")}>
-            Indietro
+            {t.home.back}
           </Button>
         </div>
       </form>

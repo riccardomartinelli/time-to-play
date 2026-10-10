@@ -154,6 +154,9 @@ Principi validi per tutte le fasi:
 - [x] Lancetta ([009](specs/009-sfida-lancetta.md))
 - [x] Cronometro a vista ([010](specs/010-sfida-cronometro-a-vista.md))
 
+## Multilingua
+- [x] Italiano e inglese, con selettore e lingua iniziale dal telefono ([decisions/006](decisions/006-multilingua.md))
+
 ## Fase 10: Modalità Eliminazione
 - [ ] Selezione della modalità nel pannello host.
 - [ ] Schermata di eliminazione (chi esce e perché, salvati per pareggio).

@@ -1,5 +1,6 @@
 import { NEEDLE_ZONES, type NeedleParams, type NeedleZone } from "@ttp/shared";
 import type { CSSProperties, Ref } from "react";
+import { messages } from "../i18n";
 import { STOP_ZOOM } from "./needleHype";
 import styles from "./Play.module.css";
 
@@ -68,7 +69,7 @@ export function NeedleDial({ params, angleDeg, needleRef, stop, zoomed }: Needle
           height={SIZE}
           viewBox={`0 0 ${SIZE} ${SIZE}`}
           role="img"
-          aria-label="Quadrante con lancetta e bersaglio a zone"
+          aria-label={messages().challenges.needle.dialLabel}
         >
           <circle cx={CENTER} cy={CENTER + 6} r={RADIUS + 8} fill="var(--color-outline)" />
           <circle

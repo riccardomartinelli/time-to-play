@@ -13,11 +13,11 @@ export interface FormattedResult {
   detail?: string;
 }
 
-/** Everything the client needs to show a challenge. */
+/**
+ * Everything the client needs to show a challenge. Titles, rules and texts live in the
+ * dictionaries (`t.challenges[id]`), so the screens follow the chosen language.
+ */
 export interface ChallengeUi {
-  title: string;
-  /** Rules, shown before the round starts. */
-  instruction: string;
   /** Missing while the challenge screens are not ready. */
   Play?: ComponentType<PlayProps>;
   /** `result` is `null` when the player has no result of their own. */
@@ -25,5 +25,5 @@ export interface ChallengeUi {
   /** What the round results reveal (e.g. the target time). */
   describeReveal(reveal: unknown): string | null;
   /** Shown for connected players without a result; "Tempo scaduto" by default. */
-  timedOutLabel?: string;
+  timedOutLabel?(): string;
 }

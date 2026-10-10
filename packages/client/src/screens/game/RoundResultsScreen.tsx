@@ -1,21 +1,18 @@
-import type { LobbySnapshot, RoundResultEntry } from "@ttp/shared";
+import type { LobbySnapshot } from "@ttp/shared";
 import { CHALLENGES } from "../../challenges/registry";
 import { ChallengeIcon } from "../../components/ChallengeIcon";
 import { Leaderboard, type LeaderboardEntry } from "../../components/Leaderboard";
 import { Pill } from "../../components/Pill";
 import { Screen } from "../../components/Screen";
+import { useT } from "../../i18n";
 import styles from "./Game.module.css";
 import { isConnected, nicknameOf, roundLabel } from "./players";
-
-const STATUS_TEXT: Record<Exclude<RoundResultEntry["status"], "played">, string> = {
-  timedOut: "Tempo scaduto",
-  noResult: "Disconnesso",
-};
 
 export function RoundResultsScreen({ snapshot }: { snapshot: LobbySnapshot }) {
   const game = snapshot.game!;
   const round = game.round!;
   const results = round.results!;
+  const t = useT();
   const challenge = CHALLENGES[round.challenge];
   const reveal = challenge.describeReveal(results.reveal);
 
@@ -33,10 +30,10 @@ export function RoundResultsScreen({ snapshot }: { snapshot: LobbySnapshot }) {
         entry.status === "played"
           ? formatted?.detail
           : entry.status === "timedOut"
-            ? (challenge.timedOutLabel ?? STATUS_TEXT.timedOut)
-            : STATUS_TEXT[entry.status],
+            ? (challenge.timedOutLabel?.() ?? t.game.timedOut)
+            : t.game.noResult,
       badge: entry.eliminated ? (
-        <Pill variant="primary">Eliminato</Pill>
+        <Pill variant="primary">{t.game.eliminated}</Pill>
       ) : game.mode === "score" ? (
         <Pill variant={entry.points > 0 ? "success" : "neutral"}>+{entry.points}</Pill>
       ) : undefined,
@@ -54,14 +51,12 @@ export function RoundResultsScreen({ snapshot }: { snapshot: LobbySnapshot }) {
         <div className={styles.resultsTitle}>
           <ChallengeIcon challenge={round.challenge} size={48} />
           <div>
-            <h1>Risultati</h1>
-            <p className={styles.muted}>{challenge.title}</p>
+            <h1>{t.game.results}</h1>
+            <p className={styles.muted}>{t.challenges[round.challenge].title}</p>
           </div>
         </div>
         {reveal && <div className={styles.reveal}>{reveal}</div>}
-        {results.repeat && (
-          <p className={styles.banner}>Non è rimasto nessuno in gara: si ripete il round!</p>
-        )}
+        {results.repeat && <p className={styles.banner}>{t.game.repeatRound}</p>}
         <Leaderboard entries={entries} />
       </div>
     </Screen>

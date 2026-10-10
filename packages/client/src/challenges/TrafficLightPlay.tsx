@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { GameButton } from "../components/GameButton";
 import { sound } from "../feedback/sound";
+import { useT } from "../i18n";
 import styles from "./Play.module.css";
 import type { PlayProps } from "./types";
 import { usePlayWindow } from "./usePlayWindow";
@@ -8,6 +9,8 @@ import { usePlayWindow } from "./usePlayWindow";
 /** Press as soon as the light turns green; pressing on red is a false start. */
 export function TrafficLightPlay({ snapshot, round, submit }: PlayProps) {
   const { redMs } = round.publicParams as { redMs: number };
+  const t = useT();
+  const texts = t.challenges["traffic-light"];
   const play = usePlayWindow(snapshot, round, submit, { hurry: false });
   const [green, setGreen] = useState(false);
   const [falseStart, setFalseStart] = useState(false);
@@ -24,9 +27,9 @@ export function TrafficLightPlay({ snapshot, round, submit }: PlayProps) {
     return () => clearTimeout(timer);
   }, [redMs]);
 
-  let status = "Aspetta il verde...";
-  if (green) status = "VIA! Premi!";
-  if (play.done) status = falseStart ? "Falsa partenza!" : "Fatto! Aspettiamo gli altri...";
+  let status = texts.waitGreen;
+  if (green) status = texts.goPress;
+  if (play.done) status = falseStart ? texts.falseStart : t.game.doneWaiting;
   if (play.error) status = play.error;
 
   return (
@@ -35,7 +38,7 @@ export function TrafficLightPlay({ snapshot, round, submit }: PlayProps) {
       <div
         className={styles.startLights}
         role="img"
-        aria-label={green ? "Semaforo verde: via!" : "Semaforo rosso: aspetta"}
+        aria-label={green ? texts.lightsGreen : texts.lightsRed}
       >
         <span className={`${styles.lamp} ${green ? "" : styles.redOn}`} />
         <span className={styles.lampGap} aria-hidden="true" />
@@ -56,7 +59,7 @@ export function TrafficLightPlay({ snapshot, round, submit }: PlayProps) {
           }
         }}
       >
-        {play.done ? "Inviato" : "Premi!"}
+        {play.done ? t.game.sent : texts.press}
       </GameButton>
       <p
         className={[styles.status, (play.error || falseStart) && styles.error]

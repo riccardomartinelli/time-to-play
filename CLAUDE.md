@@ -63,6 +63,8 @@ Docker: `docker compose up --build` avvia server e client (nginx) su `http://loc
 
 In sviluppo, `http://localhost:5173/?gallery` mostra tutti i componenti del client: usarla per verificarli in tema chiaro e scuro e a misura di telefono.
 
+Multilingua (italiano e inglese): **nessun testo visibile scritto direttamente nei componenti**. Ogni testo va nei dizionari `packages/client/src/i18n/it.ts` e `en.ts` (stesse chiavi, garantite dal tipo `Messages`), letto con `useT()` nei componenti o `messages()` fuori da React. Numeri sempre con i formattatori di `format.ts`, che seguono la lingua.
+
 Stile "Caramella" con tema chiaro e scuro obbligatorio (vedi `docs/ui-ux.md`): usare solo i token CSS di `packages/client/src/styles/theme.css`, mai colori scritti a mano, e verificare ogni schermata in entrambi i temi.
 
 La logica delle regole (punti, pareggi, eliminazioni) va scritta come funzioni pure in `shared` e coperta da test.

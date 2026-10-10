@@ -1,7 +1,10 @@
 import { rankResults, type LobbySnapshot, type PlayerId } from "@ttp/shared";
+import { messages } from "../../i18n";
 
 export function nicknameOf(snapshot: LobbySnapshot, playerId: PlayerId): string {
-  return snapshot.players.find((player) => player.id === playerId)?.nickname ?? "Giocatore";
+  return (
+    snapshot.players.find((player) => player.id === playerId)?.nickname ?? messages().game.player
+  );
 }
 
 export function isConnected(snapshot: LobbySnapshot, playerId: PlayerId): boolean {
@@ -20,7 +23,5 @@ export function scoreStandings(snapshot: LobbySnapshot) {
 
 export function roundLabel(snapshot: LobbySnapshot): string {
   const game = snapshot.game!;
-  return game.totalRounds
-    ? `Round ${game.roundNumber} di ${game.totalRounds}`
-    : `Round ${game.roundNumber}`;
+  return messages().game.round(game.roundNumber, game.totalRounds);
 }

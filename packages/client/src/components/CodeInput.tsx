@@ -1,5 +1,6 @@
 import { LOBBY_CODE_LENGTH } from "@ttp/shared";
 import { useState } from "react";
+import { useT } from "../i18n";
 import styles from "./CodeInput.module.css";
 import { sanitizeCode } from "./sanitizeCode";
 
@@ -11,12 +12,8 @@ interface CodeInputProps {
 }
 
 /** Lobby code as 4 big letter boxes, backed by a single native input. */
-export function CodeInput({
-  value,
-  onChange,
-  label = "Codice partita",
-  autoFocus,
-}: CodeInputProps) {
+export function CodeInput({ value, onChange, label, autoFocus }: CodeInputProps) {
+  const t = useT();
   const [focused, setFocused] = useState(false);
   const activeIndex = Math.min(value.length, LOBBY_CODE_LENGTH - 1);
   return (
@@ -34,7 +31,7 @@ export function CodeInput({
       ))}
       <input
         className={styles.input}
-        aria-label={label}
+        aria-label={label ?? t.home.gameCode}
         value={value}
         onChange={(event) => onChange(sanitizeCode(event.target.value))}
         onFocus={() => setFocused(true)}

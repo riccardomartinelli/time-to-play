@@ -18,10 +18,3 @@ export const STOP_ZOOM: Record<NeedleZone, number> = {
   outer: 1.8,
   miss: 1.4,
 };
-
-export const ZONE_LABEL: Record<NeedleZone, string> = {
-  center: "CENTRO!",
-  inner: "OTTIMO!",
-  outer: "BERSAGLIO",
-  miss: "FUORI",
-};

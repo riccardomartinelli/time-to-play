@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
+import { useT } from "../i18n";
 import styles from "./Leaderboard.module.css";
 import { moodsFor } from "./leaderboardMood";
 import { Crown, EmptyWallet, SadFace, Sparkle } from "./MoodIcons";
@@ -30,6 +31,7 @@ interface LeaderboardProps {
 const STAGGER_MS = 90;
 
 export function Leaderboard({ entries, celebrate = false }: LeaderboardProps) {
+  const t = useT();
   const moods = celebrate ? moodsFor(entries.map((entry) => entry.position)) : [];
   return (
     <ol className={[styles.list, celebrate && styles.celebrating].filter(Boolean).join(" ")}>
@@ -59,7 +61,7 @@ export function Leaderboard({ entries, celebrate = false }: LeaderboardProps) {
               <span
                 className={`${styles.position} numeric`}
                 aria-label={
-                  entry.position === null ? "Senza posizione" : `${entry.position}° posto`
+                  entry.position === null ? t.game.noPosition : t.game.position(entry.position)
                 }
               >
                 {entry.position ?? "–"}
@@ -69,7 +71,7 @@ export function Leaderboard({ entries, celebrate = false }: LeaderboardProps) {
               <span className={styles.nameLine}>
                 <span className={styles.nickname}>
                   {entry.nickname}
-                  {entry.isYou && " (tu)"}
+                  {entry.isYou && ` ${t.lobby.you}`}
                 </span>
                 {mood === "leader" && <Sparkle />}
                 {mood === "last" && <SadFace />}

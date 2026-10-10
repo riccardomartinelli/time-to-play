@@ -16,17 +16,14 @@ import { Screen } from "../components/Screen";
 import { SegmentedControl } from "../components/SegmentedControl";
 import { Stepper } from "../components/Stepper";
 import { errorMessage } from "../errors";
+import { useT } from "../i18n";
 import type { ClientResult } from "../state/GameClient";
 import { useGameClient } from "../state/GameClientContext";
 import styles from "./LobbyScreen.module.css";
 
-const MODE_OPTIONS: { value: GameMode; label: string; description: string }[] = [
-  { value: "score", label: "Punteggio", description: "Vince chi fa più punti" },
-  { value: "elimination", label: "Eliminazione", description: "Ogni round esce l'ultimo" },
-];
-
 /** Waiting room: code to share, players, host settings and start. See docs/specs/001. */
 export function LobbyScreen({ snapshot }: { snapshot: LobbySnapshot }) {
+  const t = useT();
   const client = useGameClient();
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -43,20 +40,29 @@ export function LobbyScreen({ snapshot }: { snapshot: LobbySnapshot }) {
     setError(result.ok ? null : errorMessage(result.error));
   };
 
+  const modeOptions: { value: GameMode; label: string; description: string }[] = [
+    { value: "score", label: t.lobby.scoreMode, description: t.lobby.scoreModeHint },
+    {
+      value: "elimination",
+      label: t.lobby.eliminationMode,
+      description: t.lobby.eliminationModeHint,
+    },
+  ];
+
   const changeSettings = (patch: Partial<GameSettings>) =>
     run(() => client.updateSettings({ ...snapshot.settings, ...patch }));
 
   return (
     <Screen>
       <div className={styles.codeBlock}>
-        <h1>Sala d'attesa</h1>
+        <h1>{t.lobby.title}</h1>
         <CodeDisplay code={snapshot.code} />
-        <p className={styles.hint}>Dite questo codice agli altri giocatori</p>
+        <p className={styles.hint}>{t.lobby.shareCode}</p>
       </div>
 
       <section className={styles.section}>
         <div className={styles.sectionTitle}>
-          <h2>Giocatori</h2>
+          <h2>{t.lobby.players}</h2>
           <span className="numeric">
             {snapshot.players.length}/{MAX_PLAYERS}
           </span>
@@ -75,27 +81,27 @@ export function LobbyScreen({ snapshot }: { snapshot: LobbySnapshot }) {
             >
               <span className={styles.name}>
                 {player.nickname}
-                {player.id === snapshot.you && " (tu)"}
+                {player.id === snapshot.you && ` ${t.lobby.you}`}
               </span>
-              {!player.connected && <span className={styles.status}>disconnesso</span>}
-              {player.isHost && <Pill variant="success">Host</Pill>}
+              {!player.connected && <span className={styles.status}>{t.lobby.disconnected}</span>}
+              {player.isHost && <Pill variant="success">{t.lobby.host}</Pill>}
             </li>
           ))}
         </ul>
       </section>
 
       <Card className={styles.section}>
-        <h2>Impostazioni</h2>
+        <h2>{t.lobby.settings}</h2>
         <SegmentedControl
-          label="Modalità"
-          options={MODE_OPTIONS}
+          label={t.lobby.mode}
+          options={modeOptions}
           value={snapshot.settings.mode}
           readOnly={!isHost || busy}
           onChange={(mode) => changeSettings({ mode })}
         />
         {snapshot.settings.mode === "score" && (
           <Stepper
-            label="Round"
+            label={t.lobby.rounds}
             value={snapshot.settings.rounds}
             min={ROUNDS_MIN}
             max={ROUNDS_MAX}
@@ -114,18 +120,16 @@ export function LobbyScreen({ snapshot }: { snapshot: LobbySnapshot }) {
       <div className={styles.actions}>
         {isHost ? (
           <>
-            {!canStart && <p className={styles.waiting}>Servono almeno 2 giocatori connessi</p>}
+            {!canStart && <p className={styles.waiting}>{t.lobby.needTwoPlayers}</p>}
             <Button block disabled={!canStart || busy} onClick={() => run(() => client.start())}>
-              Avvia partita
+              {t.lobby.start}
             </Button>
           </>
         ) : (
-          <p className={styles.waiting}>
-            In attesa che {host?.nickname ?? "l'host"} avvii la partita...
-          </p>
+          <p className={styles.waiting}>{t.lobby.waitingForHost(host?.nickname ?? null)}</p>
         )}
         <Button variant="neutral" block disabled={busy} onClick={() => run(() => client.leave())}>
-          Esci
+          {t.lobby.leave}
         </Button>
       </div>
     </Screen>

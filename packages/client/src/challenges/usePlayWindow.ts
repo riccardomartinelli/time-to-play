@@ -1,6 +1,7 @@
 import { PLAY_TIMEOUT_MS, type LobbySnapshot, type RoundSnapshot } from "@ttp/shared";
 import { useState } from "react";
 import { errorMessage } from "../errors";
+import { messages } from "../i18n";
 import { useTicks } from "../feedback/useGameSounds";
 import { secondsLeft } from "../format";
 import { useRemaining } from "../hooks/useRemaining";
@@ -31,7 +32,7 @@ export function usePlayWindow(
       return;
     }
     setState(result.error === "WRONG_PHASE" ? "sent" : "idle");
-    setError(result.error === "WRONG_PHASE" ? "Troppo tardi!" : errorMessage(result.error));
+    setError(result.error === "WRONG_PHASE" ? messages().game.tooLate : errorMessage(result.error));
   };
 
   const done = state !== "idle" || alreadyPlayed;
@@ -45,6 +46,6 @@ export function usePlayWindow(
     done,
     error,
     send,
-    playedLabel: `${round.played.length}/${round.players.length} hanno giocato`,
+    playedLabel: messages().game.played(round.played.length, round.players.length),
   };
 }

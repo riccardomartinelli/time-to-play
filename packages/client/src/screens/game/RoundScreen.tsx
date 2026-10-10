@@ -8,6 +8,7 @@ import { secondsLeft } from "../../format";
 import { useRemaining } from "../../hooks/useRemaining";
 import { sound } from "../../feedback/sound";
 import { useTicks } from "../../feedback/useGameSounds";
+import { useT } from "../../i18n";
 import { useGameClient } from "../../state/GameClientContext";
 import styles from "./Game.module.css";
 import { roundLabel } from "./players";
@@ -16,7 +17,9 @@ import { roundLabel } from "./players";
 export function RoundScreen({ snapshot }: { snapshot: LobbySnapshot }) {
   const client = useGameClient();
   const round = snapshot.game!.round!;
+  const t = useT();
   const challenge = CHALLENGES[round.challenge];
+  const texts = t.challenges[round.challenge];
   const remaining = useRemaining(snapshot.phaseEndsAt);
   const playing = round.players.includes(snapshot.you);
   // Never above 3, even for the instant before the remaining time is refreshed.
@@ -35,12 +38,12 @@ export function RoundScreen({ snapshot }: { snapshot: LobbySnapshot }) {
     content = (
       <div className={styles.center}>
         <ChallengeIcon challenge={round.challenge} size={120} className={styles.introIcon} />
-        <p className={styles.kicker}>Prossima sfida</p>
-        <h1 className={styles.title}>{challenge.title}</h1>
-        <p className={styles.rules}>{challenge.instruction}</p>
-        {!playing && <p className={styles.muted}>Sei fuori dal gioco: guarda gli altri!</p>}
+        <p className={styles.kicker}>{t.game.nextChallenge}</p>
+        <h1 className={styles.title}>{texts.title}</h1>
+        <p className={styles.rules}>{texts.instruction}</p>
+        {!playing && <p className={styles.muted}>{t.game.watching}</p>}
         <p className={styles.startsIn}>
-          Si parte tra <span className="numeric">{secondsLeft(remaining ?? 0)}</span>...
+          {t.game.startsIn} <span className="numeric">{secondsLeft(remaining ?? 0)}</span>...
         </p>
       </div>
     );
@@ -48,20 +51,18 @@ export function RoundScreen({ snapshot }: { snapshot: LobbySnapshot }) {
     content = (
       <div className={styles.center}>
         <ChallengeIcon challenge={round.challenge} size={64} />
-        <p className={styles.muted}>{challenge.title}</p>
+        <p className={styles.muted}>{texts.title}</p>
         <div className={`${styles.countdown} numeric`} aria-live="assertive">
-          {countdown || "Via!"}
+          {countdown || t.game.go}
         </div>
       </div>
     );
   } else if (!playing) {
     content = (
       <div className={styles.center}>
-        <h1>{challenge.title}</h1>
-        <p className={styles.muted}>Gli altri stanno giocando...</p>
-        <p className={styles.muted}>
-          {round.played.length}/{round.players.length} hanno giocato
-        </p>
+        <h1>{texts.title}</h1>
+        <p className={styles.muted}>{t.game.othersPlaying}</p>
+        <p className={styles.muted}>{t.game.played(round.played.length, round.players.length)}</p>
       </div>
     );
   } else if (challenge.Play) {
@@ -75,7 +76,7 @@ export function RoundScreen({ snapshot }: { snapshot: LobbySnapshot }) {
       />
     );
   } else {
-    content = <p className={styles.muted}>Questa sfida non è ancora disponibile.</p>;
+    content = <p className={styles.muted}>{t.game.notAvailable}</p>;
   }
 
   return (

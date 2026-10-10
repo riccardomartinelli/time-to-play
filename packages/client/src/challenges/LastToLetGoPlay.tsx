@@ -2,12 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import { GameButton } from "../components/GameButton";
 import { sound } from "../feedback/sound";
 import { useHoldSound } from "../feedback/useGameSounds";
+import { useT } from "../i18n";
 import styles from "./Play.module.css";
 import type { PlayProps } from "./types";
 import { usePlayWindow } from "./usePlayWindow";
 
 /** Hold as long as you dare: release before the secret explosion. */
 export function LastToLetGoPlay({ snapshot, round, submit }: PlayProps) {
+  const t = useT();
+  const texts = t.challenges["last-to-let-go"];
   const play = usePlayWindow(snapshot, round, submit, { hurry: false });
   const [holding, setHolding] = useState(false);
   const fuse = useHoldSound("fuse");
@@ -18,14 +21,14 @@ export function LastToLetGoPlay({ snapshot, round, submit }: PlayProps) {
     goAt.current = performance.now();
   }, []);
 
-  let status = "Premi e tieni premuto!";
-  if (holding) status = "Resisti... ma non esplodere!";
-  if (play.done) status = "Mollato! Vediamo chi resiste...";
+  let status = texts.pressAndHold;
+  if (holding) status = texts.resist;
+  if (play.done) status = texts.released;
   if (play.error) status = play.error;
 
   return (
     <div className={styles.play}>
-      <p className={styles.label}>C'è una bomba a tempo segreto</p>
+      <p className={styles.label}>{texts.bomb}</p>
       <GameButton
         disabled={play.done}
         onPressStart={() => {
@@ -39,7 +42,7 @@ export function LastToLetGoPlay({ snapshot, round, submit }: PlayProps) {
           void play.send({ holdMs: Math.max(0, time - goAt.current) });
         }}
       >
-        {play.done ? "Mollato" : holding ? "Resisti!" : "Tieni premuto"}
+        {play.done ? texts.letGo : holding ? texts.holdOn : texts.hold}
       </GameButton>
       <p
         className={[styles.status, play.error && styles.error].filter(Boolean).join(" ")}
@@ -47,9 +50,7 @@ export function LastToLetGoPlay({ snapshot, round, submit }: PlayProps) {
       >
         {status}
       </p>
-      <p className={styles.played}>
-        {round.played.length}/{round.players.length} hanno mollato
-      </p>
+      <p className={styles.played}>{texts.letGoCount(round.played.length, round.players.length)}</p>
     </div>
   );
 }

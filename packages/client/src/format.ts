@@ -1,5 +1,8 @@
+import { messages } from "./i18n";
+
+/** Numbers follow the current language: "2,700" in Italian, "2.700" in English. */
 const secondsFormat = (decimals: number) =>
-  new Intl.NumberFormat("it-IT", {
+  new Intl.NumberFormat(messages().locale, {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals,
   });
@@ -23,4 +26,9 @@ export function formatDifference(ms: number, decimals = 3): string {
 /** Whole seconds left, rounded up: 2100 → 3. */
 export function secondsLeft(ms: number): number {
   return Math.max(0, Math.ceil(ms / 1000));
+}
+
+/** Degrees with at most one decimal: 3.5 → "3,5" (Italian) or "3.5" (English). */
+export function formatDegrees(degrees: number): string {
+  return degrees.toLocaleString(messages().locale, { maximumFractionDigits: 1 });
 }

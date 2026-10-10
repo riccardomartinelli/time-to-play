@@ -1,15 +1,17 @@
 import { sound } from "../feedback/sound";
+import { useT } from "../i18n";
 import { useSoundEnabled } from "../feedback/useGameSounds";
 import styles from "./SoundToggle.module.css";
 
 export function SoundToggle() {
+  const t = useT();
   const enabled = useSoundEnabled();
   return (
     <button
       type="button"
       className={styles.toggle}
       aria-pressed={enabled}
-      aria-label={enabled ? "Suoni attivi" : "Suoni disattivati"}
+      aria-label={enabled ? t.settings.soundOn : t.settings.soundOff}
       onClick={() => {
         sound.setEnabled(!enabled);
         sound.unlock();

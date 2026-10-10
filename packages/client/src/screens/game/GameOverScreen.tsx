@@ -3,19 +3,20 @@ import { useState } from "react";
 import { Button } from "../../components/Button";
 import { Leaderboard } from "../../components/Leaderboard";
 import { Screen } from "../../components/Screen";
+import { useT, type Messages } from "../../i18n";
 import { useGameClient } from "../../state/GameClientContext";
 import styles from "./Game.module.css";
 import { isConnected, nicknameOf, scoreStandings } from "./players";
 
-function winnerTitle(snapshot: LobbySnapshot, winners: string[]): string {
+function winnerTitle(t: Messages, snapshot: LobbySnapshot, winners: string[]): string {
   if (winners.includes(snapshot.you))
-    return winners.length === 1 ? "Hai vinto!" : "Vittoria a pari merito!";
+    return winners.length === 1 ? t.game.youWon : t.game.tiedVictory;
   const names = winners.map((id) => nicknameOf(snapshot, id));
-  if (names.length === 1) return `Ha vinto ${names[0]}!`;
-  return `Hanno vinto ${names.slice(0, -1).join(", ")} e ${names.at(-1)}!`;
+  return names.length === 1 ? t.game.winner(names[0]!) : t.game.winners(names);
 }
 
 export function GameOverScreen({ snapshot }: { snapshot: LobbySnapshot }) {
+  const t = useT();
   const client = useGameClient();
   const [leaving, setLeaving] = useState(false);
   const game = snapshot.game!;
@@ -27,7 +28,7 @@ export function GameOverScreen({ snapshot }: { snapshot: LobbySnapshot }) {
         <div className={styles.trophy} aria-hidden="true">
           1
         </div>
-        <h1 className={styles.winner}>{winnerTitle(snapshot, winners)}</h1>
+        <h1 className={styles.winner}>{winnerTitle(t, snapshot, winners)}</h1>
       </div>
       {game.mode === "score" && (
         <Leaderboard
@@ -52,7 +53,7 @@ export function GameOverScreen({ snapshot }: { snapshot: LobbySnapshot }) {
             if (!result.ok) setLeaving(false);
           }}
         >
-          Torna alla home
+          {t.game.backHome}
         </Button>
       </div>
     </Screen>

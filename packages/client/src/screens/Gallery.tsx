@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import { Button } from "../components/Button";
 import { CHALLENGE_IDS } from "@ttp/shared";
 import { NeedleDial, NEEDLE_LENGTH, point } from "../challenges/NeedleDial";
-import { CHALLENGES } from "../challenges/registry";
 import { Card } from "../components/Card";
 import { ChallengeIcon } from "../components/ChallengeIcon";
 import { CodeInput } from "../components/CodeInput";
@@ -11,6 +10,7 @@ import { Leaderboard } from "../components/Leaderboard";
 import { Pill } from "../components/Pill";
 import { Screen } from "../components/Screen";
 import { TextField } from "../components/TextField";
+import { messages } from "../i18n";
 
 const formatSeconds = (ms: number) => `${(ms / 1000).toFixed(3).replace(".", ",")} s`;
 
@@ -35,7 +35,9 @@ export function Gallery() {
               style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
             >
               <ChallengeIcon challenge={id} size={88} />
-              <span style={{ fontSize: 13, fontWeight: 700 }}>{CHALLENGES[id].title}</span>
+              <span style={{ fontSize: 13, fontWeight: 700 }}>
+                {messages().challenges[id].title}
+              </span>
             </div>
           ))}
         </div>

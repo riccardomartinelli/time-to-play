@@ -5,17 +5,19 @@ import { GameScreen } from "./screens/game/GameScreen";
 import { HomeScreen } from "./screens/HomeScreen";
 import { LobbyScreen } from "./screens/LobbyScreen";
 import { useGameSounds } from "./feedback/useGameSounds";
+import { useT } from "./i18n";
 import { useClientState } from "./state/GameClientContext";
 
 const showGallery = import.meta.env.DEV && new URLSearchParams(location.search).has("gallery");
 
 /** Screens follow the state sent by the server: there is no manual navigation in game. */
 function CurrentScreen() {
+  const t = useT();
   const { resuming, snapshot } = useClientState();
   if (resuming && !snapshot) {
     return (
       <Screen centered>
-        <p>Rientro nella partita...</p>
+        <p>{t.app.resuming}</p>
       </Screen>
     );
   }

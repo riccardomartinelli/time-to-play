@@ -1,4 +1,5 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
+import { setLanguage } from "./i18n";
 import { formatDifference, formatSeconds, secondsLeft, secondsValue } from "./format";
 
 describe("format", () => {
@@ -22,5 +23,15 @@ describe("format", () => {
     expect(secondsLeft(2100)).toBe(3);
     expect(secondsLeft(3000)).toBe(3);
     expect(secondsLeft(-5)).toBe(0);
+  });
+
+  describe("in English", () => {
+    afterEach(() => setLanguage("it"));
+
+    it("uses a decimal point", () => {
+      setLanguage("en");
+      expect(formatSeconds(2700)).toBe("2.700 s");
+      expect(formatDifference(-120)).toBe("−0.120 s");
+    });
   });
 });

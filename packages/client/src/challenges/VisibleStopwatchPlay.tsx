@@ -3,6 +3,7 @@ import { GameButton } from "../components/GameButton";
 import { lcdTime, SevenSegment } from "../components/SevenSegment";
 import { sound } from "../feedback/sound";
 import { formatDifference } from "../format";
+import { useT } from "../i18n";
 import styles from "./Play.module.css";
 import type { PlayProps } from "./types";
 import { usePlayWindow } from "./usePlayWindow";
@@ -10,6 +11,8 @@ import { usePlayWindow } from "./usePlayWindow";
 /** An 80s digital stopwatch runs in plain sight: stop it exactly on the target. */
 export function VisibleStopwatchPlay({ snapshot, round, submit }: PlayProps) {
   const { targetMs } = round.publicParams as { targetMs: number };
+  const t = useT();
+  const texts = t.challenges["visible-stopwatch"];
   const play = usePlayWindow(snapshot, round, submit, { hurry: false });
   const [elapsed, setElapsed] = useState(0);
   const [stoppedAt, setStoppedAt] = useState<number | null>(null);
@@ -28,8 +31,8 @@ export function VisibleStopwatchPlay({ snapshot, round, submit }: PlayProps) {
 
   const shown = stoppedAt ?? elapsed;
 
-  let status = "Fermalo esattamente sull'obiettivo!";
-  if (stoppedAt !== null) status = `Fermato a ${formatDifference(stoppedAt - targetMs)}`;
+  let status = texts.stopExactly;
+  if (stoppedAt !== null) status = texts.stoppedAt(formatDifference(stoppedAt - targetMs));
   if (play.error) status = play.error;
 
   return (
@@ -42,16 +45,16 @@ export function VisibleStopwatchPlay({ snapshot, round, submit }: PlayProps) {
           <span>Chrono</span>
         </div>
         <div className={styles.lcd}>
-          <span className={styles.lcdLabel}>OBIETTIVO</span>
+          <span className={styles.lcdLabel}>{texts.target}</span>
           <SevenSegment
             text={lcdTime(targetMs)}
             height={34}
-            label={`Obiettivo ${lcdTime(targetMs)}`}
+            label={texts.targetLabel(lcdTime(targetMs))}
           />
         </div>
         <div className={styles.lcd}>
-          <span className={styles.lcdLabel}>TEMPO</span>
-          <SevenSegment text={lcdTime(shown)} height={52} label={`Tempo ${lcdTime(shown)}`} />
+          <span className={styles.lcdLabel}>{texts.time}</span>
+          <SevenSegment text={lcdTime(shown)} height={52} label={texts.timeLabel(lcdTime(shown))} />
         </div>
       </div>
       <GameButton
@@ -63,7 +66,7 @@ export function VisibleStopwatchPlay({ snapshot, round, submit }: PlayProps) {
           void play.send({ elapsedMs });
         }}
       >
-        {stoppedAt === null ? "STOP" : "Fermato"}
+        {stoppedAt === null ? texts.stop : texts.stopped}
       </GameButton>
       <p
         className={[styles.status, play.error && styles.error].filter(Boolean).join(" ")}

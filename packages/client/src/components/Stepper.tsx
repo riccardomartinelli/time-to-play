@@ -1,4 +1,5 @@
 import { useId } from "react";
+import { useT } from "../i18n";
 import styles from "./Stepper.module.css";
 
 interface StepperProps {
@@ -11,6 +12,7 @@ interface StepperProps {
 }
 
 export function Stepper({ label, value, min, max, onChange, readOnly }: StepperProps) {
+  const t = useT();
   const id = useId();
   return (
     <div className={styles.stepper}>
@@ -22,7 +24,7 @@ export function Stepper({ label, value, min, max, onChange, readOnly }: StepperP
           <button
             type="button"
             className={styles.step}
-            aria-label="Meno"
+            aria-label={t.lobby.less}
             disabled={value <= min}
             onClick={() => onChange?.(value - 1)}
           >
@@ -36,7 +38,7 @@ export function Stepper({ label, value, min, max, onChange, readOnly }: StepperP
           <button
             type="button"
             className={styles.step}
-            aria-label="Più"
+            aria-label={t.lobby.more}
             disabled={value >= max}
             onClick={() => onChange?.(value + 1)}
           >

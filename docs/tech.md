@@ -32,6 +32,9 @@ Dettaglio completo in [architecture.md](architecture.md).
 ## Sicurezza
 - **Anti-cheat fuori scope**: i giocatori sono fisicamente nella stessa stanza, quindi il server si fida dei tempi inviati dai client.
 
+## Lingue
+Testi del client in dizionari per lingua (`packages/client/src/i18n/`: `it.ts` di riferimento, `en.ts`), con `useT()` nei componenti e `messages()` fuori da React. Il server non ha testi: invia codici di errore che il client traduce. Vedi [decisions/006-multilingua.md](decisions/006-multilingua.md).
+
 ## Deploy con Docker
 Due immagini, entrambe costruite dalla radice del repository:
 
