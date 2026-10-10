@@ -52,7 +52,7 @@ Principi validi per tutte le fasi:
 - [x] Calcolo del risultato di ciascuna sfida:
   - Stop al secondo: `|tempo fermato - obiettivo|`, obiettivo casuale 1,0-5,0 s;
   - Doppio clic: intervallo tra primo e secondo rilascio;
-  - Timer nascosto: limite casuale 5-15 s, ordine casuale, totale accumulato, giri ripetuti, turni saltati, timeout di 30 s, classifica "tutti primi tranne chi sfora" (che prende 0).
+  - Timer nascosto: limite visibile casuale 3-8 s (rivisto, prima 5-15 s nascosto), ordine casuale, totale accumulato, giri ripetuti, turni saltati, timeout di 30 s, classifica "tutti primi tranne chi sfora" (che prende 0).
 
 **Fatto quando**: ogni regola delle spec ha almeno un test, compresi tutti i casi limite decisi nelle spec.
 

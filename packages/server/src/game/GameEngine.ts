@@ -340,13 +340,13 @@ export class GameEngine {
         results: round.results,
       };
     }
-    // Limit and total stay secret until the results.
+    // The limit is visible; the total and each turn's duration stay secret until the results.
     const current = round.state.current;
     return {
       id: round.id,
       challenge: round.challenge,
       players: [...round.players],
-      publicParams: { order: [...round.params.order] },
+      publicParams: { order: [...round.params.order], limitMs: round.params.limitMs },
       playMs: null,
       played: [...new Set(round.state.turns.map((turn) => turn.playerId))],
       turn: current && round.turnEndsAt ? { playerId: current, endsAt: round.turnEndsAt } : null,

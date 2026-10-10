@@ -28,8 +28,10 @@ export const STOP_THE_CLOCK_TARGET_MIN_MS = 1_000;
 export const STOP_THE_CLOCK_TARGET_MAX_MS = 5_000;
 export const STOP_THE_CLOCK_TARGET_STEP_MS = 100;
 
-export const HIDDEN_TIMER_LIMIT_MIN_MS = 5_000;
-export const HIDDEN_TIMER_LIMIT_MAX_MS = 15_000;
+/** The limit is visible; only the total added by the players stays secret. */
+export const HIDDEN_TIMER_LIMIT_MIN_MS = 3_000;
+export const HIDDEN_TIMER_LIMIT_MAX_MS = 8_000;
+export const HIDDEN_TIMER_LIMIT_STEP_MS = 100;
 
 export const TRAFFIC_LIGHT_RED_MIN_MS = 2_000;
 export const TRAFFIC_LIGHT_RED_MAX_MS = 6_000;

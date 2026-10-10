@@ -191,7 +191,7 @@ Il client traduce ogni codice in un messaggio in italiano.
 
 Lo snapshot è una **proiezione** dello stato del server, calcolata per ogni giocatore (`server/src/snapshot.ts`):
 - contiene `you: PlayerId`, i giocatori (id, nickname, connesso, host, eliminato), impostazioni, fase, `phaseEndsAt`, round corrente, punteggi, risultati e vincitori;
-- **non contiene mai** i `secret` né i parametri nascosti delle sfide (limite del Timer nascosto, totale accumulato) finché la sfida non li rivela nei risultati;
+- **non contiene mai** i `secret` né i parametri nascosti delle sfide (totale accumulato del Timer nascosto, esplosione di Ultimo a mollare) finché la sfida non li rivela nei risultati;
 - ogni sfida decide cosa dei propri parametri è pubblico (`publicParams`) e cosa mostrare a fine round (`revealParams`).
 
 ## Interfaccia delle sfide

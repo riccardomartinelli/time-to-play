@@ -2,14 +2,16 @@
 
 > Stato: approvato (nome provvisorio)
 
+> Rivista il 2026-10-10: il limite è ora visibile (3-8 s); resta nascosto il totale accumulato.
+
 ## Obiettivo
-A turno, aggiungere tempo a un totale condiviso senza superare un limite che nessuno conosce.
+A turno, aggiungere tempo a un totale condiviso senza superare un limite noto a tutti, senza sapere quanto tempo hanno già consumato gli altri.
 
 ## Comportamento
-- All'inizio della sfida viene estratto a caso un **limite nascosto** tra **5 e 15 secondi**, non visibile a nessun giocatore.
+- All'inizio della sfida viene estratto a caso un **limite** tra **3 e 8 secondi** (con un decimale, es. 6,4 s). Il limite è **visibile** a tutti.
 - I giocatori giocano **a turno**, in **ordine casuale** estratto all'inizio della sfida.
 - Nel proprio turno, il giocatore **tiene premuto** il pulsante: il tempo che passa tra pressione e rilascio si aggiunge al **totale accumulato**.
-- Il **totale accumulato non è visibile** ai giocatori.
+- Il **totale accumulato non è visibile**: nessuno sa a che punto è il timer, perché non vede quanto hanno tenuto premuto gli altri.
 - Se il totale resta entro il limite, il turno passa al giocatore successivo.
 - Se tutti hanno giocato senza superare il limite, **si ricomincia il giro** (stesso ordine) finché qualcuno sfora.
 - Se il totale **supera** il limite, il giocatore di turno **perde**.
@@ -29,14 +31,14 @@ A turno, aggiungere tempo a un totale condiviso senza superare un limite che nes
 - In modalità Eliminazione: chi perde viene eliminato.
 
 ## Esempio
-Limite nascosto: 10 s (valori puramente indicativi).
+Limite visibile: 6,4 s. Totale nascosto.
 1. Giocatore A aggiunge 1,5 s, totale 1,5 s: ok.
-2. Giocatore B aggiunge 3 s, totale 4,5 s: ok.
-3. Giocatore C aggiunge 4 s, totale 8,5 s: ok.
-4. Giocatore D aggiunge 2 s, totale 10,5 s: supera il limite e **perde**.
+2. Giocatore B aggiunge 2 s, totale 3,5 s: ok.
+3. Giocatore C aggiunge 1,8 s, totale 5,3 s: ok.
+4. Giocatore D aggiunge 1,2 s, totale 6,5 s: supera il limite e **perde**.
 
 ## Criteri di accettazione
-- [ ] Il limite è casuale tra 5 e 15 s e non è mai mostrato ai giocatori durante la sfida.
+- [ ] Il limite è casuale tra 3,0 e 8,0 s ed è mostrato a tutti i giocatori durante la sfida.
 - [ ] Il totale accumulato non è mostrato ai giocatori durante la sfida.
 - [ ] L'ordine dei turni è casuale.
 - [ ] Se nessuno sfora dopo un giro completo, si ricomincia dal primo giocatore.

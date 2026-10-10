@@ -258,18 +258,23 @@ describe("GameEngine", () => {
       expect(turns.at(-1)).toMatchObject({ endsAt: Date.now() + T.turnMs });
     });
 
-    it("plays in turns, never revealing the limit before the results", () => {
+    it("plays in turns, showing the limit but never the total before the results", () => {
       const game = setup({ challenge: "hidden-timer" });
       game.toPlaying();
       const order = (game.round().publicParams as { order: string[] }).order;
       expect(turnOf(game)).toBe(order[0]);
-      expect(JSON.stringify(game.engine.snapshot())).not.toMatch(/limitMs|totalMs/);
+      const { limitMs } = game.round().publicParams as { limitMs: number };
+      expect(limitMs).toBeGreaterThanOrEqual(3_000);
+      expect(limitMs).toBeLessThanOrEqual(8_000);
+      expect(JSON.stringify(game.engine.snapshot())).not.toMatch(/totalMs|durationMs/);
 
       const other = order[1]!;
       expect(game.submit(other, { durationMs: 100 })).toEqual({ ok: false, error: "WRONG_PHASE" });
       expect(game.submit(order[0]!, { durationMs: 100 })).toEqual({ ok: true });
       expect(turnOf(game)).toBe(other);
       expect(game.round().played).toEqual([order[0]]);
+      // After a turn the others still cannot tell how much time was used.
+      expect(JSON.stringify(game.engine.snapshot())).not.toMatch(/totalMs|durationMs/);
     });
 
     it("ends when someone exceeds the limit: everybody else wins, the loser gets 0", () => {

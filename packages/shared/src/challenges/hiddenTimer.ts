@@ -3,6 +3,7 @@ import { randomInt, shuffle, type Random } from "../random.js";
 import {
   HIDDEN_TIMER_LIMIT_MAX_MS,
   HIDDEN_TIMER_LIMIT_MIN_MS,
+  HIDDEN_TIMER_LIMIT_STEP_MS,
   HIDDEN_TIMER_TURN_TIMEOUT_MS,
   SUBMIT_GRACE_MS,
   type PlayerId,
@@ -10,12 +11,12 @@ import {
 import { parseDuration } from "./types.js";
 
 // Turn-based challenge: players take turns adding time to a shared total, and whoever
-// pushes it past the hidden limit loses. See docs/specs/005-sfida-timer-nascosto.md.
+// pushes it past the limit loses. The limit is visible, the total is not. See docs/specs/005-sfida-timer-nascosto.md.
 
 export const HIDDEN_TIMER_ID = "hidden-timer" as const;
 
 export interface HiddenTimerParams {
-  /** Secret: never sent to clients before the results. */
+  /** Visible to the players. */
   limitMs: number;
   order: PlayerId[];
 }
@@ -49,7 +50,12 @@ export function createHiddenTimerParams(
   players: readonly PlayerId[],
 ): HiddenTimerParams {
   return {
-    limitMs: randomInt(rng, HIDDEN_TIMER_LIMIT_MIN_MS, HIDDEN_TIMER_LIMIT_MAX_MS),
+    limitMs:
+      randomInt(
+        rng,
+        HIDDEN_TIMER_LIMIT_MIN_MS / HIDDEN_TIMER_LIMIT_STEP_MS,
+        HIDDEN_TIMER_LIMIT_MAX_MS / HIDDEN_TIMER_LIMIT_STEP_MS,
+      ) * HIDDEN_TIMER_LIMIT_STEP_MS,
     order: shuffle(rng, players),
   };
 }

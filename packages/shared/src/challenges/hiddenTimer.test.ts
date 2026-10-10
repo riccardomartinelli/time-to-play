@@ -22,14 +22,19 @@ function play(state: HiddenTimerState, durationMs: number, isConnected = everybo
 }
 
 describe("hidden timer", () => {
-  it("picks a limit between 5 and 15 s and a random order of all players", () => {
+  it("picks a limit between 3.0 and 8.0 s and a random order of all players", () => {
     const rng = seededRandom(7);
-    for (let i = 0; i < 200; i++) {
+    const limits = new Set<number>();
+    for (let i = 0; i < 500; i++) {
       const created = createHiddenTimerParams(rng, ["a", "b", "c"]);
-      expect(created.limitMs).toBeGreaterThanOrEqual(5_000);
-      expect(created.limitMs).toBeLessThanOrEqual(15_000);
+      expect(created.limitMs).toBeGreaterThanOrEqual(3_000);
+      expect(created.limitMs).toBeLessThanOrEqual(8_000);
+      expect(created.limitMs % 100).toBe(0);
+      limits.add(created.limitMs);
       expect([...created.order].sort()).toEqual(["a", "b", "c"]);
     }
+    expect(limits.has(3_000)).toBe(true);
+    expect(limits.has(8_000)).toBe(true);
   });
 
   it("follows the spec example: D pushes the total past 10 s and loses", () => {

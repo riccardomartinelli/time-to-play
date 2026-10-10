@@ -43,7 +43,7 @@ export const CHALLENGES: Record<ChallengeId, ChallengeUi> = {
   "hidden-timer": {
     title: "Timer nascosto",
     instruction:
-      "A turno tieni premuto per aggiungere tempo. C'è un limite segreto: chi lo supera perde!",
+      "A turno tieni premuto per aggiungere tempo al timer. Il limite lo vedete tutti, ma nessuno sa quanto tempo hanno già usato gli altri: chi lo supera perde!",
     Play: HiddenTimerPlay,
     formatResult(result, reveal, playerId) {
       const { loser } = reveal as HiddenTimerReveal;
@@ -58,7 +58,7 @@ export const CHALLENGES: Record<ChallengeId, ChallengeUi> = {
     },
     describeReveal(reveal) {
       const { limitMs, totalMs } = reveal as HiddenTimerReveal;
-      return `Limite segreto: ${formatSeconds(limitMs, 2)} · Totale: ${formatSeconds(totalMs, 2)}`;
+      return `Limite: ${formatSeconds(limitMs, 1)} · Totale: ${formatSeconds(totalMs, 2)}`;
     },
   },
   "traffic-light": {

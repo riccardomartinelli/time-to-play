@@ -5,7 +5,7 @@ import { Pill } from "../components/Pill";
 import { TimeBar } from "../components/TimeBar";
 import { errorMessage } from "../errors";
 import { useTicks } from "../feedback/useGameSounds";
-import { secondsLeft } from "../format";
+import { formatSeconds, secondsLeft } from "../format";
 import { useRemaining } from "../hooks/useRemaining";
 import { nicknameOf } from "../screens/game/players";
 import styles from "./Play.module.css";
@@ -15,7 +15,7 @@ const URGENT_SECONDS = 3;
 
 /** Turns: hold to add time to a secret total, without passing the secret limit. */
 export function HiddenTimerPlay({ snapshot, round, submit }: PlayProps) {
-  const { order } = round.publicParams as { order: string[] };
+  const { order, limitMs } = round.publicParams as { order: string[]; limitMs: number };
   const turn = round.turn;
   const remainingMs = useRemaining(turn?.endsAt ?? null) ?? 0;
   /** The turn (by its deadline) this device already sent a duration for. */
@@ -35,17 +35,19 @@ export function HiddenTimerPlay({ snapshot, round, submit }: PlayProps) {
   };
 
   let title = "Aspetta il tuo turno";
-  let status = "Il totale e il limite sono segreti...";
+  let status = "Nessuno sa quanto tempo è già passato...";
   if (turn && !myTurn) title = `Tocca a ${nicknameOf(snapshot, turn.playerId)}`;
   if (myTurn) {
     title = "Tocca a te!";
-    status = "Tieni premuto per aggiungere tempo. Non superare il limite!";
+    status = "Tieni premuto per aggiungere tempo. Gli altri quanto avranno usato?";
   }
   if (myTurn && sent) status = "Fatto! Speriamo bene...";
   if (error) status = error;
 
   return (
     <div className={styles.play}>
+      <p className={styles.label}>Limite</p>
+      <div className={`${styles.limit} numeric`}>{formatSeconds(limitMs, 1)}</div>
       <h1 className={styles.turnTitle}>{title}</h1>
       <ol className={styles.order} aria-label="Ordine dei turni">
         {order.map((playerId) => (
