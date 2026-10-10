@@ -146,6 +146,51 @@ const DRAWINGS: Record<ChallengeId, ReactNode> = {
       />
     </>
   ),
+  // Dial with the green target slice and the needle.
+  needle: (
+    <>
+      <circle cx="32" cy="35.5" r="27" fill={O} />
+      <circle cx="32" cy="32" r="27" fill={SURFACE} stroke={O} strokeWidth="4" />
+      <path
+        d="M32 32 L43.5 8.5 A26 26 0 0 1 54.5 19.5 Z"
+        fill={GREEN}
+        stroke={O}
+        strokeWidth="3"
+        strokeLinejoin="round"
+      />
+      <line x1="32" y1="36" x2="17" y2="13" stroke={O} strokeWidth="6" strokeLinecap="round" />
+      <line x1="32" y1="36" x2="17" y2="13" stroke={RED} strokeWidth="3" strokeLinecap="round" />
+      <circle cx="32" cy="32" r="5" fill={YELLOW} stroke={O} strokeWidth="2.5" />
+    </>
+  ),
+  // 80s digital stopwatch with an LCD.
+  "visible-stopwatch": (
+    <>
+      <rect x="22" y="3" width="8" height="6" rx="2" fill={RED} stroke={O} strokeWidth="2.5" />
+      <rect x="34" y="3" width="8" height="6" rx="2" fill={RED} stroke={O} strokeWidth="2.5" />
+      <rect x="6" y="12" width="52" height="46" rx="14" fill={O} />
+      <rect x="6" y="8" width="52" height="46" rx="14" fill={SURFACE} stroke={O} strokeWidth="4" />
+      <rect
+        x="13"
+        y="18"
+        width="38"
+        height="26"
+        rx="5"
+        fill="var(--color-lcd-bg)"
+        stroke={O}
+        strokeWidth="2.5"
+      />
+      <g fill="var(--color-lcd-on)">
+        <rect x="18" y="24" width="10" height="3" rx="1" />
+        <rect x="18" y="35" width="10" height="3" rx="1" />
+        <rect x="16" y="26" width="3" height="10" rx="1" />
+        <rect x="27" y="26" width="3" height="10" rx="1" />
+        <rect x="33" y="24" width="3" height="14" rx="1" />
+        <rect x="41" y="24" width="7" height="3" rx="1" />
+        <rect x="45" y="24" width="3" height="14" rx="1" />
+      </g>
+    </>
+  ),
 };
 
 interface ChallengeIconProps {

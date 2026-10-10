@@ -8,6 +8,7 @@ import {
   doubleClick,
   hiddenTimerOutcome,
   lastToLetGo,
+  needle,
   initialHiddenTimerState,
   parseHiddenTimerSubmission,
   pickNextChallenge,
@@ -16,6 +17,7 @@ import {
   startNextTurn,
   stopTheClock,
   trafficLight,
+  visibleStopwatch,
   type ChallengeId,
   type GamePhase,
   type GameSettings,
@@ -43,6 +45,8 @@ const SIMULTANEOUS: Partial<Record<ChallengeId, SimultaneousChallenge<unknown, u
     "traffic-light": trafficLight,
     "last-to-let-go": lastToLetGo,
     "rapid-fire": rapidFire,
+    needle,
+    "visible-stopwatch": visibleStopwatch,
   };
 
 interface RoundBase {

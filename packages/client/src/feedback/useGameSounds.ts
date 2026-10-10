@@ -2,7 +2,7 @@ import type { LobbySnapshot } from "@ttp/shared";
 import { useEffect, useRef, useSyncExternalStore } from "react";
 import { cuesFor } from "./gameSounds";
 import { sound } from "./sound";
-import type { LoopName } from "./synth";
+import type { LoopControl, LoopName } from "./synth";
 
 /** Plays the sounds of the game events (start, round won or lost, game over). */
 export function useGameSounds(snapshot: LobbySnapshot | null): void {
@@ -27,26 +27,30 @@ export function useSoundEnabled(): boolean {
 }
 
 /**
- * A sound that lasts while the button is held (e.g. the bomb fuse). `start` and `stop` can be
- * called from press handlers; the sound also stops when the component goes away.
+ * A sound that lasts while something happens (the bomb fuse, the needle hype). `start`, `stop`
+ * and `setIntensity` can be called from handlers or animation frames; the sound also stops
+ * when the component goes away.
  */
 export function useHoldSound(name: LoopName) {
-  const stopRef = useRef<(() => void) | null>(null);
+  const loopRef = useRef<LoopControl | null>(null);
   useEffect(
     () => () => {
-      stopRef.current?.();
-      stopRef.current = null;
+      loopRef.current?.stop();
+      loopRef.current = null;
     },
     [],
   );
   return {
     start() {
-      stopRef.current?.();
-      stopRef.current = sound.startLoop(name);
+      loopRef.current?.stop();
+      loopRef.current = sound.startLoop(name);
     },
     stop() {
-      stopRef.current?.();
-      stopRef.current = null;
+      loopRef.current?.stop();
+      loopRef.current = null;
+    },
+    setIntensity(intensity: number) {
+      loopRef.current?.setIntensity(intensity);
     },
   };
 }

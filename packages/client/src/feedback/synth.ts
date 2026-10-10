@@ -23,10 +23,17 @@ export type SoundName =
   | "boom"
   | "alarm"
   | "pew"
-  | "whistle";
+  | "whistle"
+  | "lcdBeep";
 
 /** Sounds that last while the button is held. */
-export type LoopName = "fuse" | "hum";
+export type LoopName = "fuse" | "hum" | "hype";
+
+export interface LoopControl {
+  stop(): void;
+  /** 0 = calm, 1 = maximum excitement (used by "hype"). */
+  setIntensity(intensity: number): void;
+}
 
 interface Note {
   /** Hz (ignored for noise). */
@@ -165,6 +172,8 @@ const SOUNDS: Record<SoundName, Note[]> = {
     { frequency: 1900, glideTo: 2400, at: 0, duration: 0.18, type: "sine", volume: 0.2 },
     { frequency: 2400, glideTo: 2300, at: 0.2, duration: 0.35, type: "sine", volume: 0.2 },
   ],
+  // 80s digital watch beep.
+  lcdBeep: [{ frequency: 4000, at: 0, duration: 0.07, type: "square", volume: 0.06 }],
 };
 
 const noiseBuffers = new WeakMap<BaseAudioContext, AudioBuffer>();
@@ -238,15 +247,33 @@ export function playNotes(context: AudioContext, name: SoundName, options: PlayO
 }
 
 /** Starts a sound that lasts until the returned function is called. */
-export function startLoopSound(context: AudioContext, name: LoopName): () => void {
+export function startLoopSound(context: AudioContext, name: LoopName): LoopControl {
   const now = context.currentTime;
   const out = context.createGain();
   out.gain.setValueAtTime(0, now);
   out.gain.linearRampToValueAtTime(1, now + 0.05);
   out.connect(context.destination);
   const sources: AudioScheduledSourceNode[] = [];
+  let setIntensity: (intensity: number) => void = () => {};
 
-  if (name === "fuse") {
+  if (name === "hype") {
+    // Rising buzz: pitch, brightness and volume follow the intensity.
+    const tone = context.createOscillator();
+    tone.type = "sawtooth";
+    const bright = context.createBiquadFilter();
+    bright.type = "lowpass";
+    const level = context.createGain();
+    tone.connect(bright).connect(level).connect(out);
+    sources.push(tone);
+    setIntensity = (intensity) => {
+      const x = Math.min(1, Math.max(0, intensity));
+      const t = context.currentTime;
+      tone.frequency.setTargetAtTime(180 * 2 ** (x * 2.3), t, 0.03);
+      bright.frequency.setTargetAtTime(500 + 2500 * x, t, 0.03);
+      level.gain.setTargetAtTime(0.015 + 0.11 * x * x, t, 0.03);
+    };
+    setIntensity(0);
+  } else if (name === "fuse") {
     // Sizzling fuse: band-passed noise with a fast random-ish flutter.
     const noise = context.createBufferSource();
     noise.buffer = noiseBuffer(context);
@@ -282,11 +309,14 @@ export function startLoopSound(context: AudioContext, name: LoopName): () => voi
   }
 
   for (const source of sources) source.start(now);
-  return () => {
-    const end = context.currentTime + 0.06;
-    out.gain.cancelScheduledValues(context.currentTime);
-    out.gain.setValueAtTime(out.gain.value, context.currentTime);
-    out.gain.linearRampToValueAtTime(0, end);
-    for (const source of sources) source.stop(end + 0.02);
+  return {
+    setIntensity,
+    stop() {
+      const end = context.currentTime + 0.06;
+      out.gain.cancelScheduledValues(context.currentTime);
+      out.gain.setValueAtTime(out.gain.value, context.currentTime);
+      out.gain.linearRampToValueAtTime(0, end);
+      for (const source of sources) source.stop(end + 0.02);
+    },
   };
 }

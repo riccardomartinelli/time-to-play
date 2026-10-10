@@ -1,10 +1,13 @@
 import {
   playNotes,
   startLoopSound,
+  type LoopControl,
   type LoopName,
   type PlayOptions,
   type SoundName,
 } from "./synth";
+
+const SILENT_LOOP: LoopControl = { stop: () => {}, setIntensity: () => {} };
 
 const STORAGE_KEY = "ttp-sound";
 
@@ -80,13 +83,13 @@ class SoundPlayer {
     this.play(name, options);
   }
 
-  /** Starts a sound that lasts until the returned function is called. */
-  startLoop(name: LoopName): () => void {
-    if (!this.enabled || !this.context || this.context.state !== "running") return () => {};
+  /** Starts a sound that lasts until `stop` is called on the returned control. */
+  startLoop(name: LoopName): LoopControl {
+    if (!this.enabled || !this.context || this.context.state !== "running") return SILENT_LOOP;
     try {
       return startLoopSound(this.context, name);
     } catch {
-      return () => {};
+      return SILENT_LOOP;
     }
   }
 }

@@ -46,6 +46,15 @@ export const RAPID_FIRE_MS = 5_000;
 /** Above any human tapping speed: higher counts are rejected as invalid. */
 export const RAPID_FIRE_MAX_TAPS = 150;
 
+/** Provisional, to be tuned by playtesting (docs/open-questions.md). */
+export const NEEDLE_SPEED_DEG_PER_S = 270;
+/** Half width of the target slice drawn on the dial. */
+export const NEEDLE_TARGET_HALF_WIDTH_DEG = 12;
+
+export const STOPWATCH_TARGET_MIN_MS = 3_000;
+export const STOPWATCH_TARGET_MAX_MS = 8_000;
+export const STOPWATCH_TARGET_STEP_MS = 10;
+
 export const GAME_MODES = ["score", "elimination"] as const;
 export type GameMode = (typeof GAME_MODES)[number];
 
@@ -56,6 +65,8 @@ export const CHALLENGE_IDS = [
   "traffic-light",
   "last-to-let-go",
   "rapid-fire",
+  "needle",
+  "visible-stopwatch",
 ] as const;
 export type ChallengeId = (typeof CHALLENGE_IDS)[number];
 

@@ -14,7 +14,9 @@ export function pickNextChallenge(
 export * from "./doubleClick.js";
 export * from "./hiddenTimer.js";
 export * from "./lastToLetGo.js";
+export * from "./needle.js";
 export * from "./rapidFire.js";
 export * from "./stopTheClock.js";
 export * from "./trafficLight.js";
+export * from "./visibleStopwatch.js";
 export type { PlayWindow, SimultaneousChallenge } from "./types.js";

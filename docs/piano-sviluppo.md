@@ -151,6 +151,8 @@ Principi validi per tutte le fasi:
 - [x] Semaforo ([006](specs/006-sfida-semaforo.md))
 - [x] Ultimo a mollare ([007](specs/007-sfida-ultimo-a-mollare.md))
 - [x] Raffica ([008](specs/008-sfida-raffica.md))
+- [x] Lancetta ([009](specs/009-sfida-lancetta.md))
+- [x] Cronometro a vista ([010](specs/010-sfida-cronometro-a-vista.md))
 
 ## Fase 10: Modalità Eliminazione
 - [ ] Selezione della modalità nel pannello host.

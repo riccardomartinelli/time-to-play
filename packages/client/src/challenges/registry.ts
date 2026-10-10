@@ -3,9 +3,11 @@ import { formatDifference, formatSeconds } from "../format";
 import { DoubleClickPlay } from "./DoubleClickPlay";
 import { HiddenTimerPlay } from "./HiddenTimerPlay";
 import { LastToLetGoPlay } from "./LastToLetGoPlay";
+import { NeedlePlay } from "./NeedlePlay";
 import { RapidFirePlay } from "./RapidFirePlay";
 import { StopTheClockPlay } from "./StopTheClockPlay";
 import { TrafficLightPlay } from "./TrafficLightPlay";
+import { VisibleStopwatchPlay } from "./VisibleStopwatchPlay";
 import type { ChallengeUi } from "./types";
 
 interface HiddenTimerReveal {
@@ -102,5 +104,34 @@ export const CHALLENGES: Record<ChallengeId, ChallengeUi> = {
       result === null ? null : { value: `${(result as { taps: number }).taps} tocchi` },
     describeReveal: () => null,
     timedOutLabel: "Nessun tocco",
+  },
+  needle: {
+    title: "Lancetta",
+    instruction:
+      "La lancetta gira sul quadrante: premi per fermarla proprio sul centro del bersaglio verde. Più ti avvicini, più sale la tensione!",
+    Play: NeedlePlay,
+    formatResult(result) {
+      if (result === null) return null;
+      const { errorDeg } = result as { errorDeg: number };
+      return {
+        value: `${errorDeg.toLocaleString("it-IT", { maximumFractionDigits: 1 })}°`,
+        detail: errorDeg <= 3 ? "Centro pieno!" : "dal centro",
+      };
+    },
+    describeReveal: () => null,
+  },
+  "visible-stopwatch": {
+    title: "Cronometro a vista",
+    instruction:
+      "Il cronometro corre davanti ai tuoi occhi: fermalo esattamente sul tempo obiettivo, millesimi compresi!",
+    Play: VisibleStopwatchPlay,
+    formatResult(result, reveal) {
+      if (result === null) return null;
+      const { elapsedMs } = result as { elapsedMs: number };
+      const { targetMs } = reveal as { targetMs: number };
+      return { value: formatSeconds(elapsedMs), detail: formatDifference(elapsedMs - targetMs) };
+    },
+    describeReveal: (reveal) =>
+      `Obiettivo: ${formatSeconds((reveal as { targetMs: number }).targetMs)}`,
   },
 };

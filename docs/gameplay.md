@@ -30,6 +30,8 @@ Il sistema deve permettere di aggiungere nuove sfide in futuro. I nomi sono prov
 | 4 | **Semaforo** | Premere appena il rosso diventa verde, senza falsa partenza | [006](specs/006-sfida-semaforo.md) |
 | 5 | **Ultimo a mollare** | Tenere premuto più degli altri ma rilasciare prima dell'esplosione segreta (3-12 s); i tempi non si sommano | [007](specs/007-sfida-ultimo-a-mollare.md) |
 | 6 | **Raffica** | Più tocchi possibile in 5 secondi | [008](specs/008-sfida-raffica.md) |
+| 7 | **Lancetta** | Fermare una lancetta che gira sul centro del bersaglio | [009](specs/009-sfida-lancetta.md) |
+| 8 | **Cronometro a vista** | Fermare un cronometro digitale anni '80 esattamente sul tempo obiettivo | [010](specs/010-sfida-cronometro-a-vista.md) |
 
 ## Uscita
 - In sala d'attesa un pulsante **"Esci"** riporta alla home, per entrare eventualmente in un'altra lobby.
