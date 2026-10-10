@@ -79,14 +79,26 @@ const DRAWINGS: Record<ChallengeId, ReactNode> = {
       <rect x="12" y="51" width="40" height="8" rx="4" fill={RED} stroke={O} strokeWidth="3.5" />
     </>
   ),
-  // Traffic light.
+  // Formula 1 start lights: one red, four greens in a row.
   "traffic-light": (
     <>
-      <rect x="18" y="5.5" width="28" height="56" rx="12" fill={O} />
-      <rect x="18" y="3" width="28" height="56" rx="12" fill={SURFACE} stroke={O} strokeWidth="4" />
-      <circle cx="32" cy="15" r="6.5" fill={RED} stroke={O} strokeWidth="3" />
-      <circle cx="32" cy="31" r="6.5" fill={YELLOW} stroke={O} strokeWidth="3" />
-      <circle cx="32" cy="47" r="6.5" fill={GREEN} stroke={O} strokeWidth="3" />
+      <rect x="1.5" y="23" width="61" height="20" rx="7" fill={O} />
+      <rect
+        x="1.5"
+        y="19"
+        width="61"
+        height="20"
+        rx="7"
+        fill={SURFACE}
+        stroke={O}
+        strokeWidth="3"
+      />
+      <circle cx="9.5" cy="29" r="4.3" fill={RED} stroke={O} strokeWidth="2.2" />
+      <line x1="16.5" y1="23" x2="16.5" y2="35" stroke={O} strokeWidth="2" />
+      {[24, 34, 44, 54].map((cx) => (
+        <circle key={cx} cx={cx} cy="29" r="4.3" fill={GREEN} stroke={O} strokeWidth="2.2" />
+      ))}
+      <path d="M20 39 V52 M44 39 V52" stroke={O} strokeWidth="3.5" strokeLinecap="round" />
     </>
   ),
   // Bomb with a lit fuse.

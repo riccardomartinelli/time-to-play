@@ -30,12 +30,17 @@ export function TrafficLightPlay({ snapshot, round, submit }: PlayProps) {
 
   return (
     <div className={styles.play}>
+      {/* Formula 1 style start lights: one red on the left, four greens in a row. */}
       <div
-        className={`${styles.light} ${green ? styles.green : styles.red}`}
+        className={styles.startLights}
         role="img"
-        aria-label={green ? "Semaforo verde" : "Semaforo rosso"}
+        aria-label={green ? "Semaforo verde: via!" : "Semaforo rosso: aspetta"}
       >
-        {green ? "VIA!" : "ALT"}
+        <span className={`${styles.lamp} ${green ? "" : styles.redOn}`} />
+        <span className={styles.lampGap} aria-hidden="true" />
+        {[0, 1, 2, 3].map((index) => (
+          <span key={index} className={`${styles.lamp} ${green ? styles.greenOn : ""}`} />
+        ))}
       </div>
       <GameButton
         disabled={play.done}

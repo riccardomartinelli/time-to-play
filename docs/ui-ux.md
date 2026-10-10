@@ -62,7 +62,7 @@ Ogni sfida ha un'icona Caramella (`ChallengeIcon`), disegnata con i token del te
 | Stop al secondo | Bersaglio |
 | Doppio clic | Pulsante toccato con badge "×2" |
 | Timer nascosto | Clessidra |
-| Semaforo | Semaforo |
+| Semaforo | Semaforo orizzontale stile Formula 1 (una rossa, quattro verdi) |
 | Ultimo a mollare | Bomba con miccia accesa |
 | Raffica | Fulmine |
 
