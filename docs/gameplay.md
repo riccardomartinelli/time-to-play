@@ -28,7 +28,7 @@ Il sistema deve permettere di aggiungere nuove sfide in futuro. I nomi sono prov
 | 2 | **Doppio clic** | Fare due clic in sequenza nel minor tempo possibile | [004](specs/004-sfida-doppio-clic.md) |
 | 3 | **Timer nascosto** | A turno aggiungere tempo a un totale nascosto senza superare un limite visibile (3-8 s) | [005](specs/005-sfida-timer-nascosto.md) |
 | 4 | **Semaforo** | Premere appena il rosso diventa verde, senza falsa partenza | [006](specs/006-sfida-semaforo.md) |
-| 5 | **Ultimo a mollare** | Tenere premuto più degli altri ma rilasciare prima dell'esplosione segreta | [007](specs/007-sfida-ultimo-a-mollare.md) |
+| 5 | **Ultimo a mollare** | Tenere premuto più degli altri ma rilasciare prima dell'esplosione segreta (3-12 s); i tempi non si sommano | [007](specs/007-sfida-ultimo-a-mollare.md) |
 | 6 | **Raffica** | Più tocchi possibile in 5 secondi | [008](specs/008-sfida-raffica.md) |
 
 ## Uscita

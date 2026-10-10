@@ -92,7 +92,7 @@ export const CHALLENGES: Record<ChallengeId, ChallengeUi> = {
     },
     describeReveal: (reveal) =>
       `BOOM a ${formatSeconds((reveal as { explodeMs: number }).explodeMs, 2)}`,
-    timedOutLabel: "BOOM! Era ancora premuto",
+    timedOutLabel: "BOOM! Non ha mollato in tempo",
   },
   "rapid-fire": {
     title: "Raffica",

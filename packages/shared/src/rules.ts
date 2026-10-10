@@ -38,8 +38,9 @@ export const TRAFFIC_LIGHT_RED_MAX_MS = 6_000;
 /** Time to react once the light turns green. */
 export const TRAFFIC_LIGHT_REACTION_MS = 3_000;
 
+/** Each player's hold is compared alone with the explosion: holds are never added up. */
 export const LAST_TO_LET_GO_MIN_MS = 3_000;
-export const LAST_TO_LET_GO_MAX_MS = 10_000;
+export const LAST_TO_LET_GO_MAX_MS = 12_000;
 
 export const RAPID_FIRE_MS = 5_000;
 /** Above any human tapping speed: higher counts are rejected as invalid. */

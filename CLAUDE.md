@@ -28,6 +28,8 @@ Non aggiungere dettagli di design non richiesti: proponili come domande, non com
 
 ## Sviluppo
 
+**A ogni richiesta, aggiornare sempre insieme codice e documentazione** e consegnarli nello stesso commit: spec della feature (`docs/specs/`, con nota di revisione datata se cambia una regola già approvata), `gameplay.md`, `glossary.md`, `ui-ux.md`, `architecture.md`, `piano-sviluppo.md` dove pertinenti, costanti in `rules.ts` e test. Una modifica di comportamento senza la documentazione aggiornata non è completa.
+
 Il lavoro segue `docs/piano-sviluppo.md`, fase per fase. Spuntare le attività completate e non realizzare le "proposte da confermare" senza approvazione.
 
 ## Stack tecnico

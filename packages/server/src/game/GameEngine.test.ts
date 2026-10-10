@@ -337,6 +337,7 @@ describe("GameEngine", () => {
       expect(JSON.stringify(game.engine.snapshot())).not.toMatch(/explodeMs/);
 
       game.submit("a", { holdMs: 2_000 });
+      game.submit("b", { holdMs: 2_500 });
       const started = Date.now();
       while (game.engine.phase === "playing") vi.advanceTimersByTime(10);
       const { entries, reveal } = game.results();
@@ -344,11 +345,12 @@ describe("GameEngine", () => {
       expect(explodeMs).toBeGreaterThanOrEqual(3_000);
       expect(Date.now() - started).toBeGreaterThanOrEqual(explodeMs + T.submitGraceMs);
       expect(Date.now() - started).toBeLessThan(explodeMs + T.submitGraceMs + 20);
-      // b and c were still holding at the explosion: last, tied.
+      // Holds are independent (2 + 2.5 s is not compared with the bomb): the longest wins.
+      // c was still holding at the explosion: last.
       expect(entries.map((e) => [e.playerId, e.position, e.status])).toEqual([
-        ["a", 1, "played"],
-        ["b", 2, "timedOut"],
-        ["c", 2, "timedOut"],
+        ["b", 1, "played"],
+        ["a", 2, "played"],
+        ["c", 3, "timedOut"],
       ]);
     });
 

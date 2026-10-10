@@ -40,12 +40,12 @@ describe("traffic light", () => {
 });
 
 describe("last to let go", () => {
-  it("explodes between 3 and 10 s, with a hidden deadline", () => {
+  it("explodes between 3 and 12 s, with a hidden deadline", () => {
     const rng = seededRandom(12);
     for (let i = 0; i < 200; i++) {
       const params = lastToLetGo.createParams(rng);
       expect(params.explodeMs).toBeGreaterThanOrEqual(3_000);
-      expect(params.explodeMs).toBeLessThanOrEqual(10_000);
+      expect(params.explodeMs).toBeLessThanOrEqual(12_000);
       expect(lastToLetGo.playWindow!(params)).toEqual({
         durationMs: params.explodeMs,
         visible: false,
@@ -66,6 +66,17 @@ describe("last to let go", () => {
     expect(boom.exploded).toBe(true);
     expect(lastToLetGo.compare(brave, shy)).toBeLessThan(0);
     expect(lastToLetGo.compare(shy, boom)).toBeLessThan(0);
+  });
+
+  it("judges every hold alone: holds are never added up", () => {
+    const params = { explodeMs: 4_000 };
+    // 2.0 s + 2.5 s would pass 4 s if added up: neither player explodes.
+    expect(lastToLetGo.evaluate(params, { holdMs: 2_000 }).exploded).toBe(false);
+    expect(lastToLetGo.evaluate(params, { holdMs: 2_500 }).exploded).toBe(false);
+  });
+
+  it("accepts holds up to the longest explosion", () => {
+    expect(lastToLetGo.parseSubmission({ holdMs: 12_000 })).toEqual({ holdMs: 12_000 });
   });
 
   it("allows releasing exactly at the explosion", () => {

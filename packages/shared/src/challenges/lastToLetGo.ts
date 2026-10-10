@@ -2,7 +2,8 @@ import { randomInt } from "../random.js";
 import { LAST_TO_LET_GO_MAX_MS, LAST_TO_LET_GO_MIN_MS, SUBMIT_GRACE_MS } from "../rules.js";
 import { parseDuration, type SimultaneousChallenge } from "./types.js";
 
-// Hold longer than the others, but release before the secret explosion.
+// Hold longer than the others, but release before the secret explosion. Every hold is compared
+// alone with the explosion time: holds are independent and never added up.
 // See docs/specs/007-sfida-ultimo-a-mollare.md.
 
 export interface LastToLetGoParams {
