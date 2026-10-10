@@ -46,6 +46,8 @@ export const it = {
     createGame: "Crea partita",
     joinWithCode: "Entra con codice",
     joinTitle: "Entra in partita",
+    invited: (code: string) =>
+      `Hai ricevuto un invito per la partita ${code}: scegli il tuo nickname.`,
     gameCode: "Codice partita",
     nickname: "Il tuo nickname",
     create: "Crea",
@@ -58,6 +60,10 @@ export const it = {
   lobby: {
     title: "Sala d'attesa",
     shareCode: "Dite questo codice agli altri giocatori",
+    shareLink: "Condividi link",
+    shareText: (code: string) => `Gioca con me a Time to Play! Codice partita: ${code}`,
+    linkCopied: "Link copiato! Incollalo dove vuoi.",
+    copyThisLink: "Copia questo link e mandalo agli altri:",
     codeLabel: (letters: string) => `Codice partita ${letters}`,
     players: "Giocatori",
     you: "(tu)",

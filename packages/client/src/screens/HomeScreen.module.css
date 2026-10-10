@@ -50,3 +50,13 @@
   font-size: 16px;
   margin-bottom: 6px;
 }
+
+.invited {
+  margin: 0;
+  padding: 10px 14px;
+  border: var(--outline-width) solid var(--color-outline);
+  border-radius: 14px;
+  background: var(--color-secondary);
+  color: var(--color-on-color);
+  font-weight: 700;
+}

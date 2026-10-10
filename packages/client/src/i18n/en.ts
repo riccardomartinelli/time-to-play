@@ -43,6 +43,7 @@ export const en: Messages = {
     createGame: "Create game",
     joinWithCode: "Join with code",
     joinTitle: "Join a game",
+    invited: (code) => `You've been invited to game ${code}: pick your nickname.`,
     gameCode: "Game code",
     nickname: "Your nickname",
     create: "Create",
@@ -55,6 +56,10 @@ export const en: Messages = {
   lobby: {
     title: "Waiting room",
     shareCode: "Tell this code to the other players",
+    shareLink: "Share link",
+    shareText: (code) => `Play Time to Play with me! Game code: ${code}`,
+    linkCopied: "Link copied! Paste it anywhere.",
+    copyThisLink: "Copy this link and send it to the others:",
     codeLabel: (letters) => `Game code ${letters}`,
     players: "Players",
     you: "(you)",

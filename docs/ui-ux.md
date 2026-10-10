@@ -21,6 +21,9 @@ _Da definire._
 - Si gioca da **smartphone**: design mobile-first, pulsante grande e facile da toccare.
 - Il gioco funziona anche da **desktop** (uso secondario): layout responsive, pulsante cliccabile con il mouse. Su desktop il pulsante si può usare anche con la **barra spaziatrice** (premi e rilascia).
 
+## Invito con link
+In sala d'attesa, sotto il codice, il pulsante giallo **"Condividi link"** (condivisione di sistema, copia negli appunti o link da copiare a mano). Chi apre il link vede "Hai ricevuto un invito per la partita KXQR" e ha il codice già inserito: scrive il nickname ed entra.
+
 ## Lingue
 - Il gioco è in **italiano** e **inglese** (vedi [decisions/006-multilingua.md](decisions/006-multilingua.md)).
 - **Lingua iniziale**: quella del telefono; se non è l'italiano si parte in inglese.

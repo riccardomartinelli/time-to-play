@@ -11,6 +11,7 @@ import { useState } from "react";
 import { Button } from "../components/Button";
 import { Card } from "../components/Card";
 import { CodeDisplay } from "../components/CodeDisplay";
+import { ShareLink } from "../components/ShareLink";
 import { Pill } from "../components/Pill";
 import { Screen } from "../components/Screen";
 import { SegmentedControl } from "../components/SegmentedControl";
@@ -58,6 +59,7 @@ export function LobbyScreen({ snapshot }: { snapshot: LobbySnapshot }) {
         <h1>{t.lobby.title}</h1>
         <CodeDisplay code={snapshot.code} />
         <p className={styles.hint}>{t.lobby.shareCode}</p>
+        <ShareLink code={snapshot.code} />
       </div>
 
       <section className={styles.section}>

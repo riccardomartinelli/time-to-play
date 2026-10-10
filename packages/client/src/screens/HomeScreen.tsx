@@ -7,6 +7,7 @@ import { Screen } from "../components/Screen";
 import { TextField } from "../components/TextField";
 import { errorMessage } from "../errors";
 import { useT } from "../i18n";
+import { clearInviteFromUrl, readInviteCode } from "../net/inviteLink";
 import { loadNickname, saveNickname } from "../net/nickname";
 import type { ClientResult } from "../state/GameClient";
 import { useGameClient } from "../state/GameClientContext";
@@ -35,13 +36,16 @@ function toFieldErrors(result: ClientResult): FieldErrors {
 export function HomeScreen() {
   const t = useT();
   const client = useGameClient();
-  const [step, setStep] = useState<Step>("start");
+  // Opened from an invite link: straight to "join" with the code filled in.
+  const [invite] = useState(() => readInviteCode(window.location.search));
+  const [step, setStep] = useState<Step>(invite ? "join" : "start");
   const [nickname, setNickname] = useState(loadNickname);
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState(invite ?? "");
   const [errors, setErrors] = useState<FieldErrors>({});
   const [busy, setBusy] = useState(false);
 
   const goTo = (next: Step) => {
+    if (next === "start") clearInviteFromUrl();
     setErrors({});
     setStep(next);
   };
@@ -57,8 +61,10 @@ export function HomeScreen() {
     setBusy(true);
     const result = step === "create" ? await client.create(name) : await client.join(code, name);
     setBusy(false);
-    if (result.ok) saveNickname(name);
-    else setErrors(toFieldErrors(result));
+    if (result.ok) {
+      saveNickname(name);
+      clearInviteFromUrl();
+    } else setErrors(toFieldErrors(result));
   };
 
   if (step === "start") {
@@ -84,11 +90,12 @@ export function HomeScreen() {
   return (
     <Screen>
       <h1>{step === "create" ? t.home.createGame : t.home.joinTitle}</h1>
+      {invite && step === "join" && <p className={styles.invited}>{t.home.invited(invite)}</p>}
       <form className={styles.form} onSubmit={submit} noValidate>
         {step === "join" && (
           <div>
             <div className={styles.fieldLabel}>{t.home.gameCode}</div>
-            <CodeInput value={code} onChange={setCode} autoFocus />
+            <CodeInput value={code} onChange={setCode} autoFocus={!invite} />
             {errors.code && (
               <p className={styles.formError} role="alert">
                 {errors.code}
@@ -102,7 +109,7 @@ export function HomeScreen() {
           onChange={(event) => setNickname(event.target.value)}
           maxLength={NICKNAME_MAX_LENGTH}
           autoComplete="nickname"
-          autoFocus={step === "create"}
+          autoFocus={step === "create" || Boolean(invite)}
           enterKeyHint="go"
           error={errors.nickname}
         />

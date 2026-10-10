@@ -19,6 +19,12 @@ Permettere a più giocatori di ritrovarsi nella stessa partita tramite un codice
 - Dopo l'avvio **non possono entrare nuovi giocatori**: partecipano solo quelli presenti nella lobby al momento dell'avvio (i rientri dopo una disconnessione restano possibili).
 - Il "matchmaking" consiste **solo** nell'ingresso tramite codice: non esistono partite pubbliche.
 
+## Link di invito
+- In sala d'attesa il pulsante **"Condividi link"** condivide un link alla lobby (`/?join=CODICE`): sul telefono apre la finestra di condivisione del sistema; dove non c'è, copia il link negli appunti; se nemmeno questo è permesso (es. indirizzi non HTTPS in rete locale) mostra il link in un campo da copiare.
+- Chi apre il link arriva su "Entra in partita" con il **codice già inserito**: deve solo scegliere il nickname (spesso già compilato) ed entrare.
+- Dopo l'ingresso il link viene tolto dall'indirizzo, così ricaricare la pagina non riapre il modulo.
+- Un codice non valido nel link viene ignorato (si apre la home normale).
+
 ## Disconnessione e rientro
 - Un giocatore che perde la connessione può **rientrare** nella partita e ritrova il proprio punteggio.
 - L'host disconnesso è trattato come qualsiasi altro giocatore: può rientrare allo stesso modo.
@@ -44,6 +50,7 @@ Permettere a più giocatori di ritrovarsi nella stessa partita tramite un codice
 - [ ] La partita non può essere avviata con meno di 2 giocatori.
 - [ ] Tutti i giocatori nella lobby vedono l'elenco aggiornato dei partecipanti.
 - [ ] Un giocatore disconnesso (host compreso) può rientrare e ritrova il proprio punteggio.
+- [ ] Il link di invito apre l'ingresso con il codice già inserito.
 - [ ] Riaprendo il gioco sullo stesso dispositivo, il giocatore rientra automaticamente nell'ultima lobby.
 - [ ] La partita prosegue anche se uno o più giocatori sono disconnessi.
 - [ ] Un giocatore disconnesso riceve 0 punti nei round in cui non ha inviato un risultato.
