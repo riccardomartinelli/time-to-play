@@ -5,6 +5,7 @@ import {
   PLAY_TIMEOUT_MS,
   ROUND_RESULTS_MS,
   STANDINGS_MS,
+  AFTER_PLAY_MS,
   SUBMIT_GRACE_MS,
 } from "@ttp/shared";
 
@@ -17,6 +18,8 @@ export interface Timings {
   submitGraceMs: number;
   roundResultsMs: number;
   standingsMs: number;
+  /** Pause after play ends, before the results. 0 shows the results right away. */
+  afterPlayMs: number;
 }
 
 export const DEFAULT_TIMINGS: Timings = {
@@ -27,4 +30,5 @@ export const DEFAULT_TIMINGS: Timings = {
   submitGraceMs: SUBMIT_GRACE_MS,
   roundResultsMs: ROUND_RESULTS_MS,
   standingsMs: STANDINGS_MS,
+  afterPlayMs: AFTER_PLAY_MS,
 };

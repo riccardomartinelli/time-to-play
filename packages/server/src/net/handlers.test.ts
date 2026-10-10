@@ -20,7 +20,7 @@ beforeEach(async () => {
     rng: seededRandom(1),
     log: () => {},
     challenges: ["stop-the-clock", "double-click", "hidden-timer"],
-    timings: { introMs: 20, countdownMs: 20, roundResultsMs: 50, standingsMs: 50 },
+    timings: { introMs: 20, countdownMs: 20, roundResultsMs: 50, standingsMs: 50, afterPlayMs: 30 },
   });
   url = `http://localhost:${await server.listen(0)}`;
 });

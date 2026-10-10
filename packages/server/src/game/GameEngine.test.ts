@@ -11,6 +11,8 @@ const T: Timings = {
   submitGraceMs: 200,
   roundResultsMs: 100,
   standingsMs: 100,
+  // The pause before the results has its own tests below.
+  afterPlayMs: 0,
 };
 
 beforeEach(() => vi.useFakeTimers());
@@ -21,15 +23,22 @@ interface SetupOptions {
   rounds?: number;
   players?: string[];
   challenge: ChallengeId;
+  timings?: Partial<Timings>;
 }
 
-function setup({ mode = "score", rounds = 3, players = ["a", "b", "c"], challenge }: SetupOptions) {
+function setup({
+  mode = "score",
+  rounds = 3,
+  players = ["a", "b", "c"],
+  challenge,
+  timings,
+}: SetupOptions) {
   const connected = new Set(players);
   const engine = new GameEngine({
     participants: players,
     settings: { mode, rounds },
     rng: seededRandom(1),
-    timings: T,
+    timings: { ...T, ...timings },
     isConnected: (id) => connected.has(id),
     onChange: () => {},
     challenges: [challenge],
@@ -366,6 +375,48 @@ describe("GameEngine", () => {
         ["a", 2],
         ["c", 2],
       ]);
+    });
+  });
+
+  describe("pause before the results", () => {
+    const PAUSE = 300;
+
+    it("keeps everybody on their play screen for a moment after the last play", () => {
+      const game = setup({ challenge: "double-click", timings: { afterPlayMs: PAUSE } });
+      game.toPlaying();
+      game.submit("a", { intervalMs: 100 });
+      game.submit("b", { intervalMs: 200 });
+      game.submit("c", { intervalMs: 300 });
+      expect(game.engine.phase).toBe("playing");
+      expect(game.round().results).toBeNull();
+      vi.advanceTimersByTime(PAUSE - 1);
+      expect(game.engine.phase).toBe("playing");
+      vi.advanceTimersByTime(1);
+      expect(game.engine.phase).toBe("roundResults");
+    });
+
+    it("refuses plays during the pause", () => {
+      const game = setup({
+        challenge: "double-click",
+        players: ["a", "b"],
+        timings: { afterPlayMs: PAUSE },
+      });
+      game.toPlaying();
+      vi.advanceTimersByTime(T.playMs + T.submitGraceMs);
+      expect(game.engine.phase).toBe("playing");
+      expect(game.submit("a", { intervalMs: 100 })).toEqual({ ok: false, error: "WRONG_PHASE" });
+      vi.advanceTimersByTime(PAUSE);
+      expect(game.results().entries.every((entry) => entry.status === "timedOut")).toBe(true);
+    });
+
+    it("pauses after someone goes over the hidden timer limit, with no turn running", () => {
+      const game = setup({ challenge: "hidden-timer", timings: { afterPlayMs: PAUSE } });
+      game.toPlaying();
+      game.submit(game.round().turn!.playerId, { durationMs: 20_000 });
+      expect(game.engine.phase).toBe("playing");
+      expect(game.round().turn).toBeNull();
+      vi.advanceTimersByTime(PAUSE);
+      expect(game.engine.phase).toBe("roundResults");
     });
   });
 });

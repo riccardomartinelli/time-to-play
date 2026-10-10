@@ -6,8 +6,9 @@
 1. Un giocatore crea una **lobby** e riceve un **codice lobby**.
 2. Gli altri giocatori (da 2 a 10 in totale) entrano inserendo lo stesso codice (vedi [specs/001-lobby-e-matchmaking.md](specs/001-lobby-e-matchmaking.md)).
 3. La partita si svolge in una serie di **round**: in ogni round i giocatori affrontano una **sfida** basata sul tempo, estratta a caso.
-4. Ogni sfida produce una **classifica del round**; in base alla posizione ogni giocatore riceve dei punti: con N giocatori il 1° prende N-1 punti e l'ultimo 0.
-5. Chi accumula il punteggio più alto vince la partita.
+4. Quando il round finisce c'è una **breve pausa** (2,5 s) prima dei risultati, perché anche l'ultimo a giocare veda l'effetto della propria giocata.
+5. Ogni sfida produce una **classifica del round**; in base alla posizione ogni giocatore riceve dei punti: con N giocatori il 1° prende N-1 punti e l'ultimo 0.
+6. Chi accumula il punteggio più alto vince la partita.
 
 ## Modalità di gioco
 Dettagli in [specs/002-modalita-di-gioco.md](specs/002-modalita-di-gioco.md).

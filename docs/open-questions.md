@@ -10,7 +10,7 @@ Punti ancora da decidere. Quando una domanda viene risolta, spostala nel documen
 - Cronometro a vista: obiettivo tra 3 e 8 s. Va bene l'intervallo?
 
 ## Flusso di gioco
-- Durate di presentazione sfida (6 s, allungata da 3 s su richiesta), risultati del round (6 s) e classifica (5 s): valori provvisori da regolare provando il gioco.
+- Durate di presentazione sfida (6 s, allungata da 3 s su richiesta), pausa dopo l'ultima giocata (2,5 s), risultati del round (6 s) e classifica (5 s): valori provvisori da regolare provando il gioco.
 
 ## Prima del rilascio
 - Animazioni: dettaglio per schermata.

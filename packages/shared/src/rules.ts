@@ -23,6 +23,11 @@ export const SUBMIT_GRACE_MS = 1_000;
 export const INTRO_MS = 6_000;
 export const ROUND_RESULTS_MS = 6_000;
 export const STANDINGS_MS = 5_000;
+/**
+ * Pause between the end of play and the results, so the last player can see the effect of
+ * their own play (e.g. the needle zoom).
+ */
+export const AFTER_PLAY_MS = 2_500;
 
 export const STOP_THE_CLOCK_TARGET_MIN_MS = 1_000;
 export const STOP_THE_CLOCK_TARGET_MAX_MS = 5_000;

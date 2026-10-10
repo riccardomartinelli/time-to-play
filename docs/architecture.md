@@ -104,7 +104,7 @@ Tutto vive **in memoria** (vedi [tech.md](tech.md)): un riavvio del server cance
 
 ```
           host avvia
- [lobby] ───────────▶ [intro] ──▶ [countdown] ──▶ [playing] ──▶ [roundResults] ──▶ [standings] ─┐
+ [lobby] ───────────▶ [intro] ──▶ [countdown] ──▶ [playing] ─(pausa)─▶ [roundResults] ──▶ [standings] ─┐
                          ▲                                                                       │
                          └─────────────────────────── altri round ◀─────────────────────────────┤
                                                                                                  ▼
@@ -117,6 +117,7 @@ Tutto vive **in memoria** (vedi [tech.md](tech.md)): un riavvio del server cance
 | `intro` | Viene estratta e presentata la sfida (icona, nome, regole) | 6 s * | timer |
 | `countdown` | 3, 2, 1... | 3 s | timer |
 | `playing` | I giocatori giocano | dipende dalla sfida (10 s di base; Timer nascosto: turni da 30 s) | tutti hanno giocato o tempo scaduto |
+| (pausa) | Il gioco è finito ma i risultati non compaiono ancora: ognuno vede l'effetto della propria giocata (es. zoom della Lancetta). Le giocate non sono più accettate | 2,5 s * | timer |
 | `roundResults` | Risultati e posizioni del round, eliminazioni | 6 s * | timer |
 | `standings` | Classifica generale | 5 s * | timer |
 | `gameOver` | Vincitore o vincitori | libera | ogni giocatore preme "Torna alla home" |

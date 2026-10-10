@@ -55,6 +55,8 @@ interface RoundBase {
   challenge: ChallengeId;
   players: PlayerId[];
   results: RoundResults | null;
+  /** Play is over (no more submissions); the results come after a short pause. */
+  closed: boolean;
 }
 
 interface SimultaneousRound extends RoundBase {
@@ -122,7 +124,7 @@ export class GameEngine {
 
   submit(playerId: PlayerId, roundId: unknown, raw: unknown): Result {
     const round = this.round;
-    if (this.phase !== "playing" || !round || round.id !== roundId) {
+    if (this.phase !== "playing" || !round || round.id !== roundId || round.closed) {
       return { ok: false, error: "WRONG_PHASE" };
     }
     if (!round.players.includes(playerId)) return { ok: false, error: "WRONG_PHASE" };
@@ -132,7 +134,7 @@ export class GameEngine {
       const submission = round.definition.parseSubmission(raw);
       if (submission === null) return { ok: false, error: "INVALID_SUBMISSION" };
       round.played.set(playerId, round.definition.evaluate(round.params, submission));
-      if (this.everybodyPlayed(round)) this.finishRound();
+      if (this.everybodyPlayed(round)) this.closeRound();
       else this.changed();
       return { ok: true };
     }
@@ -141,16 +143,16 @@ export class GameEngine {
     const submission = parseHiddenTimerSubmission(raw);
     if (submission === null) return { ok: false, error: "INVALID_SUBMISSION" };
     round.state = applyHiddenTimerTurn(round.params, round.state, playerId, submission.durationMs);
-    if (round.state.finished) this.finishRound();
+    if (round.state.finished) this.closeRound();
     else this.nextTurn(round);
     return { ok: true };
   }
 
   playerDisconnected(playerId: PlayerId): void {
     const round = this.round;
-    if (this.phase !== "playing" || !round) return;
+    if (this.phase !== "playing" || !round || round.closed) return;
     if (round.kind === "simultaneous") {
-      if (this.everybodyPlayed(round)) this.finishRound();
+      if (this.everybodyPlayed(round)) this.closeRound();
       return;
     }
     if (round.state.current === playerId) {
@@ -185,6 +187,7 @@ export class GameEngine {
       challenge,
       players: this.participants.filter((id) => !this.eliminated.has(id)),
       results: null,
+      closed: false,
     };
     const definition = SIMULTANEOUS[challenge];
     this.round = definition
@@ -213,7 +216,7 @@ export class GameEngine {
     this.enterPhase(
       "playing",
       visible ? durationMs : null,
-      () => this.finishRound(),
+      () => this.closeRound(),
       durationMs + this.options.timings.submitGraceMs,
     );
   }
@@ -239,7 +242,7 @@ export class GameEngine {
   private nextTurn(round: TurnBasedRound): void {
     round.state = startNextTurn(round.params, round.state, this.options.isConnected);
     if (round.state.finished) {
-      this.finishRound();
+      this.closeRound();
       return;
     }
     const { turnMs, submitGraceMs } = this.options.timings;
@@ -250,7 +253,7 @@ export class GameEngine {
       turnMs,
       () => {
         round.state = applyHiddenTimerTimeout(round.state);
-        this.finishRound();
+        this.closeRound();
       },
       turnMs + submitGraceMs,
     );
@@ -258,6 +261,25 @@ export class GameEngine {
 
   private everybodyPlayed(round: SimultaneousRound): boolean {
     return round.players.every((id) => round.played.has(id) || !this.options.isConnected(id));
+  }
+
+  /**
+   * Stops accepting plays, then waits `afterPlayMs` before the results so every player, the last
+   * one included, can see the effect of their own play.
+   */
+  private closeRound(): void {
+    const round = this.round!;
+    if (round.closed) return;
+    round.closed = true;
+    this.clearTimer();
+    const pause = this.options.timings.afterPlayMs;
+    if (pause <= 0) {
+      this.finishRound();
+      return;
+    }
+    if (round.kind === "turnBased") round.turnEndsAt = null;
+    this.timer = setTimeout(() => this.finishRound(), pause);
+    this.changed();
   }
 
   private finishRound(): void {
