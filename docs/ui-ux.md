@@ -104,6 +104,27 @@ Sintetizzati nel browser (Web Audio API): brevi, allegri, in stile "cartoon". Ne
 
 I suoni di fine partita sono volutamente diversi da quelli di vittoria e sconfitta del singolo round, così si capisce subito che la partita è finita.
 
+#### Suoni delle sfide
+Ogni sfida ha i suoi effetti, per renderla più divertente:
+
+| Sfida | Momento | Suono |
+|-------|---------|-------|
+| Stop al secondo | pressione / rilascio | "click" e "clack" da cronometro |
+| Doppio clic | ogni pressione | "pop" a bolla, il secondo più acuto |
+| Timer nascosto | tocca a te | "ding" a due note |
+| Timer nascosto | mentre tieni premuto | ronzio leggero |
+| Timer nascosto | risultati, se qualcuno ha sforato | sirena d'allarme, poi successo o fallimento |
+| Semaforo | si accende il rosso | beep basso stile F1 |
+| Semaforo | verde | beep di partenza |
+| Semaforo | falsa partenza | buzzer |
+| Ultimo a mollare | mentre tieni premuto | miccia che sfrigola |
+| Ultimo a mollare | rilascio | "pfiù" di sollievo |
+| Ultimo a mollare | risultati | BOOM, poi successo o fallimento |
+| Raffica | ogni tocco | "pew" che sale di tono con il conteggio |
+| Raffica | tempo scaduto | fischio |
+
+Tutti i suoni sono sintetizzati (anche rumore per miccia ed esplosione). Se qualcuno risultasse troppo "sintetico", si può sostituire con un file audio (candidati: esplosione e miccia).
+
 - Chi guarda soltanto (eliminato) non sente successo o fallimento.
 - Il pulsante con l'altoparlante, in alto in tutte le schermate, **disattiva i suoni**; la scelta resta salvata sul dispositivo.
 - I browser permettono l'audio solo dopo un tocco: i suoni partono dal primo tocco sulla pagina. Su iPhone l'interruttore del silenzioso li disattiva.

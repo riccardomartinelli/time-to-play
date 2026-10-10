@@ -1,4 +1,10 @@
-import { playNotes, type SoundName } from "./synth";
+import {
+  playNotes,
+  startLoopSound,
+  type LoopName,
+  type PlayOptions,
+  type SoundName,
+} from "./synth";
 
 const STORAGE_KEY = "ttp-sound";
 
@@ -53,10 +59,10 @@ class SoundPlayer {
     }
   }
 
-  play(name: SoundName): void {
+  play(name: SoundName, options?: PlayOptions): void {
     if (!this.enabled || !this.context || this.context.state !== "running") return;
     try {
-      playNotes(this.context, name);
+      playNotes(this.context, name, options);
     } catch {
       // A missing sound must never break the game.
     }
@@ -68,10 +74,20 @@ class SoundPlayer {
   }
 
   /** Plays the sound only the first time `key` is seen. */
-  playOnce(key: string, name: SoundName): void {
+  playOnce(key: string, name: SoundName, options?: PlayOptions): void {
     if (this.played.has(key)) return;
     this.played.add(key);
-    this.play(name);
+    this.play(name, options);
+  }
+
+  /** Starts a sound that lasts until the returned function is called. */
+  startLoop(name: LoopName): () => void {
+    if (!this.enabled || !this.context || this.context.state !== "running") return () => {};
+    try {
+      return startLoopSound(this.context, name);
+    } catch {
+      return () => {};
+    }
   }
 }
 

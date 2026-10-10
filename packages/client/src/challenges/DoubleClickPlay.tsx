@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { GameButton } from "../components/GameButton";
 import { TimeBar } from "../components/TimeBar";
+import { sound } from "../feedback/sound";
 import styles from "./Play.module.css";
 import type { PlayProps } from "./types";
 import { usePlayWindow } from "./usePlayWindow";
@@ -20,6 +21,7 @@ export function DoubleClickPlay({ snapshot, round, submit }: PlayProps) {
       <p className={styles.label}>Premi due volte di fila</p>
       <GameButton
         disabled={play.done}
+        onPressStart={() => sound.play(firstRelease === null ? "pop" : "popHigh")}
         onPressEnd={(_duration, time) => {
           if (firstRelease === null) {
             setFirstRelease(time);

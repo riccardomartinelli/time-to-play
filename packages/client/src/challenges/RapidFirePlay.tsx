@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { GameButton } from "../components/GameButton";
 import { TimeBar } from "../components/TimeBar";
+import { sound } from "../feedback/sound";
 import styles from "./Play.module.css";
 import type { PlayProps } from "./types";
 import { usePlayWindow } from "./usePlayWindow";
@@ -21,6 +22,7 @@ export function RapidFirePlay({ snapshot, round, submit }: PlayProps) {
   useEffect(() => {
     goAt.current = performance.now();
     const timer = setTimeout(() => {
+      sound.play("whistle");
       setOver(true);
       void send.current({ taps: count.current });
     }, durationMs);
@@ -43,6 +45,8 @@ export function RapidFirePlay({ snapshot, round, submit }: PlayProps) {
           if (time - goAt.current > durationMs) return;
           count.current += 1;
           setTaps(count.current);
+          // Higher and higher with every tap, up to two octaves.
+          sound.play("pew", { pitch: Math.min(4, 2 ** (count.current / 20)) });
         }}
       >
         Tap!

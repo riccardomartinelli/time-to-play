@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { GameButton } from "../components/GameButton";
+import { sound } from "../feedback/sound";
+import { useHoldSound } from "../feedback/useGameSounds";
 import styles from "./Play.module.css";
 import type { PlayProps } from "./types";
 import { usePlayWindow } from "./usePlayWindow";
@@ -8,6 +10,7 @@ import { usePlayWindow } from "./usePlayWindow";
 export function LastToLetGoPlay({ snapshot, round, submit }: PlayProps) {
   const play = usePlayWindow(snapshot, round, submit, { hurry: false });
   const [holding, setHolding] = useState(false);
+  const fuse = useHoldSound("fuse");
   /** `performance.now()` at "Via!": the hold is counted from here, not from the press. */
   const goAt = useRef(0);
 
@@ -25,8 +28,13 @@ export function LastToLetGoPlay({ snapshot, round, submit }: PlayProps) {
       <p className={styles.label}>C'è una bomba a tempo segreto</p>
       <GameButton
         disabled={play.done}
-        onPressStart={() => setHolding(true)}
+        onPressStart={() => {
+          fuse.start();
+          setHolding(true);
+        }}
         onPressEnd={(_duration, time) => {
+          fuse.stop();
+          sound.play("phew");
           setHolding(false);
           void play.send({ holdMs: Math.max(0, time - goAt.current) });
         }}

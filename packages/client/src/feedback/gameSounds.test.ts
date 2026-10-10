@@ -1,6 +1,8 @@
 import type { LobbySnapshot, RoundResultEntry } from "@ttp/shared";
 import { describe, expect, it } from "vitest";
-import { cueFor } from "./gameSounds";
+import { cuesFor } from "./gameSounds";
+
+const cueFor = (snapshot: LobbySnapshot) => cuesFor(snapshot).at(-1) ?? null;
 
 function snapshot(
   overrides: Partial<LobbySnapshot>,
@@ -86,5 +88,24 @@ describe("game sound cues", () => {
     const second = withResults([{ playerId: "a" }]);
     second.game!.round!.id = "r2";
     expect(cueFor(second)!.key).not.toBe(first);
+  });
+
+  it("explodes before the result in last to let go", () => {
+    const base = withResults([{ playerId: "a", position: 1 }]);
+    base.game!.round!.challenge = "last-to-let-go";
+    const cues = cuesFor(base);
+    expect(cues.map((cue) => cue.sound)).toEqual(["boom", "success"]);
+    expect(cues[1]!.options?.delay).toBeGreaterThan(0);
+  });
+
+  it("sounds the alarm when someone went over the hidden timer limit", () => {
+    const base = withResults([{ playerId: "a", position: 2 }]);
+    base.game!.round!.challenge = "hidden-timer";
+    base.game!.round!.results!.reveal = { loser: { playerId: "a", reason: "exceeded" } };
+    expect(cuesFor(base).map((cue) => cue.sound)).toEqual(["alarm", "fail"]);
+  });
+
+  it("plays a single result sound for the other challenges", () => {
+    expect(cuesFor(withResults([{ playerId: "a" }])).map((cue) => cue.sound)).toEqual(["success"]);
   });
 });

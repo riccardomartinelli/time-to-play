@@ -15,6 +15,7 @@ export function TrafficLightPlay({ snapshot, round, submit }: PlayProps) {
   const greenAt = useRef<number | null>(null);
 
   useEffect(() => {
+    sound.play("redLight");
     const timer = setTimeout(() => {
       greenAt.current = performance.now();
       setGreen(true);
@@ -48,6 +49,7 @@ export function TrafficLightPlay({ snapshot, round, submit }: PlayProps) {
         onPressStart={(time) => {
           if (greenAt.current === null) {
             setFalseStart(true);
+            sound.play("buzzer");
             void play.send({ falseStart: true });
           } else {
             void play.send({ reactionMs: Math.max(0, time - greenAt.current) });
