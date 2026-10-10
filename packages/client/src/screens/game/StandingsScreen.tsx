@@ -24,6 +24,7 @@ export function StandingsScreen({ snapshot }: { snapshot: LobbySnapshot }) {
         <div className={styles.section}>
           <h1>Classifica</h1>
           <Leaderboard
+            celebrate
             entries={scoreStandings(snapshot).map((row) => ({
               ...entry(row.playerId),
               position: row.position,
@@ -43,11 +44,12 @@ export function StandingsScreen({ snapshot }: { snapshot: LobbySnapshot }) {
     >
       <div className={styles.section}>
         <h1>Ancora in gara</h1>
-        <Leaderboard entries={inGame.map((id) => ({ ...entry(id), position: 1 }))} />
+        <Leaderboard celebrate entries={inGame.map((id) => ({ ...entry(id), position: 1 }))} />
         {game.eliminated.length > 0 && (
           <>
             <h2>Eliminati</h2>
             <Leaderboard
+              celebrate
               entries={game.eliminated.map((id) => ({ ...entry(id), position: null }))}
             />
           </>

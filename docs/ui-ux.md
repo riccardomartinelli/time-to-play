@@ -68,6 +68,14 @@ Ogni sfida ha un'icona Caramella (`ChallengeIcon`), disegnata con i token del te
 
 Compare nella presentazione della sfida (grande, con un piccolo "pop"), nel conto alla rovescia e nei risultati del round.
 
+### Classifica animata
+Nella classifica tra un round e l'altro e in quella di fine partita:
+- le righe **entrano una dopo l'altra**;
+- chi è **primo** ha una **corona** sopra la posizione che dondola, una stellina che brilla accanto al nome e la riga fa un piccolo salto di gioia;
+- chi è **ultimo** è "povero": **faccina triste con una lacrima** che scende accanto al nome e **portafoglio vuoto** da cui scappa una tarma; la riga si affloscia un po';
+- a pari merito la corona (o la faccina) va a tutti i giocatori di quella posizione; se sono tutti a pari merito nessuno ha corona o faccina;
+- con "riduci movimento" attivo le icone restano ma le animazioni sono disattivate.
+
 ### Presentazione della sfida
 Dura **6 secondi**. Mostra l'icona, la scritta "Prossima sfida", il nome e le **regole in grande su un adesivo giallo** leggermente inclinato, più "Si parte tra N...". L'animazione dell'icona è disattivata con "riduci movimento".
 

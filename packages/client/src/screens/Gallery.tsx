@@ -98,6 +98,7 @@ export function Gallery() {
       <Card>
         <h2 style={{ marginTop: 0 }}>Classifica</h2>
         <Leaderboard
+          celebrate
           entries={[
             { id: "a", nickname: "Giulia", position: 1, value: 12 },
             { id: "b", nickname: "Marco", position: 2, value: 9, isYou: true },

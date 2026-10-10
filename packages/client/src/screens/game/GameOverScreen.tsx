@@ -31,6 +31,7 @@ export function GameOverScreen({ snapshot }: { snapshot: LobbySnapshot }) {
       </div>
       {game.mode === "score" && (
         <Leaderboard
+          celebrate
           entries={scoreStandings(snapshot).map((row) => ({
             id: row.playerId,
             nickname: nicknameOf(snapshot, row.playerId),
